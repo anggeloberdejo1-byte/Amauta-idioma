@@ -1,0 +1,1422 @@
+<title>Amauta Idioma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: una columna de estudio (máx. 720px) con barra de pestañas fija abajo, como app de bolsillo. Familia visual de las apps de Anggelo: fondo crema, sello arriba y abajo. */
+:root{
+  --bg:#F6F0E4; --surface:#FFFBF3; --ink:#1F1B2E; --muted:#6B6378; --line:#E2D8C6;
+  --accent:#B4362A; --accent-ink:#FFFFFF; --teal:#1F6E6A; --gold:#C98A1B; --soft:#EFE5D2;
+  --ok:#2F7D46; --warn:#B9771A;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#17141F; --surface:#211D2B; --ink:#F2EBDD; --muted:#A79FB3; --line:#36304A;
+  --accent:#E0654F; --accent-ink:#1A0F0C; --teal:#5BB8B0; --gold:#E2AE4C; --soft:#2A2536;
+  --ok:#6CC28A; --warn:#E2AE4C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17141F; --surface:#211D2B; --ink:#F2EBDD; --muted:#A79FB3; --line:#36304A;
+  --accent:#E0654F; --accent-ink:#1A0F0C; --teal:#5BB8B0; --gold:#E2AE4C; --soft:#2A2536;
+  --ok:#6CC28A; --warn:#E2AE4C; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:0 96px}
+.wrap{max-width:720px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0;text-wrap:balance}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.tabnum{font-variant-numeric:tabular-nums}
+
+/* Cabecera */
+header.top{display:flex;align-items:center;gap:14px;padding-block:20px 12px}
+.sello{width:56px;height:56px;border-radius:50%;flex:none;display:grid;place-items:center;overflow:hidden;
+  background:var(--ink);color:var(--bg);font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.02em}
+.sello img{width:100%;height:100%;object-fit:cover}
+.brand{min-width:0}
+.brand h1{font-size:28px;font-weight:800;letter-spacing:-.01em}
+.brand p{margin:0;color:var(--muted);font-size:14px}
+/* franja tejida: patrón escalonado inspirado en la chakana */
+.franja{height:10px;margin-block:6px 18px;border-radius:2px;
+  background:
+   linear-gradient(135deg,var(--accent) 25%,transparent 25%) 0 0/20px 10px,
+   linear-gradient(225deg,var(--accent) 25%,transparent 25%) 0 0/20px 10px,
+   var(--gold);opacity:.9}
+
+/* Navegación inferior */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.tabs .row{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
+nav.tabs button{background:none;border:0;padding:10px 4px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.02em}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--accent)}
+nav.tabs button[aria-current="page"] .dot{background:var(--accent)}
+nav.tabs .dot{width:5px;height:5px;border-radius:50%;background:transparent}
+
+section.view{display:grid;gap:18px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;min-width:0}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+
+/* Botones */
+.btn{text-decoration:none;border:1.5px solid var(--ink);background:transparent;border-radius:999px;padding:9px 16px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.teal{background:var(--teal);border-color:var(--teal);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.icon-btn{border:1px solid var(--line);background:var(--soft);border-radius:999px;width:36px;height:36px;display:inline-grid;place-items:center;flex:none}
+.icon-btn svg{width:18px;height:18px}
+
+/* HOY */
+.hoy-head{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}
+.hoy-head h2{font-size:30px;font-weight:800}
+.semana{text-align:right}
+.semana b{font-family:var(--display);font-size:34px;line-height:1;display:block}
+.barra{height:8px;background:var(--soft);border-radius:99px;overflow:hidden}
+.barra i{display:block;height:100%;background:var(--teal);border-radius:99px}
+.metas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.meta{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;display:grid;gap:6px;text-align:left}
+.meta{min-width:0}
+.meta .t{display:flex;justify-content:space-between;align-items:center;gap:4px 8px;font-weight:700;flex-wrap:wrap}
+.meta .n{font-family:var(--display);font-size:22px}
+.chip{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--muted)}
+.meta .chip{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--muted)}
+.meta.done .chip{background:var(--ok);color:var(--bg)}
+.racha{display:flex;gap:6px;flex-wrap:wrap}
+.racha span{width:22px;height:22px;border-radius:6px;background:var(--soft);border:1px solid var(--line)}
+.racha span.on{background:var(--gold);border-color:var(--gold)}
+.racha span.full{background:var(--accent);border-color:var(--accent)}
+.reto-frase{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding-block:8px;border-top:1px dashed var(--line)}
+.reto-frase:first-of-type{border-top:0}
+.en{font-weight:700}
+.es{color:var(--muted);font-size:15px}
+
+/* HABLAR */
+.escenas{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.escena{border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;text-align:left;display:grid;gap:4px}
+.escena b{font-family:var(--display);font-size:17px}
+.escena span{font-size:13px;color:var(--muted)}
+.escena[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.chat{display:grid;gap:12px}
+.msg{max-width:88%;padding:12px 14px;border-radius:14px;display:grid;gap:6px;min-width:0}
+.msg.tutor{background:var(--surface);border:1px solid var(--line);border-top-left-radius:4px}
+.msg.yo{background:var(--ink);color:var(--bg);justify-self:end;border-top-right-radius:4px}
+.msg .linea{display:flex;gap:8px;align-items:flex-start}
+.msg .linea .en{flex:1;min-width:0}
+.corr{border-left:3px solid var(--warn);padding:6px 10px;background:var(--soft);border-radius:6px;font-size:15px}
+.corr.bien{border-left-color:var(--ok)}
+.natural{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:15px}
+.natural .en{color:var(--teal)}
+.opciones{display:flex;flex-wrap:wrap;gap:6px}
+.opcion{border:1px dashed var(--teal);background:transparent;color:var(--teal);border-radius:99px;padding:5px 12px;font-size:14px;font-weight:700;text-align:left}
+.compose{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
+.compose textarea{width:100%;min-height:52px;max-height:160px;resize:vertical;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:12px}
+.typing{color:var(--muted);font-style:italic}
+.tip{font-size:14px;color:var(--muted);background:var(--soft);border-radius:10px;padding:10px 12px}
+
+/* TARJETAS */
+.flash{background:var(--surface);border:1px solid var(--line);border-radius:18px;min-height:240px;padding:24px 20px;display:grid;place-items:center;text-align:center;gap:10px;position:relative}
+.flash .cat{position:absolute;top:12px;left:16px}
+.flash .big{font-family:var(--display);font-size:28px;font-weight:700;line-height:1.2}
+.flash .sub{font-size:18px;color:var(--muted)}
+.califs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.califs .btn{padding:10px 6px;font-size:14px;flex-direction:column;gap:0;border-radius:12px}
+.califs .btn small{font-weight:400;font-size:11px;opacity:.8}
+.cajas{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;text-align:center}
+.cajas div{background:var(--soft);border-radius:8px;padding:6px 2px}
+.cajas b{font-family:var(--display);font-size:18px;display:block}
+.cajas small{font-size:11px;color:var(--muted)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:3px;background:var(--soft);flex-wrap:wrap}
+.seg button{border:0;background:transparent;border-radius:99px;padding:6px 12px;font-size:14px;font-weight:700;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+
+/* VOZ */
+.shadow-frase{font-family:var(--display);font-size:26px;font-weight:700;line-height:1.25}
+.reps{display:flex;gap:8px}
+.reps span{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-weight:700;color:var(--muted)}
+.reps span.on{background:var(--teal);border-color:var(--teal);color:var(--bg)}
+.prompt-box{font-size:14px;background:var(--soft);border-radius:10px;padding:12px;white-space:pre-wrap;user-select:all;overflow-wrap:anywhere}
+
+/* PLAN */
+.fase{display:grid;grid-template-columns:72px 1fr;gap:14px;padding-block:14px;border-top:1px solid var(--line)}
+.fase:first-of-type{border-top:0}
+.fase .sem{font-family:var(--display);font-weight:800;font-size:15px;color:var(--muted)}
+.fase.actual .sem{color:var(--accent)}
+.fase h3{font-size:19px;margin-bottom:4px}
+.fase ul{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:15px}
+.rutina{display:grid;gap:8px}
+.rutina div{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:baseline}
+.rutina b{font-family:var(--display);font-variant-numeric:tabular-nums}
+
+/* VERBOS */
+.drill-sujeto{font-family:var(--display);font-size:30px;font-weight:800;line-height:1.1}
+.drill-meta{display:flex;flex-wrap:wrap;gap:6px}
+.drill-meta .chip{font-size:12px}
+.chip.acc{background:var(--accent);color:var(--accent-ink)}
+.chip.tl{background:var(--teal);color:var(--bg)}
+.resp{width:100%;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:14px;font-size:18px}
+.resultado{border-radius:10px;padding:12px;display:grid;gap:6px;background:var(--soft)}
+.resultado.ok{border-left:4px solid var(--ok)}
+.resultado.mal{border-left:4px solid var(--accent)}
+.toggles{display:flex;flex-wrap:wrap;gap:6px}
+.toggle{border:1.5px solid var(--line);background:transparent;border-radius:99px;padding:5px 12px;font-size:13px;font-weight:700;color:var(--muted)}
+.toggle[aria-pressed="true"]{border-color:var(--teal);background:var(--teal);color:var(--bg)}
+.tabla-wrap{overflow-x:auto}
+table.vt{border-collapse:collapse;width:100%;font-size:15px;min-width:420px}
+table.vt th,table.vt td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.vt th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+table.vt td.f{font-weight:700}
+select.sel{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:10px;font-size:16px;width:100%}
+/* SELLO Y TEMAS */
+.sello-img{height:76px;width:auto;flex:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+.sello-img.pie{height:44px}
+.temas-btn{margin-left:auto;width:42px;height:42px}
+.temas-btn svg{width:20px;height:20px}
+.temas-grupo{display:grid;gap:8px}
+.temas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.tema-op{border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:700;font-size:14px;text-align:left}
+.tema-op[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.swatches{display:flex;flex:none}
+.swatches i{width:18px;height:18px;border-radius:50%;border:2px solid var(--surface);margin-left:-6px}
+.swatches i:first-child{margin-left:0}
+footer.pie{display:flex;align-items:center;gap:12px;justify-content:center;padding-block:28px 8px;color:var(--muted);font-size:13px;text-align:center}
+footer.pie .sello{width:34px;height:34px;font-size:13px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-size:14px;font-weight:700;z-index:20;max-width:calc(100% - 32px)}
+@media (max-width:440px){.sello-img{height:64px}nav.tabs button{font-size:11px}.drill-sujeto{font-size:24px}.brand h1{font-size:24px}.hoy-head h2{font-size:24px}.flash .big{font-size:24px}.califs .btn{font-size:13px}}
+@media (prefers-reduced-motion:no-preference){.flash{transition:transform .15s}.flash.flip{transform:scale(.98)}}
+
+[hidden]{display:none!important}
+/* PREGUNTAR */
+.top-acc{margin-left:auto;display:flex;gap:8px;align-items:center;flex:none}
+.top-acc .temas-btn{margin-left:0}
+.preg-btn{width:auto;padding-inline:12px;gap:6px;display:inline-flex;align-items:center;font-weight:700;font-size:14px;border-radius:999px}
+.preg-btn.activo{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.rapidas{display:flex;flex-wrap:wrap;gap:6px}
+.preg-texto{white-space:pre-wrap}
+.btn svg{width:16px;height:16px;flex:none}
+#preg-chat .msg.tutor{max-width:100%}
+.ej-preg .btn{white-space:nowrap}
+.ej-preg{display:grid;gap:6px;padding-top:10px;border-top:1px dashed var(--line)}
+.preg-card{display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;width:100%;border:1.5px dashed var(--teal);background:var(--surface);border-radius:14px;padding:14px 16px;color:inherit}
+.preg-card b{font-family:var(--display);font-size:18px;display:block}
+@media (max-width:440px){.preg-btn span{display:none}.preg-btn{width:42px;padding:0;justify-content:center}}
+/* AJUSTES Y AYUDAS DE LECTURA */
+.ajustes{margin-bottom:18px;gap:14px}
+.switches{display:grid}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:14px;padding-block:12px;border-top:1px solid var(--line);cursor:pointer}
+.sw:first-child{border-top:0}
+.sw > span{display:grid;gap:2px;min-width:0}
+.sw input{appearance:none;-webkit-appearance:none;flex:none;width:48px;height:28px;border-radius:99px;background:var(--line);position:relative;cursor:pointer;transition:background .15s;margin:0}
+.sw input::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+.sw input:checked{background:var(--teal)}
+.sw input:checked::after{transform:translateX(20px)}
+.ejemplo-ajustes{background:var(--soft);border-radius:12px;padding:12px}
+.ing{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:start;min-width:0}
+.ing-cuerpo{min-width:0;display:grid;gap:4px}
+.ing .oir{display:flex;gap:6px}
+.inter{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:flex-start}
+.w{display:inline-grid;line-height:1.25;min-width:0}
+.w b{font-weight:700;font-size:17px}
+.w .pr{font-size:13px;color:var(--teal);font-style:italic}
+.w .gl{font-size:12.5px;color:var(--muted);max-width:11em}
+.en-line{font-weight:700;font-size:17px}
+.pr-line{color:var(--teal);font-style:italic;font-size:14px}
+.trad{color:var(--muted);font-size:15px;border-left:3px solid var(--line);padding-left:8px}
+.ing.lg .w b,.ing.lg .en-line{font-family:var(--display);font-size:25px;line-height:1.2}
+.ing.lg .w .pr{font-size:15px}.ing.lg .w .gl{font-size:14px}
+.ing.lg .trad{font-size:17px}
+.ing.sm .w b,.ing.sm .en-line{font-size:15px}
+.ing.sm .w .pr{font-size:12px}.ing.sm .w .gl{font-size:11.5px}
+.ing.sm .trad{font-size:14px}
+.lista-frases{display:grid;gap:12px}
+.lista-frases > .ing{padding-top:12px;border-top:1px dashed var(--line)}
+.lista-frases > .ing:first-child{border-top:0;padding-top:0}
+.msg.yo .w .gl,.msg.yo .w .pr,.msg.yo .pr-line,.msg.yo .trad{color:inherit;opacity:.75}
+.opcion{border:1px dashed var(--teal);background:transparent;color:inherit;border-radius:12px;padding:8px 12px;text-align:left;width:100%}
+.opciones{display:grid;gap:6px}
+.natural{display:grid;gap:6px;background:var(--soft);border-radius:10px;padding:10px}
+details.guia{background:var(--soft);border-radius:12px;padding:12px 14px}
+details.guia summary{font-weight:700;cursor:pointer;list-style-position:inside}
+details.guia ol{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
+.vista-cab{display:flex;justify-content:space-between;align-items:end;gap:10px;flex-wrap:wrap}
+.vista-cab h2{font-size:26px;margin-top:4px}
+.fila-sb{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.campo{width:100%;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:10px}
+.btn.ancho{width:100%;padding:14px}
+.flash-cuerpo{display:grid;gap:12px;justify-items:center;width:100%;min-width:0}
+.flash .ing{text-align:left;width:100%}
+.flash .chip.cat{position:absolute;top:12px;left:16px}
+.flash{padding-top:44px}
+.big-es{font-family:var(--display);font-size:26px;font-weight:700;line-height:1.2}
+.califs{grid-template-columns:repeat(3,minmax(0,1fr))}
+.califs .btn small{font-size:11.5px}
+.niveles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;text-align:center}
+.niveles div{background:var(--soft);border-radius:8px;padding:8px 2px}
+.niveles b{font-family:var(--display);font-size:20px;display:block}
+.niveles small{font-size:11.5px;color:var(--muted)}
+.drill-frase{font-family:var(--display);font-size:30px;font-weight:800;line-height:1.15}
+.opciones-v{display:grid;gap:8px}
+.opcion-v{text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;width:100%;color:inherit}
+.opcion-v:not(:disabled):hover{border-color:var(--teal)}
+.opcion-v.correcta{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.opcion-v.incorrecta{border-color:var(--accent);opacity:.75}
+.opcion-v:disabled{cursor:default}
+.formula{background:var(--soft);border-radius:8px;padding:8px 10px;font-weight:700;font-size:15px}
+.tiempo-bloque{display:grid;gap:10px;padding-block:16px;border-top:1px solid var(--line)}
+.tiempo-bloque:first-child{border-top:0;padding-top:0}
+.tiempo-bloque h3{font-size:19px}
+.ejemplo{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:start}
+.ejemplo .etq{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.lista-verbos{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.verbo-item{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px;min-width:0}
+.verbo-es{font-size:14px;color:var(--muted)}
+@media (max-width:440px){.drill-frase{font-size:25px}.ing.lg .w b,.ing.lg .en-line{font-size:22px}.ejemplo{grid-template-columns:1fr;gap:4px}.califs .btn{font-size:13px}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <img class="sello-img" src="data:image/webp;base64,UklGRnArAABXRUJQVlA4WAoAAAAQAAAAbQAAnwAAQUxQSN4HAAABoEVtmyFJ+v6IaK1t27ZtG4O1bdu2bdu2bZtjoyL+/7uorEFlxH1ETADqGHDq6fAoZnD78yR4Vwqg+1/2Qt6llZPrtpltqH0y1fKQFuKy4wBAQnAC+WPsH+Tor66RIM4HDwA+M4IpIWh2WHAISSY+CIdmL1PNAsmKx1UvBmDG465axeEORiMt9Z8bMz3x2JkrAdv22xaSDQ+PvfkT5n6/H3km5hlDI8nE+zD1QJIXu2XIjeC95AEO24yJA6/4leSz02ETKivsVWCD0dbgrUsmewsOeXQnzYzzGEly9FkAVqdV8Vl0YOt/mfizamNZHLYkXO08VuP2/mlLNlbfngfiMNlf1KqDEDxmftMSmbjT1HzF1S9gT70VX1OpY/v19h4BJzCSVH4CEQn4mA1l5J4rqi0OXzPx7mm+v9lQaiL/XyN0hjDrBzSSpsN29N51dO5DRo08bA3aYeisGdDxHY3No67oQPM8rGCDRyAAwAp/kMa/P1aeIKj5lFPgPEZVfrnzzDMcd85N19x71wdqbFa75Z7PH7/3qvN6T7P3q1RSbV3MJ3UKOOj9ngVGmUXejQX/5ATfF0czWoMvYYvBs0DqdAgvwVtM5Nh+YxgrdRw0aYqxofbFCBojD+v+lVvA10a6wt7KG36msdk4kSOP2pGj1wydvh7iAazJyGozTnhTI2kcOtjeAQAnNXDANBv3foCarKJdfzxp977bAr7tHKZY+zO2uxkrz5wJ0mYe6/1EakrtRdJiisoBfeHbymHJoUzKujb4d7dIG4mb5CNG1jjyXPg28nI1I+tsamvCt43DDEPMasXIu6WdZhnCmiW+C2mbgB2ZWG9j/xnEtYuTV2rHxPPg2yTImlTW3WzwdM61hXN4nql2TDwHHW7iiQd2oLH+ptoXCCITynkfQvDAgs9SmUXjPTMCcCEE78ZHHKonvXoEjZlU/tJ3NkGl+HHywOKrbtH3ylNu/pFMzGYih332/PlH9tpiQcBJC/GY6qYGq5Mxo5pY3XhyVUAqBFjuI9I0xRiVmTVNMSYl+fAUcAAc5nu5wWjMuiXl81ND4DD9pzRl/hv8dFonrvtlNljEsTwPAQtQrQyqv3UCF1tkIZWbYcq/qKVIfAx7UVlK5dfhVKaCfBX2pBbD+N/0W9OKQeoqKycWtLHkUtGKkfQ56fmWqRQNngBs2khWBuV3szuP/ZiKoDpwATgEvMBUgsSdEQAniw9Sy1/iQwgAEHAUU/6MS4lvEjfZn9TcJT7sHCoDLmPM36YILWR7ptxZWhKuymMtWuaUHwdBtWCmwbS8RV6FMA5T/5+/K8ZplqH5u34cHJZi7hKfg2sRsDsT8278c3JIC7mAMXsjZm/lcQdT5qhcH75CMNkP1NxF7o1QEdCLifm7aRxOtZg95UciFR63MmXP2G8aSNVDRYgLwlXdWwAaV4MHIBI+ouYv8nAEAA6zj6blL/EFuIqFGiVQfhMggMdqNOY/8T0IgIDtmQqg/HcaSNPuhejXYq9CfNdRtWsh/py0yWMtWhH+m6okxqGzwAEOC0daCRrzNXksq8b8K/tNC2lamWX4vbvJYeGxtPwlPgmHZv85U/4i90docnipDAdWeTxcAuWG8E0BtzBmzzhqPriq/ZkK8NekkCbBTINpuUu8RzxafkzNXeTRCFUBNzHmTrkJfKsLSrDxuFxRgk1aeXmYKX8bthK8nr/E7aVK0P0HLXeRJyFUeJxKZe7Vfp5VBIBI13dM2WPiNRIAOCwUWcBkL8AB8NiLqQDG/6aBQKTjqyIwcT8EeKxmxhJGewoOAccyFkH586QQj/sLQdqS8A6vMZVBuTUC3NfUMkSejIAp/yzHzQjYWRNLcTsCNqEW4zYEmeQzailuRwi4kbEU5zbdUYrEXgjYe5BaGSJPQsDLjCxj4hde0NdSIZS/dwFL0gqR+L4TTP0PtQyRtyIg/FKOMxCcPM1UisMQArailkFt86Y1CmFsLOS8Cx8UgokXI2B/KstoGjfG6YwspXHA/D9Qi8HE419KqRxRX72aWgwjD53n+UQrg3HIDgC2a2gRzP5fCt6J/EYtQeKbCHCYdQitDE87B4e5RpfiMXgIen6hliDyUgTA4RlNZTihKeAENgpgGpeFA5ws9Bs1f5H3wAOAw+JDUspd4qA5xTUhYA8yZs0ih6wHh2qPQ/ozxaRmtHxYtWpK5K+LwaO1w+w3sdJIVdNkNbMUjeP6zzWzwWNcPeTQqx/7Y4yyddIaWSJJHTrcdEz/nz598oBpAYdx71oBwKTzLbLakitusvYqG+z7D2usZL+H919l4VlnX3SReafpBgAvGG8fHMZ1ll0+oFk9Ev/afzpgBrR2XjBhxTnvfHMAsCvV6pD4/TyAC5N41yyCthTvsC/N2q/BL2dHh6D9JWBPjandIn+fAx717MBxpLaVKZ+ZGx41Fe96fcWU2ieRZwgc6iuY8jkyaXsk4/BeEIc6hTDZzm+SmmxiaVTypRUQBLV3235MMiWdYKZRSd66AuBRe/FA95ZPjCSpKcZk42EpJpL85vo+gDhk0QOYq+/9P7MyWStNbB7x4ZUbdQPOIZfiHYCeXV658ba3BpJWZST/fvKyXecEgOAxkaWdADjvUTnjQQ1GVdXIP/dZdio0ey/Ir3jxXoBdR7Dyv/kBuOAd2nIKabtqF7D4VR98/PrLd66LTido254qVlA4IGwjAADwXwCdASpuAKAAPjUUh0MiIQ3u61QQAaJZgDMixfFN9p5jvIvYL8M+4eZvm+6m8ot+b/Yeon9Y+wB/Z+gR+7vqA/cv1i/+R/s/Yz/hPUX/sX+d9bX1I/3Q9gb9u/Tu/d/4Pf7t/3fSk/+HsAf//1AP/rxHn8o/Bj9M/I3+/fkh5n/inyX90/tH7Tf3f2OsTfnP65/n/zI9yv479s/w/92/cT1v/1Xgb79f577ffkC/Hv5l/iPzF/uHv8e/f5/tutS/tf/F/vPsC+x/0P/M/239x/8F6Hv976BfVf/Z/3n9xP8N9gP8o/on+Z/Nv/Gf//5//1v/C8T77J/i/9h/hvy7+wD+U/03/a/4b9z/8T///tU/gP+j/jf8t/6f877Mvzz+5f8r/J/6r/0/6b/////9Bf5P/Rv9R/cf8h/5f8h////T9z//z9t37R+x/+s//W/PV6IPAePCW9QAdh1hsvp3ynL/Jm+k8qxd209InYAODiISOr3LUBdBn8cezKQKaewwSCMTEf1iZeWpLu05bRwVFwuU7J2vafCdYqyGJNelnfkYHCj0LNCt6ogpuD/qorfc189LL8fOC0YIdEoVCFEt/yiO8bSXUT8Of2QAUMwx5L6UuHZl+udH6yjbE8I3X4of+EdvTr+4PjfyLyCci0niujaPDhhawHk6habF6Xgvzv0LMzEClZphwIzJ968NyC8rHQ462zdFL9BnSloY0AlTFVNvoDzPZ8ktet1Tv/VxsZomlHF0SbDOHcf4YOzIEU30BytDyzWH8aS6Km9f8zfS4wpPQAm2JoABB/YkHdqzTFLQON9OYSxGhAHGbX+4ZWjTPnxsJ5Q91vi1ZB/8em7oD76ID1ATSHCH+eU1avkX40JmweDLik6H/FGsu2Ae7W9unrZtEg+J78bZehOLOxlDLHsCOITpXFA5W3KrsQoT1usY/hL5gpzvS18cNSAW86BuTf4wniVP3k9d3Xz0VL3qEm/bJgLFiwjoYqIimgAG8WJmN/LigynTt4USAwfn/XrMTXpMgr48AAD+/2AYv/aCgX2dYidKL1XFfVCfP9WuJF7uFf2vSQUz5k7XTucAX1Svhx9Z9834G3LLZL6qiII/e9YLgiP6QW0xgOFIIs9DIw7NzHHvNsW5BvJDT3PeaRva2L5EiaPPF5HvTLvskldR9m6MQkkd3kSCE/GfiAOSedhyxMr9XJpA6rZhCzBKrdqd8sOBN38kJ+ZCykQRlspsuuI6CIbwo/z5aLXY2Gl4T9iUYIUvbsV7PWaUiwY6CT3N7aZ8lb0G0JYLAQ9ffEtsYSdULD7vnm0/G+OZGlCdpV3WudJQTGrL3bLnFlnbkZdf61FPfj3pi+kkW744qWQwcTNuRQmwiIprfY2KaVTGrGLoWmcC/q0ZqivmLx8qfNeRiaSTuH1hL/7aIGJPLm40XuLO9qQzyiEdha1Qh1SAAhaJdUFOvjaiIf5FJ/hRn5QoDbrxe7vboXYUoImpzXUEQSur50cLqoP70vpzxz//PvX0Kfdv5pYXzf7vYACwxziGF402LCGWy2Joul3M+oP1MKTZX5TlyR9Ran7W09Ham6qizCEJOSg98FW6fNzDmKP9ZIZkUMjVw2E5UV4HK+WIx6iUTWi7RtM3/eTcqbWuC9WKWcA53Kw/f+QPpX8/IAJjAzSkvAAA8fm4AavmsL4JAjrm5UoP3WNp/64MVFf8PqrmIs8kH//d7pOnW/0kqtGLZnUtnc9k9B2aiWRKLmGr+YXB7eKUp7P+W1juyrLs2Du0MJXdGFzL1e8O5eXzMFeg47WzoL7rfVoUYKuDOXec8A2azxm2FkxWDmvpf36aALsUY4WKT1KYZnXvBA3xW0Pl+zqcHWIeYMdLY6HDnn+Ey5r5pg0w1/WCCUtG2GFlcuCnZVz9EKSkuAzfsiB+MBI1PkP68RzBM2SFBswud7j+drU6vommXGjm8RKJ7mH54geRkHpVKE0lN4C8YCZ8KVE14NiXi9u0LbA0zgE7Ddm+18nqafOgjI8kjCc7w5jDKvC6LKtSJxLgJOAmLOD54aZGDOg668BPKBDCRv3niMmmE/f1dbviZpWTvOFDhYbyQTYle4Yj+xWDg2Ofako2RmliXZqxtsxtZU7ko5AlTb62YqjfQu/eHKxDu5Fcbg1Bgp7kzhKG18RBJgQduZv6+10WNXj5aqX1hMmq0mVvqUpyj8sm4lCr5i2dbvx8lOwevz59l8L/j2gyPl0M2LbpkMXy48h63W+SI7ripP1xhIQ64HsOwe2TPUh/rDFDm+Bv07rFZ6Z62qZDhHSXeSugVtXgJ0UNWEjyF2MtjN+T5wmyGoPqDmCnYAxq3/pOIyp8cpg2gnkHNe5NMPX0m7Ju+VAEX0k8O7FtcyLvpd54hSrBLUuA6KoE+YlqwXSQvgZbvJc1Ek8xCnuATiZXYu++25rJmN/EstkF46fygYE2kdfrWxt3AUsv2Wq8vsJQjZrAq2ZtbAispyY/a2mnz/DSrBuSB8VQi1KcMD+5bw4NkZbvBjE7IL4a8PBFYCYLwoIm/69EURFhWEoRAvJNq83wtx5FE77Jyy5YN0AEtQL12cOVEi+UOAvKiKg73lCCqCkb2Eo1iDucbNIbUVwApk8XorGirzBLzDCMXXea+OsUmQZzIGIh6jiOIXNa1FvPz9ZRwB/tWpPQHLOp9Xb8VV3BODusuSVS5A6ZZK6Gzf+pT21080ajtYpIWFzaCjidt9dnTtnM2RN6vzNyqCx15RO1rSfWDZRFqbwguHF3Ivz9I8WxdlPf8lrb9Vnz4x+jJGxs6ex1cnOh/kCP0q4Z3C1NnNhlPIej6TYilvW3JR6EVhZ1cct1WJFHn1IP8GKtNUUxZ2BqrSrkJGEdDP3eHxxaevWRMczgOvcpmYiD3Cxuhqu1Lac2x7EyoTNh/pf0zacWLI90tOonq0AgERlFTLli3Knw0Pmcezfw+URLVM0AD1/fKDAzeR2b7Sw/N/MbYTaz4MJLiX5e/qkcGKGRrZfGZ2fnP8Brk5ioH/ZULuXP8ofNOotzNR6TvpOw3A8mw6s2JpHydpKtd9FtQBBwoIXYWHqT8nnXWesP9AmXffzSOqGejtB6RF4/v5mPph76qZ2SftOJeW540XEz2qSXJL2irW0wWSVh8Za8oRHCvBB3cAxFBi1ZM+VAkuX/CiNpQI9K2kCym6+1Wv7KCDJCappap8R6aRBuf6650hEwEKxifeL7VZYXRB59k3G+HQu3S3TDcnU7um4Qr3M7BHY0p/oRvGQSlmMX+Yn6Ebgg2BXKP3v8nZxB8/f6UMPEX/3z1FImWGMpyIrkbrDQuPcNt+S2OfjeaXc5Y8PAvjE/3uAuWRi+roe9iJs+xrQcXZ58TuH89zA6BnbWRKY8sf1INMq8NMZ5O3hEyf482bBrDeLVwNxqA6T+/K9aMAzQnT95Dik05nTV88T82OElWwLqGhQF4gj5/5kza8cwyiVexLKyM4YiGIfOetRKNRV2aoxB41+ceDdSu3ykNcVFKtOvd1Ek9qC8Z5WbEURMS/5iBDF0hT0HDpUl0l5J8IZeF7pzEs0kdK3wPYoI5/renobtr9SI8lQmb3zbyfau0TFFnsnKRKdHHX6QpmNSUq3o6AsZH4ku0cblFdCBTNcdCLIxGfehdCfbLqSCBmRYBcnLJxtnLLKlxz4I8jTC758VJAwgTXOH66xQZFkuT9lbljo9S8f5ZRZwGdFbf8HCrWu2NagXp9/4dyB5GqwUEPZzRJu6iWTnjj0OvIbAgKmEQEkeaWOPbYPIwtJyH8fTe9oE1PtKxMvUdbjR/bKF6bt8arGqZ4IozIzUQ2UJfZ6sB4CeijQEnebkfvF8Z/h0UaW2zyYLPVZC3Uz5P4PSmIYPnukwIdkw5vg/q2UBRpq5s6R/tZfP3PesBNtbPr+KZ7uALYNAVSYqR2wOJitH/c0rYALvpjEpBQGUQPuKpNP7rxZZusAsB6lBK/M5D5xFBFsZwIN7m/xb10q7vijS3B9ehXS/fxEZtiXSKGF35QNLq8PgXZin5bz1U9lD9DYNSDFLOJT/wf1BF4V2ZThTmV1mD9EcwQNP2xmRm7jRxUjqz/dQ2jKHm3AXzx25hoLve1MiwkffweJFaXFvwEZp1nYMkVexYIWonGYGmgXGCp0F/yNIUk36ziniIWJ1YN2AR7m3F4HEM6wLcm+2tMLfEHY2UUENsTIP3AIy1cZGyHNokk1VDnQvCxbqvc4oGt0qABhr232853eRZyW70SmWWOU3P15sQ0OCO/20dRFDimFO7AI6AzDJrnCz2IyZ245JqthkUx0rvYNhacZkyZMv/VLqeisnY2kkbvzeCvGhVuNrNY1r/Sc40bcuwAdHDDzMbw7TUfjpPjEcjG6xsWRHaRZ3npXzA8VTB4MaUzpW6AVYPsu2xdBnHzmkAU795qTnj6BakiOIAvsRbp/XjSUzBr3Jr32NIFWnE4D1dBGkIDzd5euJ+SXT608cL1hfuMu3ZaxEELsUznlxEkUsxNptt+v02TWvD86JXQ999Za7vxGu9niMkyN03uhKEfFqDnBOpZ844AKgnjv2Id7qeEBDcYajD4ULBhwvtS0pSZjQj0YUQlGbn2TcB0he8DfSaV1KogYPASl8gJZPAj5y3shMso6+Xb0vaRvTlDch4SThBQ881LakaVzbftbeMp+eOjrNiY/K1sXkjMqggVq40DG042OLcaNfvloywGGMSJsn6fVP8VvDKnPtHdyMCXD2/kM29VXjrSzJTLJg03hAG78f+0amBv61apIehmqbOaoQo/9hAH5AZNW/3VXaHAfZMyWzGmqdBCpPPvtLzmbL4ahPQqqmzdwY+qKxk7Z9upJpFe2PRbA+KOCVHxuUAplwAu1ZsE2I/XVaYeJ5dAXimVqAj+eeAW0DIftTGNkXNg2odRfGtxjF+03+bhhkJnpK8EssHOfcBYdVA32bCJEqGn/NiRNiUw9D4cnE/IMH01skiLxixBDHkaZbzXNbwrSZzLlPOOSXdLirFlgZGoaHLvMpNV4pkyFN/MmajIZy6UBpXibaw4qUkyVXzms8kw8O35xX2n+dI19VkxE9CPizjEOXnI7DX6WWeq92+gnxs4+YwbYzvy7DW0frjQz6+XcnDWjUNK3DsGS/QMKXPxmp01BIXhH4Oytzpzso+CRfKn56GKkyWqYDgdW3upxvfsORYzF+PC0LAtKZ/xEuzyac4M+Vz+gNLU/ySusBZl5oipCHSqqPHIUyApPBfwaMIDhJhNnjBu+JUieKmCEa53VYgXXKW4dVC1ZLhh3WrE4gfTEQEwLIWca+Fe2lakE/Uk1lWaYy/uhnxfSunWl+1Qla6z27XMH3vZEmPjtQX5kpRwzE5LzKh+nM7Wk7Q8/l9tusQKGqc/O5+jQdpI/3LdXpbJFao0V182mE2ypDomSys9269fBXdYkhLaosb486gLUV1cnH5XRs88SPztK4OnXA/PPsz1akBKsLdHLZ9T4Y0AbeNuImxLlIFwVj9jy5b/uJqP2+Oq2UZQvt60zNiSfhcQNVKY9i+cv2N2H1TESqbTye0ZDe5+DfwDusVVGwBXGTXYYbefihIWeantFR/wAqsKFKmWpDSCbt2l8QkWCU5Jb9EATGohHIuBcqZo/T5ZF5J8q8DkLbgL/3CJjxgiNnT4JNbJEYHF71ISAnC7zQbJXsH7ORR48rQtXXo/ExDVCAOriRb96e+DNRGS7eeIcnhA7+wUozlgiU5aYkHM0PtpA7OIpn2lydrGieMo97rcPsUSF307tJwZ/sdvzWHHcKcUtj1vJlvBwv3h2k59qL5G776BpBs2R4xiOYCUD1Gsm66EgcKR9OIN/FGX1c1fptirIw8PS5qJZfphDmBfNUjAAl5Mice/c48f0yv3sk0RxoGr+OxTBH7BWWqdKmRdlZO71bcE4I2vmznRVC2Ev+Evu0XLwM7/K2l0DFZgq6ZkH7fx9Fe5jfbSX3Ynt6eVpPSsiJ1DjfXTQGRFgAdCY52Wfhbg5x7YXtm5YM4vgTr2LwanfGYK3gx0f+Xs6qsFnCmOkx7AO6gAkvrkJfHBaz9pflKmIwPlzRVfeQgUat+adpFSPelOJWSKMTSpiUKGfhgBBphtLLCrhALWaC5rr0ZjQa8qtaUF/JnXG0v7kgebOrx2nHdHrpyGksWnGPuIsUvWeN2pB7CM84aOajIZZ51I/3AVJHla86NP0WxRX8pEKCE6YksEUFLs5u7H8o2zDN7yKTHk0GiQ0tOy+yuELzw/qWbXGtSACin/x8Wlgl+s4cPwKw6BRZbLmufCJA6X56NJ4ph6uoZAUGcJ6jLGQEjwrJRPmPrROWU4B4tksu7JDgAWhBrmVbRadlXrEzioTqFSkqFa1jmXxxMP891Sq1maH71YdG6Df2k0dtQG1u+dNMFecq/EQpbPwdzKr49YCLR6vuZ9GTu7yu8tOj4bRa2AGHFh75QJHP3NbsvsFYPTRXuRq1mR9YiN2wG6A9ZoA6c+1vbDB0JutTUJLZ1cVNT38ajznylsEOw/9Iot6/ZxXO2kr7LFGkftLtc3L/Q/Ok8DWfKCkvr389JHlPBadwSGJ0ATplrSYEDWaEEd/fot1nRqrFPY7tbIu5j6muh+6ITi9+ZsqC1jRwkYCHU7LoMBmHAerIXiNGFIYmWPE5/X0nNaZS560CliRHx4NBC99aYrcI+qiZ8C6y28FLC9Jh1mAxnYLt4NEwtpOxVkE3nnPlWwVR9llO4MRYwBGlmLv6Y2Ui+STHStB6bZWkoZ9GQYTOTELM8ouyEaWN7FAl1EsPO6ZNJSP20BB8IpJVtL7xObSyJ64xnCssTEuYrP1WKGBGsIkulfEWhaVsOlUkTQFVIfrtByrErZNTwnSLz/olFzM+mBV6Gk7XEwnGl4+YULW04IZ+6ii/fpgX6bs+6UGbWBxfGnTXssJ6w+O8Sy7yQanI385AXT+YVewEHymZ90negz1sEqh99lUJ9gPN7RsSzSKFZtNd6GRR3hWWPEx8GYoPErvn/KsAvY7pyQsi5RlNnwJehAr0oCmKRMDvE5R0E5zTFYUoXJ3k+EE824jqJZolxxKM5mTgmswDZa2wskzN9hVorJmRnUFQFN5XE6igd2spinSQbLUmvxJ87fhPcNTSIYDeu/n8+D8mDTGUAJ7hObv/xN9W3sw+DnfQ/37KYkj+h1qhG6ipJN1XvemNCSZpIvWAncDN9rbhciCwV3EBaoXn53/3w4YjreaRl9JWfwClnyXmFqnTESrYvrdiOppPhJMP4OD7keraabqW3tM+dQLOjP0FtpWwtBhec+ppTsc88hvmn4Kg4Ni53T6OgBcuisXuo0+7/TTwI+bMHvm0BdXqwj0OUeGPEaqYzn+Ow7kf/tn58+OT7Awwcq1RLR1Q4Hz3WQSByL1dpyH/XCG0o1i5NVe7tZEq5vSWzEwz593pD44CnYEZCaSrdatiEriFNJRU7LYxZSVqw+xKCP9bOMIY3J8MKiMqeQJAqD2/C0fidORUj9OrbpxLajVFJqETtcoVI1M7VzIPTpt6v+bStEVfFsIBNdrWTfyEu92LVnCgySL8eG4bJsnfekMGlLkymjVDBaPXIu7dnp5TSwshGFHmJ2wuvp0wIUEJ1IK4Y16hk7Ph31kU702BNdt41M3nCYisAzG/nN1dO1WOOuVjvEihZ/NrdZfZ04v9j/SwPwT3AvzNNFXMOxX5A0agb/4FYN59fjvZrrrwBh/bRUKyLxLcA4fe0r+vNgi6240cDWe0sc/99JI+PZwk04zvm+iGAuOppprgE350l+Eddt13V4RW5N0GCbSQCobCfmuHMXvS5FDRWBItzT8g8N/NDtI8vEiUAV9FBkdUwTi7ZVVrAh8LZaPEvOCVsCtHQYYXwwPFBBUn2pkw/UWMgvlXnBpRl1gEYSH7JNg4mtw5dp6c4W1Zz1qo6nDyByxfSPwB7q8vh+PkUoGMfJC3hRJXsB+gWI9kDvFOpb1meLLqjnwPCuVrAwQ8wsKX2hoq5yRfIfZhaeNm9yNxJjJ5/u4mS5EFcmf2QYeAA6+Y8X2FFS261tAhI41KE55kPlu99nBj61z6nPcz/6T1YNBI9GGZzq/hJF2mxGehxWvmMhbguQbQ9JlTT7EmVogKtwXJZuM1sAZLiazCTI/ltOqJPzr8x5GQojXz3lBeYz7wKeXOO5gTWMj2ugBnXhGd7ItulxQb43TRa/uPdYjjsFn9o5Lc/1Oc+xjYHcRgssE+zgnAldRAul+DA3VUu0u+eaLmSPgN4P6YPzkKLRhUa1glF48q8WnxVpjV3ln9Cn/5NoczOFu+835wKhElI3OtC6jhAw/XDy1dT+sx5o+tTWvM5Hhy7GGnbzqZhJ57/npggbJHLJ3raz0Gt6D77u4SopZYLaTecs4yg8G5y79aXGnHBivw2b886zQpFMejA0ZYbIIPmSo6/6WMUKHETuocDDXkpD/ETSPr3Pd17stv37IL0dcbbZQUOxlVGZewdH4YXDMWe+V2jk/GnPtIqoKV0whyMmvRqyKpaF3lRFIGgcpOw1kS7oWFLf6esJxVn9s8VUyYTxBp8ag0D83M/y52lWm0sgtzgrG36ELS2MGpmBtFcBR6RhCuA3E4ayIy8JEF0b0Nc80e6PuK9YFJ/TZfrBtBaxQjA4BkpB0bkNqEIlp/7qpp6G70mafkxYTbQesbhdUyrwtrdlK8Kz3lTX/FaZAKJrFB7+MKa6rJV7KAG4DCyGCOF174W/IZq0omtzX3sCe9aDJ3q96sR2wWIrKYx7ela4jqsu+WPYi6DlBvGtxcwC8L8xr5bmAQc9mgDIQil/asTvm/a54huAG0hqah7lFhUcpNwVz/nwgXomyKV8GQxCoyq6vxmovUNDgee8XUR691JfalGvpsytRGNXhp7VlOXmtOheuq6cTrb8gk6ofNQl9Tut/Y67s2OgpO0am9+MWtXwySDgO2Jmr0LwpxvP8RWu43gnUiMeRi71kKOWN23iuN8XRs0sEFl7BcrQyAgF/sNYbU99rrgkpioPTuKhlYa4mDU58dJEFZE+5NuLHynfzBBr8Jou3VXli0dG7AMDDSvttv9s8wB+1ok9e9JcPEt6882kyTO7b84UiLKizlSxO/IKo4zBlK7D4Za5tXnhUMO+J8HzpJDBny82HHPNqGkIy2SeJ4mE0ef0yMCNyGr964EZiXRTvPXMSAak7qP8PJCPIlGnvGxU+44vmA++HNzt0W+QhW4mZyjC0ZMvtliPz/1V3Rw4+w6ZYXHfl98EeLktANI4vrjqdUNvG8j3Mzn81s2M6lHsS95Rr79ZaIXPLfVlu/vJlXzyrS3ZOphgg/AsPbAXxT+8QPlEQcddMGqDwgzX1th+w1X09Sy5+S4IKoZ1vxFh1on5pYwUV/Uk/g/hJOXtYTwB2OclRTw1TI3/xScB1SyHut7vBMs7PPIPEoY6gvmGPsgqUPlB5ZmtfYCDYKHbU5K16fdacqyH1D2tzLgWe2QsxT2go2OQLLJqBms2Nf4OKjb7gMs36HbxAWdYX5lMx0MQQRqsTRpuYQVLM6j0OKgp2YI1pRaNonaK9/5rCELyVsDZJbxlkd9r3imMy+PIrrZBPETvl14ieF3/QJ3AibLUh94PfqowDXWHtZC8Yms/Wx4kJk5BhJ7CkZgWLAjJAF0PItnurkkYkPdlfD7bUF7amiP5fNnV4WEtCaOkVkvK/POBgNRvuHR2/6H4Tn+i1dT3QgW7Dcky5naBoGnmoyIaCtNHovNWurLUWRFtWa0oQxGj5UlnhF39mG5Ijy2UB3D9XfB1BOiFMyQnoPUSTHgRM2/m4P2Y1dTbtesrUZCt52r8KrinO/DMWvS8y49tWblTfvz+R51UO7vSEN+3fWQ92ZJJC/H+ZzegnMo2eQgAM14BZ+I2tU2BJruLRrdoToJYReKclMFi08+gbzqd+9bwnJCrk8N52TNigOYZtLKu8zKOvW5BfDUnfefoAAbSGOCt94IKKEmYkf+apdBNyMrvFJObMxFOxbriKPCO0skuFFWFBkRtr0XFvAZ88Bw5g0WWHUQ+urBdlsoNUOq5gW5fcpE7VpxNp4TqquTEwbKpp0xw3emb7MgpvrBmSmxUCVXI9VrWVvX14WkNhpF6h0W2PAYPReszjxubVnqSujM1nVmkFeCwvNXdC+Yl6imlPg0e7ozKg0o9yFQIB9mbjwsx24EoDvRVS+pYIZI3ASzYT5YWb/FqUiMwbxwcE28FdmZDV7jhh4JTmkX5LiOHHJ3TJXOVpttt4aw2sa5sLg3RNQ6cgQhCF0sUud8Szl+y6dlaT+bf6foX2qmtnBpl3ijoLI1oG4mXcwrhaTFtqBxJ0lSequXbIjs4eSTbGc4XFUpDlO/i/zMHkmtFmhczuk2CimfvhmCxndhp4F0ZwC2xsN54qW3NX2lR9VMjAxttEMry4wD8kHz+C00qTijLMeHdUF+kk4OVzrlb1x07S3kdR7/awYD1HPahPlt+1GujgsS4bD3rvp3w1psF3aSVXueMT5IGjJ+WtSLGrMEjsm0hfvXe3Umxq0iYle5o5sCHAaAKASyFXQvuYIv8yQHk0U5c57SbLYwPTA4DS62hbvaQPA/+6HU5mvE2g8bk97zhcVpW5t/tA0Nmx/sUIl14JmhCc/5l0nrluqQw9TFoLOf5IS8GLNmTh8G2d8Mwvv/wbpql0qwTPqSI4g8yS8gSc8DAdpqRUJc6g+2cvY0WRrGo1nOk4jhuA9bTAJXNwMkfPvyiajEqqlK2K/6cT8WLiKA1H4RY1fzxIVTNdYoSYhz17/kVV97rOIXvExtVmbDskCJRmS9kSFTls/B+r1jmYUNOqywXZv/Ogct6Cs94TsxclxeyTyjnqdYUvs4i/g6hBfOoWto90BfdqjcddGHCXPad2ujGxDBg+ph+aLpzsogtyIUHK9icMD624UklkoVyWUquQhJeGNlxvdzpp+WRiK2P3FMLPn/AKE6176+kx7RO4PWzdqIlIN1NQp4yc5uYctqc0d+5s4ZNYTgCKDoLFn2YFSdW88pWUC4RM6v1f598+oXmwPXYwbuUX3LBs48/C2G4B8pY6xmx4Xq91K66jufAd7vDxUh/u2zYxAUOjtPkrh7HB+HUsQRsWAUPpVz7JXwsCwpT/KixahcUItdc03xJ1862l3Zzyv+Hh6Fe0LuoAh6LWU6tbBhVFFYM2u/DDYRM75GR7wIIJLJLQZaRUA5KW+HARGh/WBMDNb4uvvFQP6b4+yv9oSCOtePnpMfW0pn5gNJWBL7OQIOJquBKVTkJDHp4WMzRCK9zj+Z+J6cWwopEJv/k/caRqDZGvmWDKntQedqT5M89ZMwGXNwg6zq/ZwFqUwinZbpEqQgs95Ayl+XDLtPgBsoZtec8C/kzHfc7m2zX2YbKkXX0O/IHf8F+EvUUNXKcdMZo9Jf/mKoGrPsf8anrLgeobvz++4EteojNxw1nBdBKGMyFoj4Ug6yaZHI+rywqFj7w5hj19eGnVru29j4rrGr0Q6Qxb/+kRJdD849zucb+b/f6oFUmfG9e7W9qbBp6O1NiH1JkeAQBl8D3n7Q2YhIc0L0slnPFB3u2b/b5y0CWwKVWKFw0zAE/t8BJnIFhBcioLGaXfwr1b3KPpMvcRucDlqcWX8ooI8nrsbekykKq3PndeMZAh2OEoHUy/RXbMc1Qvh2ZLF8c/RAHGS0yn/cx07M5ekaahxZL1Oh4HVYy1dhjdtHVwmBsfvZP8NMD6kZiPizABxm2EbrZIL6/xpXUZ9EfeYOfhT3J0L4BJBezW+FlWf8upXNBGk1YgFpqXXpYnK3Vr+2TDmoqbPCSc45hlt0tTDvHHysWEV5rOshbUeBUSedUj67CzNIzym/Y4LFAdDGWCtIY/4ZEGZZ8PU6jO3Nk9eMuqyxN5cHYWACS25HcT18FWNTOeW897JmC+j7o7HqYi8OltRjRVfsZ8w3FIVo4kgH/n1AC2ifshf8ZGEKsWZ7+fh8UvfnR83poVpy+p3zeZyXNIrNZ4rSoca7WRypIwfgbb9EIbnRDIR3Md4GTvdoGxU5Db9K+xS33uy/QyVl6mC7luQRPMGZKzKhazbq3dfwojg3YAAAA==" alt="Sello Amauta Idioma" width="111" height="160">
+    <div class="brand">
+      <h1>Amauta Idioma</h1>
+      <p>Inglés para hablar en 24 semanas</p>
+    </div>
+    <div class="top-acc">
+      <button class="icon-btn temas-btn preg-btn" id="preguntar-btn" type="button" aria-label="Pregúntale al profe" title="Pregúntale al profe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M10 9.5a2 2 0 1 1 2.6 1.9c-.4.2-.6.5-.6.9v.4"/><circle cx="12" cy="15.3" r=".6" fill="currentColor"/></svg><span>Preguntar</span></button>
+  <button class="icon-btn temas-btn" id="ajustes-btn" type="button" aria-label="Ajustes" aria-expanded="false" title="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    </div>
+  </header>
+  <div class="franja" aria-hidden="true"></div>
+  <section class="panel ajustes" id="ajustes" hidden aria-label="Ajustes"></section>
+
+  <main id="app"></main>
+
+  <footer class="pie">
+    <img class="sello-img pie" src="data:image/webp;base64,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" alt="" width="111" height="160">
+    <span>By Anggelo Berdejo · Amauta Idioma · 2026</span>
+  </footer>
+</div>
+
+<nav class="tabs" aria-label="Secciones">
+  <div class="row" id="tabs"></div>
+</nav>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Contenido base ---------- */
+const DECK = [
+ // Básico
+ ["b1","Hello, nice to meet you.","Hola, mucho gusto.","Básico"],
+ ["b2","My name is Anggelo.","Me llamo Anggelo.","Básico"],
+ ["b3","I'm from the Dominican Republic.","Soy de República Dominicana.","Básico"],
+ ["b4","How are you?","¿Cómo estás?","Básico"],
+ ["b5","I'm fine, thank you. And you?","Estoy bien, gracias. ¿Y tú?","Básico"],
+ ["b6","Can you repeat that, please?","¿Puede repetir eso, por favor?","Básico"],
+ ["b7","Can you speak more slowly?","¿Puede hablar más despacio?","Básico"],
+ ["b8","I don't understand.","No entiendo.","Básico"],
+ ["b9","What does that mean?","¿Qué significa eso?","Básico"],
+ ["b10","How do you say this in English?","¿Cómo se dice esto en inglés?","Básico"],
+ ["b11","I'm learning English.","Estoy aprendiendo inglés.","Básico"],
+ ["b12","Sorry, my English is not very good.","Perdón, mi inglés no es muy bueno.","Básico"],
+ ["b13","Thank you very much.","Muchas gracias.","Básico"],
+ ["b14","You're welcome.","De nada.","Básico"],
+ ["b15","Excuse me.","Disculpe.","Básico"],
+ ["b16","No problem.","No hay problema.","Básico"],
+ ["b17","See you later.","Nos vemos luego.","Básico"],
+ ["b18","Have a nice day.","Que tengas un buen día.","Básico"],
+ ["b19","Yes, of course.","Sí, claro.","Básico"],
+ ["b20","I think so.","Creo que sí.","Básico"],
+ ["b21","I don't think so.","Creo que no.","Básico"],
+ ["b22","Wait a moment, please.","Espere un momento, por favor.","Básico"],
+ // Presentarte
+ ["p1","I'm a percussionist.","Soy percusionista.","Presentarte"],
+ ["p2","I play congas and cajón.","Toco congas y cajón.","Presentarte"],
+ ["p3","I'm also a DJ and producer.","También soy DJ y productor.","Presentarte"],
+ ["p4","I teach music.","Enseño música.","Presentarte"],
+ ["p5","I live in Santo Domingo.","Vivo en Santo Domingo.","Presentarte"],
+ ["p6","I have two bands.","Tengo dos bandas.","Presentarte"],
+ ["p7","We play salsa and Latin jazz.","Tocamos salsa y jazz latino.","Presentarte"],
+ ["p8","I've been playing for many years.","Llevo muchos años tocando.","Presentarte"],
+ ["p9","What do you do?","¿A qué te dedicas?","Presentarte"],
+ ["p10","Where are you from?","¿De dónde eres?","Presentarte"],
+ ["p11","I love my job.","Me encanta mi trabajo.","Presentarte"],
+ ["p12","Music is my life.","La música es mi vida.","Presentarte"],
+ // Música
+ ["m1","Can you turn up the monitor?","¿Puedes subir el monitor?","Música"],
+ ["m2","Can you turn down the bass in my monitor?","¿Puedes bajar el bajo en mi monitor?","Música"],
+ ["m3","I need more congas in my mix.","Necesito más congas en mi mezcla.","Música"],
+ ["m4","Is the microphone on?","¿Está encendido el micrófono?","Música"],
+ ["m5","What time is the soundcheck?","¿A qué hora es la prueba de sonido?","Música"],
+ ["m6","We need two more microphones.","Necesitamos dos micrófonos más.","Música"],
+ ["m7","Let's start from the top.","Empecemos desde el principio.","Música"],
+ ["m8","One more time, please.","Una vez más, por favor.","Música"],
+ ["m9","The tempo is too fast.","El tempo está muy rápido.","Música"],
+ ["m10","Let's take a five-minute break.","Tomemos un descanso de cinco minutos.","Música"],
+ ["m11","Where can I set up my gear?","¿Dónde puedo montar mi equipo?","Música"],
+ ["m12","How long is the set?","¿Cuánto dura el set?","Música"],
+ ["m13","We play two sets of forty-five minutes.","Tocamos dos sets de cuarenta y cinco minutos.","Música"],
+ ["m14","I'll send you our rider.","Te envío nuestro rider.","Música"],
+ // Booking
+ ["k1","I'm the booking manager for the band.","Soy el encargado de booking de la banda.","Booking"],
+ ["k2","Are you available on Friday?","¿Están disponibles el viernes?","Booking"],
+ ["k3","What is your budget?","¿Cuál es su presupuesto?","Booking"],
+ ["k4","Our fee is five hundred dollars.","Nuestra tarifa es de quinientos dólares.","Booking"],
+ ["k5","The price includes sound and transport.","El precio incluye sonido y transporte.","Booking"],
+ ["k6","We need a fifty percent deposit.","Necesitamos un depósito del cincuenta por ciento.","Booking"],
+ ["k7","Can we talk about the price?","¿Podemos hablar del precio?","Booking"],
+ ["k8","I'll send you the contract by email.","Le envío el contrato por correo.","Booking"],
+ ["k9","Let me check with the band.","Déjeme consultar con la banda.","Booking"],
+ ["k10","Thank you for the opportunity.","Gracias por la oportunidad.","Booking"],
+ ["k11","Here is our press kit.","Aquí está nuestro press kit.","Booking"],
+ ["k12","How many people do you expect?","¿Cuántas personas esperan?","Booking"],
+ // Viaje
+ ["v1","Where is the gate?","¿Dónde está la puerta de embarque?","Viaje"],
+ ["v2","I'm here for work.","Estoy aquí por trabajo.","Viaje"],
+ ["v3","I'm here to play music at a festival.","Estoy aquí para tocar en un festival.","Viaje"],
+ ["v4","I'm staying for one week.","Me quedo una semana.","Viaje"],
+ ["v5","I'm staying at a hotel downtown.","Me quedo en un hotel en el centro.","Viaje"],
+ ["v6","This is a musical instrument.","Esto es un instrumento musical.","Viaje"],
+ ["v7","Where can I get a taxi?","¿Dónde puedo tomar un taxi?","Viaje"],
+ ["v8","How much does it cost?","¿Cuánto cuesta?","Viaje"],
+ ["v9","I have a reservation.","Tengo una reservación.","Viaje"],
+ ["v10","What time is check-out?","¿A qué hora es la salida del hotel?","Viaje"],
+ ["v11","Where is the bathroom?","¿Dónde está el baño?","Viaje"],
+ ["v12","I lost my bag.","Perdí mi maleta.","Viaje"],
+ ["v13","Can I pay with card?","¿Puedo pagar con tarjeta?","Viaje"],
+ ["v14","Is it far from here?","¿Está lejos de aquí?","Viaje"],
+ // Día a día
+ ["d1","Can I have a coffee, please?","¿Me da un café, por favor?","Día a día"],
+ ["d2","The check, please.","La cuenta, por favor.","Día a día"],
+ ["d3","I would like to order.","Quisiera ordenar.","Día a día"],
+ ["d4","What do you recommend?","¿Qué recomienda?","Día a día"],
+ ["d5","I'm hungry.","Tengo hambre.","Día a día"],
+ ["d6","I'm tired.","Estoy cansado.","Día a día"],
+ ["d7","What time is it?","¿Qué hora es?","Día a día"],
+ ["d8","I'm running late.","Voy tarde.","Día a día"],
+ ["d9","I'll call you later.","Te llamo más tarde.","Día a día"],
+ ["d10","Send me a message.","Mándame un mensaje.","Día a día"],
+ ["d11","What's your phone number?","¿Cuál es tu número de teléfono?","Día a día"],
+ ["d12","What are you doing this weekend?","¿Qué haces este fin de semana?","Día a día"],
+ ["d13","I had a great time.","La pasé muy bien.","Día a día"],
+ ["d14","Let's go!","¡Vamos!","Día a día"],
+ // Gramática útil
+ ["g1","I want to …","Quiero …","Estructuras"],
+ ["g2","I need to …","Necesito …","Estructuras"],
+ ["g3","I have to …","Tengo que …","Estructuras"],
+ ["g4","I'm going to …","Voy a …","Estructuras"],
+ ["g5","I used to …","Yo solía …","Estructuras"],
+ ["g6","Can you help me with …?","¿Me puede ayudar con …?","Estructuras"],
+ ["g7","Do you know where … is?","¿Sabe dónde está …?","Estructuras"],
+ ["g8","I'm looking for …","Estoy buscando …","Estructuras"],
+ ["g9","Yesterday I went to …","Ayer fui a …","Estructuras"],
+ ["g10","Tomorrow I will …","Mañana voy a …","Estructuras"],
+ ["g11","It depends on …","Depende de …","Estructuras"],
+ ["g12","In my opinion, …","En mi opinión, …","Estructuras"],
+ ["g13","Let me think.","Déjame pensar.","Estructuras"],
+ ["g14","How long have you been …?","¿Cuánto tiempo llevas …?","Estructuras"],
+].map(([id,en,es,cat])=>({id,en,es,cat}));
+
+const ESCENAS = [
+ {id:"aeropuerto", t:"Migración", d:"Llegas a otro país con tus congas", rol:"an immigration officer at a US airport. The student is a Dominican musician arriving to play at a festival, carrying congas."},
+ {id:"booking", t:"Booking", d:"Negocias una presentación con un promotor", rol:"an event promoter in Miami who wants to hire a salsa band for a private party. Ask about fee, date, band size and needs. Let the student negotiate."},
+ {id:"soundcheck", t:"Soundcheck", d:"Hablas con el ingeniero de sonido", rol:"a sound engineer at a club doing soundcheck with the student, a percussionist. Ask about monitors, mics and levels."},
+ {id:"presentarte", t:"Presentarte", d:"Conoces a alguien después de un show", rol:"a friendly person who just watched the student's concert at a bar and wants to get to know him: his music, his life, where he is from."},
+ {id:"restaurante", t:"Restaurante", d:"Ordenas comida y pagas", rol:"a waiter at a casual restaurant in New York. Take the student's order and help him."},
+ {id:"entrevista", t:"Entrevista", d:"Te entrevistan en una radio", rol:"a radio host interviewing the student about his bands, his career as a percussionist and DJ, and his plans."},
+ {id:"libre", t:"Charla libre", d:"Habla de lo que quieras", rol:"a patient friend having a casual chat. Follow the student's topics."},
+];
+
+const FASES = [
+ {a:1,b:4,t:"Supervivencia",o:["Presentarte en 1 minuto sin leer","Pedir que repitan y que hablen despacio","Escenas: Presentarte, Restaurante"]},
+ {a:5,b:8,t:"Tu día y tu pasado",o:["Presente simple y pasado simple","Contar qué hiciste ayer y el fin de semana","Escenas: Charla libre, Migración"]},
+ {a:9,b:12,t:"Inglés de trabajo musical",o:["Soundcheck, rider, montaje","Negociar fecha y tarifa","Escenas: Soundcheck, Booking"]},
+ {a:13,b:16,t:"Planes y llamadas",o:["Futuro: going to / will","Llamadas y mensajes de voz","Escenas: Booking por teléfono, Migración"]},
+ {a:17,b:20,t:"Opinar y contar historias",o:["Dar tu opinión y explicar por qué","Hablar 5 minutos de un tema","Escena: Entrevista"]},
+ {a:21,b:24,t:"Fluidez",o:["Conversaciones de 20 minutos","Simulacros de tu situación real","Repaso de tus errores frecuentes"]},
+];
+
+const METAS = {tarjetas:20, turnos:10, shadow:15, voz:1};
+const INTERVALOS = [0,1,3,7,16,35];
+
+const VOZ_PROMPT = "Be my English conversation partner. I'm a beginner from the Dominican Republic, a percussionist and DJ. Speak slowly, use short simple sentences, and ask me one question at a time. If I make a mistake, repeat my sentence correctly and then continue. If I speak Spanish, tell me how to say it in English. Today let's talk about: ";
+const VOZ_PROMPT_ES = "Sé mi compañero de conversación en inglés. Soy principiante, de República Dominicana, percusionista y DJ. Habla despacio, usa oraciones cortas y simples, y hazme una pregunta a la vez. Si me equivoco, repite mi oración bien dicha y sigue. Si hablo en español, dime cómo se dice en inglés. Hoy hablemos de: ";
+
+/* ---------- Diccionario: palabra → [traducción literal, pronunciación] ---------- */
+const DICC = {"a":["un / una","e"],"about":["acerca de","abáut"],"also":["también","ólsou"],"am":["soy / estoy","am"],"and":["y","and"],"anggelo":["Anggelo","Anggelo"],"are":["son / están / eres","ar"],"aren't":["no son / no están","árent"],"at":["en / a","at"],"ate":["comió","eit"],"available":["disponibles","avéilebel"],"bag":["maleta","bag"],"band":["banda","band"],"bands":["bandas","bands"],"bass":["bajo","bas"],"bathroom":["baño","bátrum"],"be":["ser / estar","bi"],"been":["sido / estado","bin"],"began":["empezó","bigán"],"begin":["empezar","biguín"],"beginning":["empezando","biguíning"],"begins":["empieza","biguíns"],"begun":["empezado","bigán"],"being":["siendo / estando","bíng"],"booking":["booking (contrataciones)","búking"],"bought":["compró / comprado","bat"],"break":["descanso","breik"],"bring":["traer","bring"],"bringing":["trayendo","brínging"],"brings":["trae","brings"],"brought":["trajo / traído","brot"],"budget":["presupuesto","báyit"],"buy":["comprar","bai"],"buying":["comprando","báing"],"buys":["compra","bais"],"by":["por","bai"],"cajón":["cajón","cajón"],"call":["llamar","kol"],"called":["llamó / llamado","kold"],"calling":["llamando","kóling"],"calls":["llama","kols"],"came":["vino","keim"],"can":["puede / puedo","kan"],"card":["tarjeta","kard"],"check":["cuenta / revisar","chek"],"check-out":["salida (del hotel)","chek-áut"],"coffee":["café","káfi"],"come":["venir / venido","kam"],"comes":["viene","kams"],"coming":["viniendo","káming"],"congas":["congas","cóngas"],"contract":["contrato","kántrakt"],"cost":["costar","kast"],"course":["curso","kors"],"day":["día","dei"],"depends":["depende","dipénds"],"deposit":["depósito","depásit"],"did":["(auxiliar de pasado)","did"],"didn't":["no (pasado)","dídent"],"dj":["DJ","díyei"],"do":["(auxiliar) / hacer","du"],"does":["(auxiliar) / hace","das"],"doesn't":["no (presente)","dásent"],"doing":["haciendo","dúing"],"dollars":["dólares","dálers"],"domingo":["Domingo","doumíngou"],"dominican":["Dominicana","demíneken"],"don't":["no (presente)","dount"],"done":["hecho","dan"],"down":["abajo","daun"],"downtown":["centro","dáuntaun"],"drank":["bebió","drank"],"drink":["beber","drink"],"drinking":["bebiendo","drínking"],"drinks":["bebe","drinks"],"drunk":["bebido","drank"],"eat":["comer","it"],"eaten":["comido","íten"],"eating":["comiendo","íting"],"eats":["come","its"],"email":["correo","iméil"],"english":["inglés","ínglish"],"excuse":["disculpe","ikskiús"],"expect":["esperan","ikspékt"],"far":["lejos","far"],"fast":["rápido","fast"],"fee":["tarifa","fi"],"feel":["sentir","fil"],"feeling":["sintiendo","fíling"],"feels":["siente","fils"],"felt":["sintió / sentido","felt"],"festival":["festival","féstevel"],"fifty":["cincuenta","fífti"],"find":["encontrar","faind"],"finding":["encontrando","fáinding"],"finds":["encuentra","fainds"],"fine":["bien","fain"],"finish":["terminar","fínish"],"finished":["terminó / terminado","fínisht"],"finishes":["termina","fínishis"],"finishing":["terminando","fínishing"],"five":["cinco","faiv"],"five-minute":["de cinco minutos","faiv-mínet"],"for":["para / por","for"],"forty-five":["cuarenta y cinco","fórti-faiv"],"found":["encontró / encontrado","faund"],"friday":["viernes","fráidi"],"from":["de","fram"],"gate":["puerta (de embarque)","gueit"],"gave":["dio","gueiv"],"gear":["equipo","guir"],"get":["conseguir","guet"],"gets":["consigue","guets"],"getting":["consiguiendo","guéting"],"give":["dar","guiv"],"given":["dado","guíven"],"gives":["da","guivs"],"giving":["dando","guíving"],"go":["ir","gou"],"goes":["va","gous"],"going":["yendo","góuing"],"gone":["ido","gon"],"good":["bueno","gud"],"got":["consiguió","gat"],"gotten":["conseguido","gáten"],"great":["genial","greit"],"had":["tuvo / tenido","jad"],"has":["tiene / (ha)","jas"],"hasn't":["no ha","jásent"],"have":["tener / (he)","jav"],"haven't":["no he / no han","jávent"],"having":["teniendo","jáving"],"he":["él","ji"],"hello":["hola","jelóu"],"help":["ayudar","jelp"],"here":["aquí","jir"],"hotel":["hotel","joutél"],"how":["cómo","jau"],"hundred":["cien(tos)","jándred"],"hungry":["hambriento","jángri"],"i":["yo","ai"],"i'll":["yo (futuro)","ail"],"i'm":["yo soy / estoy","aim"],"i've":["yo he","aiv"],"in":["en","in"],"includes":["incluye","inklúds"],"instrument":["instrumento","ínstrement"],"is":["es / está","is"],"isn't":["no es / no está","ísent"],"it":["eso","it"],"jazz":["jazz","yas"],"job":["trabajo","yab"],"kit":["kit (paquete)","kit"],"knew":["supo","nu"],"know":["saber / conocer","nou"],"knowing":["sabiendo","nóuing"],"known":["sabido","noun"],"knows":["sabe","nous"],"late":["tarde","leit"],"later":["más tarde","léiter"],"latin":["latino","láten"],"learn":["aprender","lern"],"learned":["aprendió / aprendido","lernd"],"learning":["aprendiendo","lérning"],"learns":["aprende","lerns"],"leave":["salir","liv"],"leaves":["sale","livs"],"leaving":["saliendo","líving"],"left":["salió / salido","left"],"let":["dejar","let"],"let's":["vamos a","lets"],"life":["vida","laif"],"like":["gustar","laik"],"liked":["gustó / gustado","laikt"],"likes":["le gusta","laiks"],"liking":["gustando","láiking"],"listen":["escuchar","lísen"],"listened":["escuchó / escuchado","lísend"],"listening":["escuchando","lísening"],"listens":["escucha","lísens"],"live":["vivir","liv"],"lived":["vivió / vivido","livd"],"lives":["vive","livs"],"living":["viviendo","líving"],"long":["largo / cuánto","long"],"looking":["buscando","lúking"],"lost":["perdí","lost"],"love":["encantar / amar","lav"],"loved":["encantó / encantado","lavd"],"loves":["le encanta","lavs"],"loving":["encantando","láving"],"made":["hizo / hecho","meid"],"make":["hacer","meik"],"makes":["hace","meiks"],"making":["haciendo","méiking"],"manager":["encargado","máneyer"],"many":["muchos","méni"],"me":["me / mí","mi"],"mean":["significar","min"],"meet":["conocer","mit"],"meeting":["conociendo","míting"],"meets":["conoce","mits"],"message":["mensaje","mésey"],"met":["conoció / conocido","met"],"microphone":["micrófono","máikrefoun"],"microphones":["micrófonos","máikroufouns"],"minutes":["minutos","mínets"],"mix":["mezcla","miks"],"moment":["momento","móument"],"monitor":["monitor","máneter"],"more":["más","mor"],"much":["mucho","mach"],"music":["música","miúsik"],"musical":["musical","miúsikel"],"my":["mi","mai"],"name":["nombre","neim"],"need":["necesitar","nid"],"needed":["necesitó / necesitado","níded"],"needing":["necesitando","níding"],"needs":["necesita","nids"],"nice":["agradable","nais"],"no":["no","nou"],"not":["no","nat"],"number":["número","námber"],"of":["de","av"],"on":["encendido / en","an"],"one":["una","uan"],"opinion":["opinión","apínien"],"opportunity":["oportunidad","apertúneti"],"order":["ordenar","órder"],"our":["nuestro","áuer"],"paid":["pagó / pagado","peid"],"pay":["pagar","pei"],"paying":["pagando","péing"],"pays":["paga","peis"],"people":["personas","pípel"],"percent":["por ciento","persént"],"percussionist":["percusionista","perkáshenist"],"phone":["teléfono","foun"],"plan":["planear","plan"],"planned":["planeó / planeado","pland"],"planning":["planeando","pláning"],"plans":["planea","plans"],"play":["tocar","plei"],"played":["tocó / tocado","pleid"],"playing":["tocando","pléing"],"plays":["toca","pleis"],"please":["por favor","plis"],"practice":["practicar","práktes"],"practiced":["practicó / practicado","práktest"],"practices":["practica","prákteses"],"practicing":["practicando","práktesing"],"press":["prensa","pres"],"price":["precio","prais"],"problem":["problema","práblem"],"producer":["productor","predúser"],"read":["leer / leyó / leído","rid / red"],"reading":["leyendo","ríding"],"reads":["lee","rids"],"recommend":["recomienda","rekeménd"],"repeat":["repetir","ripít"],"republic":["República","ripáblek"],"reservation":["reservación","reservéishen"],"rider":["rider (lista técnica)","ráider"],"running":["corriendo","ráning"],"said":["dijo / dicho","sed"],"salsa":["salsa","sólse"],"sang":["cantó","sang"],"santo":["Santo","sántou"],"saw":["vio","so"],"say":["decir","sei"],"saying":["diciendo","séing"],"says":["dice","ses"],"see":["ver","si"],"seeing":["viendo","síng"],"seen":["visto","sin"],"sees":["ve","sis"],"send":["enviar","send"],"sending":["enviando","sénding"],"sends":["envía","sends"],"sent":["envió / enviado","sent"],"set":["set (tanda)","set"],"sets":["sets (tandas)","sets"],"she":["ella","shi"],"sing":["cantar","sing"],"singing":["cantando","sínging"],"sings":["canta","sings"],"sleep":["dormir","slip"],"sleeping":["durmiendo","slíping"],"sleeps":["duerme","slips"],"slept":["durmió / dormido","slept"],"slowly":["despacio","slóuli"],"so":["tan / así","sou"],"sorry":["perdón","sári"],"sound":["sonido","saund"],"soundcheck":["prueba de sonido","sáundchek"],"speak":["hablar","spik"],"speaking":["hablando","spíking"],"speaks":["habla","spiks"],"spoke":["habló","spouk"],"spoken":["hablado","spóuken"],"start":["comenzar","start"],"started":["comenzó / comenzado","stártid"],"starting":["comenzando","stárting"],"starts":["comienza","starts"],"staying":["quedándome","stéing"],"stop":["parar","stap"],"stopped":["paró / parado","stapt"],"stopping":["parando","stáping"],"stops":["para","staps"],"studied":["estudió / estudiado","stádid"],"studies":["estudia","stádis"],"study":["estudiar","stádi"],"studying":["estudiando","stáding"],"sung":["cantado","sang"],"take":["tomar","teik"],"taken":["tomado","téiken"],"takes":["toma","teiks"],"taking":["tomando","téiking"],"talk":["hablar","tok"],"taught":["enseñó / enseñado","tot"],"taxi":["taxi","táksi"],"teach":["enseñar","tich"],"teaches":["enseña","tíches"],"teaching":["enseñando","tíching"],"tell":["contar / decir","tel"],"telling":["contando","téling"],"tells":["cuenta","tels"],"tempo":["tempo","témpou"],"thank":["agradecer (gracias)","tank"],"that":["eso","dat"],"the":["el / la","de"],"they":["ellos","dei"],"think":["pensar / creer","tink"],"thinking":["pensando","tínking"],"thinks":["piensa","tinks"],"this":["esto","dis"],"thought":["pensó / pensado","tot"],"time":["hora / tiempo","taim"],"tired":["cansado","táierd"],"to":["a / para","tu"],"told":["contó / contado","tould"],"tomorrow":["mañana","temárou"],"too":["demasiado","tu"],"took":["tomó","tuk"],"top":["arriba (principio)","tap"],"transport":["transporte","transpórt"],"travel":["viajar","trável"],"traveled":["viajó / viajado","tráveld"],"traveling":["viajando","tráveling"],"travels":["viaja","trávels"],"tried":["intentó / intentado","traid"],"tries":["intenta","trais"],"try":["intentar","trai"],"trying":["intentando","tráing"],"turn":["girar (subir/bajar)","tern"],"two":["dos","tu"],"understand":["entender","anderstánd"],"understanding":["entendiendo","anderstánding"],"understands":["entiende","anderstánds"],"understood":["entendió / entendido","anderstúd"],"up":["arriba","ap"],"used":["solía","iusd"],"very":["muy","véri"],"wait":["esperar","ueit"],"want":["querer","uant"],"wanted":["quiso / querido","uóntid"],"wanting":["queriendo","uánting"],"wants":["quiere","uants"],"was":["era / estaba","uas"],"wasn't":["no era / no estaba","uásent"],"we":["nosotros","ui"],"week":["semana","uik"],"weekend":["fin de semana","uíkend"],"welcome":["bienvenido","uélkem"],"went":["fue","uent"],"were":["eran / estaban","uer"],"weren't":["no eran / no estaban","uérent"],"what":["qué","uat"],"what's":["qué es / cuál es","uats"],"where":["dónde","uer"],"will":["(futuro)","uil"],"with":["con","uid"],"won't":["no (futuro)","uount"],"work":["trabajar","uerk"],"worked":["trabajó / trabajado","uerkt"],"working":["trabajando","uérking"],"works":["trabaja","uerks"],"would":["(condicional)","wud"],"write":["escribir","rait"],"writes":["escribe","raits"],"writing":["escribiendo","ráiting"],"written":["escrito","ríten"],"wrote":["escribió","rout"],"years":["años","irs"],"yes":["sí","ies"],"yesterday":["ayer","iésterdei"],"you":["tú / usted","iu"],"you're":["tú eres / estás","iur"],"your":["tu","ior"],"today":["hoy","tedéi"],"now":["ahora","nau"]};
+
+/* Instrucción para que Claude devuelva cada palabra con su traducción y pronunciación */
+const PAL_INSTR = `"palabras" lists every word of that English text, in order, as ["word as written","literal Spanish meaning of that word here","pronunciation spelled for a Dominican Spanish speaker, with an accent mark on the stressed syllable"]. Pronunciation examples: hello=jelóu, the=de, thank=tenk, you=iu, work=uerk, would=wud, nice=nais, music=miúsik.`;
+
+/* ---------- Verbos ---------- */
+const VERBOS_RAW = `be|was/were|been|ser / estar|estar
+have|had|had|tener|tener
+do|did|done|hacer|hacer
+go|went|gone|ir|ir
+play|played|played|tocar / jugar|tocar
+work|worked|worked|trabajar|trabajar
+make|made|made|hacer / crear|hacer
+take|took|taken|tomar / llevar|tomar
+come|came|come|venir|venir
+get|got|gotten|conseguir / llegar|conseguir
+see|saw|seen|ver|ver
+know|knew|known|saber / conocer|saber
+want|wanted|wanted|querer|querer
+need|needed|needed|necesitar|necesitar
+like|liked|liked|gustar|gustar
+love|loved|loved|amar / encantar|encantar
+live|lived|lived|vivir|vivir
+speak|spoke|spoken|hablar|hablar
+say|said|said|decir|decir
+tell|told|told|contar / decirle a|contar
+think|thought|thought|pensar|pensar
+buy|bought|bought|comprar|comprar
+bring|brought|brought|traer|traer
+teach|taught|taught|enseñar|enseñar
+learn|learned|learned|aprender|aprender
+practice|practiced|practiced|practicar|practicar
+listen|listened|listened|escuchar|escuchar
+call|called|called|llamar|llamar
+send|sent|sent|enviar|enviar
+pay|paid|paid|pagar|pagar
+eat|ate|eaten|comer|comer
+drink|drank|drunk|beber|beber
+write|wrote|written|escribir|escribir
+read|read|read|leer|leer
+sing|sang|sung|cantar|cantar
+begin|began|begun|empezar|empezar
+give|gave|given|dar|dar
+leave|left|left|salir / irse|salir
+meet|met|met|conocer / reunirse|conocer
+sleep|slept|slept|dormir|dormir
+travel|traveled|traveled|viajar|viajar
+start|started|started|comenzar|comenzar
+finish|finished|finished|terminar|terminar
+study|studied|studied|estudiar|estudiar
+try|tried|tried|intentar|intentar
+stop|stopped|stopped|parar|parar
+plan|planned|planned|planear|planear
+feel|felt|felt|sentir|sentir
+find|found|found|encontrar|encontrar
+understand|understood|understood|entender|entender`;
+const VERBOS = VERBOS_RAW.split("\n").map(l=>{const [b,pa,pp,es,si]=l.split("|");return {b,pa,pp,es,si}});
+const ING_ESP = {stop:"stopping",plan:"planning",begin:"beginning",get:"getting",travel:"traveling"};
+function tercera(b){ if(b==="have")return"has"; if(b==="do")return"does"; if(b==="go")return"goes";
+  if(/(s|sh|ch|x|z|o)$/.test(b))return b+"es"; if(/[^aeiou]y$/.test(b))return b.slice(0,-1)+"ies"; return b+"s"; }
+function gerundio(b){ if(ING_ESP[b])return ING_ESP[b]; if(/[^e]e$/.test(b))return b.slice(0,-1)+"ing"; return b+"ing"; }
+const SUJETOS = [
+  {k:"i",en:"I",es:"Yo"},{k:"you",en:"You",es:"Tú"},{k:"he",en:"He",es:"Él"},
+  {k:"she",en:"She",es:"Ella"},{k:"we",en:"We",es:"Nosotros"},{k:"they",en:"They",es:"Ellos"}];
+const PI = {i:0,you:1,he:2,she:2,we:3,they:4};
+const TIEMPOS = [
+  {k:"pres",t:"Presente simple",d:"Rutinas y cosas que siempre pasan",pista:"todos los días",
+    f:{aff:"Sujeto + verbo (con -s para he / she)",neg:"Sujeto + don't / doesn't + verbo",q:"Do / Does + sujeto + verbo ?"}},
+  {k:"past",t:"Pasado simple",d:"Algo que ya pasó y terminó",pista:"ayer",
+    f:{aff:"Sujeto + verbo en pasado",neg:"Sujeto + didn't + verbo",q:"Did + sujeto + verbo ?"}},
+  {k:"will",t:"Futuro con will",d:"Algo que decides en el momento o prometes",pista:"mañana",
+    f:{aff:"Sujeto + will + verbo",neg:"Sujeto + won't + verbo",q:"Will + sujeto + verbo ?"}},
+  {k:"going",t:"Futuro con going to",d:"Algo que ya tienes planeado",pista:"el viernes",
+    f:{aff:"Sujeto + am / is / are + going to + verbo",neg:"Sujeto + am not / isn't / aren't + going to + verbo",q:"Am / Is / Are + sujeto + going to + verbo ?"}},
+  {k:"cont",t:"Presente continuo",d:"Lo que está pasando ahora mismo",pista:"ahora",
+    f:{aff:"Sujeto + am / is / are + verbo-ing",neg:"Sujeto + am not / isn't / aren't + verbo-ing",q:"Am / Is / Are + sujeto + verbo-ing ?"}},
+  {k:"perf",t:"Presente perfecto",d:"Algo que has hecho alguna vez o ya hiciste",pista:"alguna vez / ya",
+    f:{aff:"Sujeto + have / has + participio",neg:"Sujeto + haven't / hasn't + participio",q:"Have / Has + sujeto + participio ?"}}];
+const FORMULA_BE = {
+  pres:{aff:"Sujeto + am / is / are",neg:"Sujeto + am not / isn't / aren't",q:"Am / Is / Are + sujeto ?"},
+  past:{aff:"Sujeto + was / were",neg:"Sujeto + wasn't / weren't",q:"Was / Were + sujeto ?"}};
+const FORMAS = [{k:"aff",t:"Afirmativa"},{k:"neg",t:"Negativa"},{k:"q",t:"Pregunta"}];
+const tercer = s=>s.k==="he"||s.k==="she";
+function beForm(s){return s.k==="i"?"am":tercer(s)?"is":"are"}
+function cap(x){return x.charAt(0).toUpperCase()+x.slice(1)}
+
+/* Conjugación en español */
+const ES_IRR = {
+ estar:{pres:["estoy","estás","está","estamos","están"],pret:["estuve","estuviste","estuvo","estuvimos","estuvieron"]},
+ tener:{pres:["tengo","tienes","tiene","tenemos","tienen"],pret:["tuve","tuviste","tuvo","tuvimos","tuvieron"],fut:"tendr"},
+ hacer:{pres:["hago","haces","hace","hacemos","hacen"],pret:["hice","hiciste","hizo","hicimos","hicieron"],fut:"har",part:"hecho"},
+ ir:{pres:["voy","vas","va","vamos","van"],pret:["fui","fuiste","fue","fuimos","fueron"],ger:"yendo"},
+ tocar:{pret:["toqué","tocaste","tocó","tocamos","tocaron"]},
+ venir:{pres:["vengo","vienes","viene","venimos","vienen"],pret:["vine","viniste","vino","vinimos","vinieron"],fut:"vendr",ger:"viniendo"},
+ conseguir:{pres:["consigo","consigues","consigue","conseguimos","consiguen"],pret:["conseguí","conseguiste","consiguió","conseguimos","consiguieron"],ger:"consiguiendo"},
+ ver:{pres:["veo","ves","ve","vemos","ven"],pret:["vi","viste","vio","vimos","vieron"],part:"visto"},
+ saber:{pres:["sé","sabes","sabe","sabemos","saben"],pret:["supe","supiste","supo","supimos","supieron"],fut:"sabr"},
+ querer:{pres:["quiero","quieres","quiere","queremos","quieren"],pret:["quise","quisiste","quiso","quisimos","quisieron"],fut:"querr"},
+ decir:{pres:["digo","dices","dice","decimos","dicen"],pret:["dije","dijiste","dijo","dijimos","dijeron"],fut:"dir",ger:"diciendo",part:"dicho"},
+ contar:{pres:["cuento","cuentas","cuenta","contamos","cuentan"]},
+ pensar:{pres:["pienso","piensas","piensa","pensamos","piensan"]},
+ traer:{pres:["traigo","traes","trae","traemos","traen"],pret:["traje","trajiste","trajo","trajimos","trajeron"],ger:"trayendo",part:"traído"},
+ practicar:{pret:["practiqué","practicaste","practicó","practicamos","practicaron"]},
+ enviar:{pres:["envío","envías","envía","enviamos","envían"]},
+ pagar:{pret:["pagué","pagaste","pagó","pagamos","pagaron"]},
+ escribir:{part:"escrito"},
+ leer:{pret:["leí","leíste","leyó","leímos","leyeron"],ger:"leyendo",part:"leído"},
+ empezar:{pres:["empiezo","empiezas","empieza","empezamos","empiezan"],pret:["empecé","empezaste","empezó","empezamos","empezaron"]},
+ dar:{pres:["doy","das","da","damos","dan"],pret:["di","diste","dio","dimos","dieron"]},
+ salir:{pres:["salgo","sales","sale","salimos","salen"],fut:"saldr"},
+ conocer:{pres:["conozco","conoces","conoce","conocemos","conocen"]},
+ dormir:{pres:["duermo","duermes","duerme","dormimos","duermen"],pret:["dormí","dormiste","durmió","dormimos","durmieron"],ger:"durmiendo"},
+ comenzar:{pres:["comienzo","comienzas","comienza","comenzamos","comienzan"],pret:["comencé","comenzaste","comenzó","comenzamos","comenzaron"]},
+ sentir:{pres:["siento","sientes","siente","sentimos","sienten"],pret:["sentí","sentiste","sintió","sentimos","sintieron"],ger:"sintiendo"},
+ encontrar:{pres:["encuentro","encuentras","encuentra","encontramos","encuentran"]},
+ entender:{pres:["entiendo","entiendes","entiende","entendemos","entienden"]},
+ haber:{pres:["he","has","ha","hemos","han"]},
+};
+const GUSTA = new Set(["gustar","encantar"]);
+const ES_END = {
+ pres:{ar:["o","as","a","amos","an"],er:["o","es","e","emos","en"],ir:["o","es","e","imos","en"]},
+ pret:{ar:["é","aste","ó","amos","aron"],er:["í","iste","ió","imos","ieron"],ir:["í","iste","ió","imos","ieron"]}};
+function esConj(inf,tiempo,pi){
+  const irr=ES_IRR[inf]||{};
+  if(tiempo==="fut") return (irr.fut||inf)+["é","ás","á","emos","án"][pi];
+  if(irr[tiempo]) return irr[tiempo][pi];
+  return inf.slice(0,-2)+ES_END[tiempo][inf.slice(-2)][pi];
+}
+function esGer(inf){const irr=ES_IRR[inf]||{};return irr.ger||inf.slice(0,-2)+(inf.endsWith("ar")?"ando":"iendo")}
+function esPart(inf){const irr=ES_IRR[inf]||{};return irr.part||inf.slice(0,-2)+(inf.endsWith("ar")?"ado":"ido")}
+
+/* Oración en inglés como lista de [palabra, traducción literal] */
+function conjugarT(v,s,t,f){
+  const pi=PI[s.k], b=v.b, inf=v.si, esBe=b==="be", g=GUSTA.has(inf);
+  const E=tm=>esConj(inf,tm,g?2:pi);
+  const S0=[s.en,s.es], SQ=[s.k==="i"?"I":s.en.toLowerCase(),s.es.toLowerCase()];
+  const BE=beForm(s), estar=esConj("estar","pres",pi), haber=esConj("haber","pres",pi);
+  const NEGBE = BE==="am"?[["am",estar],["not","no"]]:[[BE+"n't","no "+estar]];
+  const hv=tercer(s)?"has":"have";
+  let P;
+  if(esBe&&(t==="pres"||t==="past")){
+    const fe=t==="pres"?BE:(s.k==="i"||tercer(s)?"was":"were");
+    const fes=t==="pres"?estar:esConj("estar","pret",pi);
+    if(f==="aff") P=[S0,[fe,fes]];
+    else if(f==="neg") P=t==="pres"?[S0,...NEGBE]:[S0,[fe+"n't","no "+fes]];
+    else P=[[cap(fe),fes],SQ];
+  } else switch(t){
+    case "pres": P = f==="aff"?[S0,[tercer(s)?tercera(b):b,E("pres")]]
+                  : f==="neg"?[S0,[tercer(s)?"doesn't":"don't","no"],[b,inf]]
+                  : [[tercer(s)?"Does":"Do","(pregunta)"],SQ,[b,inf]]; break;
+    case "past": P = f==="aff"?[S0,[v.pa.split("/")[0],E("pret")]]
+                  : f==="neg"?[S0,["didn't","no (pasado)"],[b,inf]]
+                  : [["Did","(pregunta en pasado)"],SQ,[b,inf]]; break;
+    case "will": P = f==="aff"?[S0,["will","(futuro)"],[b,inf]]
+                  : f==="neg"?[S0,["won't","no (futuro)"],[b,inf]]
+                  : [["Will","(futuro)"],SQ,[b,inf]]; break;
+    case "going": { const R=[["going","yendo"],["to","a"],[b,inf]];
+                  P = f==="aff"?[S0,[BE,estar],...R]:f==="neg"?[S0,...NEGBE,...R]:[[cap(BE),estar],SQ,...R]; break; }
+    case "cont": { const G=[gerundio(b),esGer(inf)];
+                  P = f==="aff"?[S0,[BE,estar],G]:f==="neg"?[S0,...NEGBE,G]:[[cap(BE),estar],SQ,G]; break; }
+    case "perf": { const PP=[v.pp,esPart(inf)];
+                  P = f==="aff"?[S0,[hv,haber],PP]:f==="neg"?[S0,[hv+"n't","no "+haber],PP]:[[cap(hv),haber],SQ,PP]; break; }
+  }
+  if(esBe) P.push(["here","aquí"]);
+  if(f==="q"){const u=P[P.length-1];P[P.length-1]=[u[0]+"?",u[1]]}
+  return P;
+}
+function conjugar(v,s,t,f){return conjugarT(v,s,t,f).map(p=>p[0]).join(" ")}
+function espanol(v,s,t,f){
+  const pi=PI[s.k], inf=v.si, g=GUSTA.has(inf), comp=v.b==="be"?" aquí":"";
+  const p=g?2:pi;
+  const vp = t==="pres"?esConj(inf,"pres",p) : t==="past"?esConj(inf,"pret",p) : t==="will"?esConj(inf,"fut",p)
+    : t==="going"?esConj("ir","pres",p)+" a "+inf : t==="cont"?esConj("estar","pres",p)+" "+esGer(inf) : esConj("haber","pres",p)+" "+esPart(inf);
+  let txt;
+  if(g){
+    const obj=["me","te","le","nos","les"][pi], pre=s.k==="he"?"a él ":s.k==="she"?"a ella ":"";
+    txt = f==="aff"?`${pre}${obj} ${vp}`:f==="neg"?`${pre}no ${obj} ${vp}`:`¿${pre}${obj} ${vp}?`;
+  } else {
+    const suj=s.es;
+    txt = f==="aff"?`${suj} ${vp}${comp}`:f==="neg"?`${suj} no ${vp}${comp}`:`¿${suj} ${vp}${comp}?`;
+  }
+  return txt.startsWith("¿")?"¿"+cap(txt.slice(1)):cap(txt);
+}
+function formulaDe(v,t,f){ if(v.b==="be"&&FORMULA_BE[t]) return FORMULA_BE[t][f]; return TIEMPOS.find(x=>x.k===t).f[f]; }
+function errorTipico(v,s,t,f){
+  const S=s.en, sq=s.k==="i"?"I":s.en.toLowerCase(), b=v.b, pa=v.pa.split("/")[0], q=f==="q";
+  if(b==="be"){ const BE=beForm(s); const otro=BE==="is"?"are":BE==="are"?"is":"is";
+    if(t==="pres") return f==="aff"?`${S} ${otro} here`:f==="neg"?`${S} don't here`:`${cap(otro)} ${sq} here?`;
+    if(t==="past"){ const fe=(s.k==="i"||tercer(s))?"was":"were", otroP=fe==="was"?"were":"was";
+      return f==="aff"?`${S} ${otroP} here`:f==="neg"?`${S} didn't here`:`Did ${sq} here?`; } }
+  switch(t){
+    case "pres": return f==="aff"?(tercer(s)?`${S} ${b}`:`${S} ${tercera(b)}`):f==="neg"?(tercer(s)?`${S} don't ${b}`:`${S} doesn't ${b}`):(tercer(s)?`Do ${sq} ${b}?`:`Does ${sq} ${b}?`);
+    case "past": return f==="aff"?`${S} ${b}`:f==="neg"?`${S} didn't ${pa}`:`Did ${sq} ${pa}?`;
+    case "will": return f==="aff"?`${S} will ${tercer(s)?tercera(b):pa}`:f==="neg"?`${S} don't will ${b}`:`${S} will ${b}?`;
+    case "going": return f==="aff"?`${S} going to ${b}`:f==="neg"?`${S} not going to ${b}`:`${cap(sq)} going to ${b}?`;
+    case "cont": return f==="aff"?`${S} ${gerundio(b)}`:f==="neg"?`${S} don't ${gerundio(b)}`:`${cap(sq)} ${gerundio(b)}?`;
+    case "perf": { const hv=tercer(s)?"has":"have", otro=tercer(s)?"have":"has";
+      const mal=pa!==v.pp?pa:v.pp; return f==="aff"?(pa!==v.pp?`${S} ${hv} ${pa}`:`${S} ${otro} ${v.pp}`):f==="neg"?`${S} didn't ${mal}`:`${cap(otro)} ${sq} ${v.pp}?`; }
+  }
+  return "";
+}
+function variantes(txt){
+  let x=String(txt||"").toLowerCase().replace(/[‘’´`]/g,"'");
+  x=x.replace(/\bwon't\b/g,"will not").replace(/\bcan't\b/g,"can not").replace(/n't\b/g," not")
+     .replace(/\bi'm\b/g,"i am").replace(/'re\b/g," are").replace(/'ve\b/g," have").replace(/'ll\b/g," will");
+  const limpiar=y=>y.replace(/[^a-z' ]+/g," ").replace(/\s+/g," ").trim();
+  if(/'s\b/.test(x)) return [limpiar(x.replace(/'s\b/g," is")),limpiar(x.replace(/'s\b/g," has"))];
+  return [limpiar(x)];
+}
+function esCorrecta(resp,ok){const a=variantes(resp),b=new Set(variantes(ok));return a.some(v=>b.has(v))}
+
+/* ---------- Utilidades ---------- */
+const $ = (s,el=document)=>el.querySelector(s);
+const hoyStr = (d=new Date())=>d.toLocaleDateString("en-CA");
+const diasEntre=(a,b)=>Math.round((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/86400000);
+const sumarDias=(s,n)=>{const d=new Date(s+"T12:00:00");d.setDate(d.getDate()+n);return hoyStr(d)};
+const h=(tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==="class")e.className=v;else if(k.startsWith("on"))e.addEventListener(k.slice(2),v);else if(v!==false&&v!=null)e.setAttribute(k,v===true?"":v)}for(const k of kids.flat(Infinity)){if(k==null||k===false)continue;e.append(k.nodeType?k:document.createTextNode(k))}return e};
+const barajar=a=>{const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r};
+let toastT;function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2200)}
+
+const ICON = {
+ hoy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+ hablar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>',
+ tarjetas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg>',
+ verbos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h6"/><path d="M16 14l3 3-3 3"/></svg>',
+ voz:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>',
+ plan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>',
+ play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+ lento:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 5v14l11-7z" fill="currentColor" stroke="none" opacity=".45"/><path d="M3 20h4"/></svg>',
+ mas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+};
+const svg=k=>{const s=document.createElement("span");s.innerHTML=ICON[k];return s.firstChild};
+
+/* ---------- Voz (síntesis) ---------- */
+const TTS = "speechSynthesis" in window;
+let vozEN=null;
+function elegirVoz(){ if(!TTS)return; const vs=speechSynthesis.getVoices(); vozEN = vs.find(v=>/en-US/i.test(v.lang)&&/Samantha|Google US|Aria|Jenny|Natural/i.test(v.name)) || vs.find(v=>/^en-US/i.test(v.lang)) || vs.find(v=>/^en/i.test(v.lang)) || null; }
+if(TTS){ elegirVoz(); speechSynthesis.onvoiceschanged=elegirVoz; }
+function hablar(texto,lento=false){
+  if(!TTS){toast("Tu navegador no puede leer en voz alta");return}
+  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(String(texto).replace(/…/g,"")); u.lang="en-US"; if(vozEN)u.voice=vozEN; u.rate=lento?0.65:0.92; speechSynthesis.speak(u);}catch(e){}
+}
+function botonOir(texto,lento=false){
+  return h("button",{class:"icon-btn",type:"button","aria-label":lento?"Escuchar despacio":"Escuchar",title:lento?"Escuchar despacio":"Escuchar",onclick:(e)=>{e.stopPropagation();hablar(texto,lento)}},svg(lento?"lento":"play"));
+}
+
+/* ---------- Estado y guardado ---------- */
+const LS="amauta-idioma-v1";
+function estadoNuevo(){return {v:2,inicio:hoyStr(),cards:{},custom:[],dias:{},reto:null,dir:"en",tiempos:["pres","past","will"],formas:["aff","neg","q"],vfallos:{},vmodo:"elegir",ayudas:{palabra:true,trad:true,pron:true},vocab:{},guias:{},tema:"auto",preg:[]}}
+let S = estadoNuevo();
+let dbRef=null, guardarT=null;
+
+function lsGet(){try{const r=localStorage.getItem(LS);return r?JSON.parse(r):null}catch(e){return null}}
+function lsSet(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+function guardar(){
+  lsSet();
+  if(!dbRef) return;
+  clearTimeout(guardarT);
+  guardarT=setTimeout(()=>{ dbRef.set(JSON.parse(JSON.stringify(S))).catch(()=>{}) },1200);
+}
+function mezclar(a,b){
+  if(!a) return b; if(!b) return a;
+  const r={...b}; r.vfallos={...(a.vfallos||{}),...(b.vfallos||{})}; r.vocab={...(a.vocab||{}),...(b.vocab||{})};
+  r.inicio = a.inicio<b.inicio?a.inicio:b.inicio;
+  r.cards={...a.cards,...b.cards};
+  const ids=new Set(b.custom.map(c=>c.id)); r.custom=[...b.custom,...a.custom.filter(c=>!ids.has(c.id))];
+  r.dias={...a.dias}; for(const[k,v]of Object.entries(b.dias||{})){const o=r.dias[k]||{};r.dias[k]={tarjetas:Math.max(o.tarjetas||0,v.tarjetas||0),turnos:Math.max(o.turnos||0,v.turnos||0),shadow:Math.max(o.shadow||0,v.shadow||0),voz:Math.max(o.voz||0,v.voz||0),verbos:Math.max(o.verbos||0,v.verbos||0)}}
+  return r;
+}
+function norm(x){const n=estadoNuevo();x=x||{};return {...n,...x,cards:x.cards||{},custom:x.custom||[],dias:x.dias||{},
+  tiempos:(x.tiempos&&x.tiempos.length)?x.tiempos:n.tiempos,formas:(x.formas&&x.formas.length)?x.formas:n.formas,
+  vfallos:x.vfallos||{},vocab:x.vocab||{},guias:x.guias||{},preg:Array.isArray(x.preg)?x.preg:[],ayudas:{...n.ayudas,...(x.ayudas||{})}}}
+
+function dia(){const k=hoyStr();if(!S.dias[k])S.dias[k]={tarjetas:0,turnos:0,shadow:0,voz:0,verbos:0};return S.dias[k]}
+function sumar(campo,n=1){dia()[campo]=(dia()[campo]||0)+n;guardar()}
+function metasCumplidas(d){if(!d)return 0;let c=0;for(const k in METAS)if((d[k]||0)>=METAS[k])c++;return c}
+function racha(){let n=0;let k=hoyStr();if(metasCumplidas(S.dias[k])<2)k=sumarDias(k,-1);while(metasCumplidas(S.dias[k])>=2){n++;k=sumarDias(k,-1)}return n}
+function semana(){return Math.min(24,Math.floor(diasEntre(S.inicio,hoyStr())/7)+1)}
+
+/* ---------- Ayudas de lectura: palabra por palabra, traducción y pronunciación ---------- */
+function clave(w){return String(w).toLowerCase().replace(/[‘’]/g,"'").replace(/^[^a-z0-9à-ÿ']+|[^a-z0-9à-ÿ']+$/g,"").replace(/^'+|'+$/g,"")}
+function buscar(k,extra){
+  if(!k) return null;
+  if(extra&&extra[k]) return extra[k];
+  if(DICC[k]) return {es:DICC[k][0],pr:DICC[k][1]};
+  if(S.vocab[k]) return {es:S.vocab[k][0],pr:S.vocab[k][1]};
+  return null;
+}
+function mapaExtra(palabras){ // [["word","es","pr"],...] → {key:{es,pr}}
+  const m={}; if(!Array.isArray(palabras)) return m;
+  for(const p of palabras){ if(!Array.isArray(p)) continue; const k=clave(p[0]); if(k) m[k]={es:String(p[1]||""),pr:String(p[2]||"")}; }
+  return m;
+}
+function aprenderPalabras(palabras){
+  if(!Array.isArray(palabras)) return;
+  for(const p of palabras){ if(!Array.isArray(p)) continue; const k=clave(p[0]); if(!k||DICC[k]) continue; S.vocab[k]=[String(p[1]||""),String(p[2]||"")]; }
+  const ks=Object.keys(S.vocab); if(ks.length>3000) for(const k of ks.slice(0,ks.length-3000)) delete S.vocab[k];
+}
+function fichas(texto,palabras){
+  const extra=mapaExtra(palabras);
+  return String(texto||"").split(/\s+/).filter(Boolean).map(trozo=>{
+    const k=clave(trozo); let r=buscar(k,extra);
+    if(!r&&k.includes("-")){ const ps=k.split("-").map(x=>buscar(x,extra)); if(ps.every(Boolean)) r={es:ps.map(p=>p.es).join("-"),pr:ps.map(p=>p.pr).join("-")}; }
+    return {en:trozo,es:r?r.es:"",pr:r?r.pr:""};
+  });
+}
+function fichasDe(partes){return partes.map(([en,es])=>{const r=buscar(clave(en));return {en,es,pr:r?r.pr:""}})}
+function pronFrase(f){return f.map(x=>x.pr||x.en).join(" ")}
+/* Muestra un texto en inglés con las ayudas activas.
+   opts: es (traducción completa), palabras (de Claude), partes (de los verbos), tam: "lg"|"md"|"sm", oir, soloIngles (oculta significados) */
+function ingles(texto,opts={}){
+  const A=S.ayudas, f=opts.partes?fichasDe(opts.partes):fichas(texto,opts.palabras);
+  const tam=opts.tam||"md", soloIngles=!!opts.soloIngles;
+  const cuerpo=h("div",{class:"ing-cuerpo"});
+  if(A.palabra&&!soloIngles){
+    cuerpo.append(h("div",{class:"inter",lang:"en"},f.map(x=>h("span",{class:"w"},
+      h("b",{},x.en),
+      A.pron?h("span",{class:"pr"},x.pr||" "):null,
+      h("span",{class:"gl"},x.es||" ")))));
+  } else {
+    cuerpo.append(h("div",{class:"en-line",lang:"en"},texto));
+    if(A.pron) cuerpo.append(h("div",{class:"pr-line"},pronFrase(f)));
+  }
+  if(A.trad&&opts.es&&!soloIngles) cuerpo.append(h("div",{class:"trad"},opts.es));
+  const oir = opts.oir===false?null:h("div",{class:"oir"},botonOir(texto),botonOir(texto,true));
+  return h("div",{class:"ing "+tam},cuerpo,oir);
+}
+function guia(id,titulo,...contenido){
+  const d=h("details",{class:"guia",open:!S.guias[id]},h("summary",{},titulo),...contenido);
+  d.addEventListener("toggle",()=>{S.guias[id]=!d.open;guardar()});
+  return d;
+}
+
+/* ---------- Claude ---------- */
+let sample=null;
+async function pedirJSON(prompt,opts={}){
+  if(!sample) throw {code:"sin_claude"};
+  return await sample.json(prompt,{cache:false,...opts});
+}
+function mensajeError(e){
+  const c=e&&e.code;
+  if(c==="sin_claude"||c==="not_granted") return "Esta parte necesita Claude. Ábrela desde claude.ai con tu cuenta y acepta el permiso.";
+  if(c==="rate_limited") return "Muchas solicitudes seguidas. Espera un minuto y vuelve a intentarlo.";
+  if(c==="cancelled") return "";
+  return "No llegó la respuesta. Revisa tu conexión e inténtalo otra vez.";
+}
+
+/* ---------- Tarjetas ---------- */
+function todas(){return [...DECK,...S.custom]}
+function pendientes(){
+  const hoy=hoyStr(); const out=[]; let nuevas=0;
+  for(const c of todas()){const st=S.cards[c.id];
+    if(!st){ if(nuevas<10){out.push(c);nuevas++} }
+    else if(st.due<=hoy) out.push(c);}
+  return out.sort((a,b)=>(S.cards[a.id]?0:1)-(S.cards[b.id]?0:1));
+}
+const NOTAS=[{t:"No me la sé",n:0},{t:"Más o menos",n:1},{t:"Me la sé",n:2}];
+function siguienteCaja(c,nota){const st=S.cards[c.id]||{box:0};return nota===0?0:nota===1?Math.max(1,st.box):Math.min(5,st.box+1)}
+function diasHasta(c,nota){const box=siguienteCaja(c,nota);return nota===0?0:nota===1?1:(INTERVALOS[box]||1)}
+function calificar(c,nota){
+  S.cards[c.id]={box:siguienteCaja(c,nota),due:sumarDias(hoyStr(),diasHasta(c,nota))};
+  sumar("tarjetas");
+}
+function agregarTarjeta(en,es,cat="Mis frases",palabras){
+  en=String(en||"").trim(); es=String(es||"").trim(); if(!en)return false;
+  if(todas().some(c=>c.en.toLowerCase()===en.toLowerCase())){toast("Esa frase ya está en tus tarjetas");return false}
+  aprenderPalabras(palabras);
+  S.custom.push({id:"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),en,es,cat,p:Array.isArray(palabras)?palabras:undefined}); guardar(); toast("Agregada a tus tarjetas"); return true;
+}
+
+/* ---------- Navegación ---------- */
+let vista="hoy";
+const TABS=[["hoy","Hoy"],["hablar","Hablar"],["tarjetas","Tarjetas"],["verbos","Verbos"],["voz","Voz"],["plan","Plan"]];
+function pintarTabs(){
+  $("#tabs").replaceChildren(...TABS.map(([id,l])=>h("button",{type:"button","aria-current":vista===id?"page":false,onclick:()=>ir(id)},svg(id),l,h("i",{class:"dot"}))));
+}
+function ir(v){vista=v;pintarTabs();render();window.scrollTo({top:0})}
+function render(){
+  const f={hoy:vHoy,hablar:vHablar,tarjetas:vTarjetas,verbos:vVerbos,voz:vVoz,plan:vPlan,preguntar:vPreguntar}[vista];
+  $("#app").replaceChildren(f());
+  const pb=$("#preguntar-btn"); if(pb){pb.classList.toggle("activo",vista==="preguntar");pb.setAttribute("aria-current",vista==="preguntar"?"page":"false")}
+}
+const titulo=(eyebrow,txt,extra)=>h("div",{class:"vista-cab"},h("div",{},h("div",{class:"eyebrow"},eyebrow),h("h2",{},txt)),extra||null);
+
+/* ---------- HOY ---------- */
+function vHoy(){
+  const d=dia(); const sem=semana(); const fase=FASES.find(x=>sem>=x.a&&sem<=x.b);
+  const pend=pendientes().length;
+  const meta=(k,tit,txt,dest)=>{const v=d[k]||0;const ok=v>=METAS[k];
+    return h("button",{class:"meta"+(ok?" done":""),type:"button",onclick:()=>ir(dest)},
+      h("div",{class:"t"},tit,h("span",{class:"chip"},ok?"Listo":"Pendiente")),
+      h("div",{class:"n tabnum"},k==="voz"?(v?"Hecho":"0 de 15 min"):`${Math.min(v,999)} / ${METAS[k]}`),
+      h("div",{class:"small muted"},txt));};
+  const dias=[];for(let i=13;i>=0;i--){const k=sumarDias(hoyStr(),-i);const m=metasCumplidas(S.dias[k]);dias.push(h("span",{class:m>=4?"full":m>=2?"on":"",title:k+": "+m+" de 4 metas"}))}
+  const retoBox=h("div",{class:"panel"}); pintarReto(retoBox);
+  const r=racha();
+  return h("section",{class:"view"},
+    h("div",{class:"hoy-head"},
+      h("div",{},h("div",{class:"eyebrow"},"Hoy"),h("h2",{},fase?fase.t:"Fluidez")),
+      h("div",{class:"semana"},h("span",{class:"eyebrow"},"Semana"),h("b",{class:"tabnum"},`${sem}/24`))),
+    h("div",{class:"barra",role:"progressbar","aria-valuemin":"1","aria-valuemax":"24","aria-valuenow":String(sem)},h("i",{style:`width:${(sem/24*100).toFixed(1)}%`})),
+    h("div",{class:"metas"},
+      meta("tarjetas","Tarjetas y verbos",(pend?`${pend} tarjetas por repasar`:"Tarjetas al día")+((d.verbos||0)?` · ${d.verbos} verbos`:""),"tarjetas"),
+      meta("turnos","Conversación","Respuestas al tutor","hablar"),
+      meta("shadow","Shadowing","Repeticiones en voz alta","voz"),
+      meta("voz","Voz con Claude","15 min hablando","voz")),
+    h("div",{class:"panel"},
+      h("div",{class:"fila-sb"},h("span",{class:"eyebrow"},"Últimos 14 días"),h("span",{class:"small muted tabnum"},`Racha: ${r} ${r===1?"día":"días"}`)),
+      h("div",{class:"racha"},dias),
+      h("div",{class:"small muted"},"Dorado: 2 metas cumplidas. Rojo: las 4.")),
+    retoBox,
+    h("button",{class:"preg-card",type:"button",onclick:()=>ir("preguntar")},
+      h("span",{},h("b",{},"¿Tienes una duda?"),h("span",{class:"small muted"},"Pregúntale al profe en español: palabras, gramática, pronunciación.")),
+      h("span",{class:"btn primary",style:"flex:none"},"Preguntar"))
+  );
+}
+function retoFijo(){
+  const n=diasEntre("2026-01-01",hoyStr()); const frases=[];for(let i=0;i<5;i++){const c=DECK[(n*5+i*7)%DECK.length];frases.push({en:c.en,es:c.es})}
+  return {tema:"Frases del día",situacion:"Usa al menos tres de estas frases hoy, en voz alta o con el tutor.",frases,pregunta:"What did you do today?",pregunta_es:"¿Qué hiciste hoy?",consejo:"Di cada frase tres veces antes de seguir."};
+}
+function pintarReto(box){
+  const hoy=hoyStr(); const generado=!!(S.reto&&S.reto.fecha===hoy); const r=generado?S.reto.data:retoFijo();
+  box.replaceChildren(
+    h("div",{class:"fila-sb"},h("span",{class:"eyebrow"},"Reto del día"),h("span",{class:"small muted"},r.tema||"")),
+    h("p",{style:"margin:0"},r.situacion||""),
+    h("div",{class:"lista-frases"},(r.frases||[]).map(f=>ingles(f.en,{es:f.es,palabras:f.palabras}))),
+    r.pregunta?h("div",{class:"tip"},h("div",{style:"font-weight:700;margin-bottom:6px"},"Responde en voz alta:"),ingles(r.pregunta,{es:r.pregunta_es,palabras:r.pregunta_palabras,tam:"sm"})):null,
+    r.consejo?h("div",{class:"small muted"},r.consejo):null,
+    h("div",{class:"btns"},
+      h("button",{class:"btn primary",type:"button",onclick:()=>{for(const f of r.frases||[])agregarTarjeta(f.en,f.es,"Retos",f.palabras)}},"Guardar frases en tarjetas"),
+      h("button",{class:"btn ghost",type:"button",onclick:()=>{shadowLista=(r.frases||[]).map(f=>({en:f.en,es:f.es,p:f.palabras}));shadowI=0;shadowReps=0;ir("voz")}},"Practicarlas en Voz"),
+      sample&&!generado?h("button",{class:"btn ghost",type:"button",onclick:()=>generarReto(box)},"Crear reto con Claude"):null)
+  );
+}
+async function generarReto(box){
+  const sem=semana(); const fase=FASES.find(x=>sem>=x.a&&sem<=x.b)||FASES[5];
+  box.replaceChildren(h("span",{class:"eyebrow"},"Reto del día"),h("p",{class:"typing"},"Preparando tu reto…"));
+  try{
+    const r=await pedirJSON(`You create a daily English speaking challenge for Anggelo, a Spanish-speaking beginner (A1) from the Dominican Republic. He is a percussionist (congas, cajón), DJ, music teacher and books shows for his salsa bands. Current study week: ${sem} of 24, phase: "${fase.t}" (${fase.o.join("; ")}).
+Reply with only JSON:
+{"tema":"short topic in Spanish","situacion":"one or two sentences in neutral Latin American Spanish describing a real situation for today (no voseo)","frases":[{"en":"short useful sentence, max 9 words","es":"Spanish translation","palabras":[...]}] (exactly 5),"pregunta":"one simple question in English he should answer aloud","pregunta_es":"its Spanish translation","pregunta_palabras":[...],"consejo":"one short tip in Spanish"}
+${PAL_INSTR}`,{modelTier:"quick"});
+    if(!r||!Array.isArray(r.frases))throw {code:"bad"};
+    for(const f of r.frases) aprenderPalabras(f.palabras); aprenderPalabras(r.pregunta_palabras);
+    S.reto={fecha:hoyStr(),data:r};guardar();pintarReto(box);
+  }catch(e){const m=mensajeError(e);pintarReto(box);if(m)toast(m)}
+}
+
+/* ---------- HABLAR ---------- */
+let escena=ESCENAS[0], turnos=[], chatUI=null, enCurso=null, ultimaEval=null;
+function vHablar(){
+  const lista=h("div",{class:"escenas"},ESCENAS.map(e=>h("button",{class:"escena",type:"button","aria-pressed":escena.id===e.id?"true":"false",onclick:()=>{if(escena.id!==e.id){escena=e;turnos=[];ultimaEval=null;render()}}},h("b",{},e.t),h("span",{},e.d))));
+  const chat=h("div",{class:"chat",id:"chat"});
+  const ta=h("textarea",{id:"entrada",placeholder:"Escribe en inglés (o en español si no sabes cómo)",rows:"2"});
+  const enviarBtn=h("button",{class:"btn primary",type:"button",onclick:()=>enviar(ta.value)},"Enviar");
+  ta.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();enviar(ta.value)}});
+  chatUI={chat,ta,enviarBtn};
+  const cuerpo = !sample
+    ? h("div",{class:"panel"},
+        h("p",{style:"margin:0"},"El tutor de conversación funciona dentro de Claude. Ábrelo ahí con tu cuenta; tus tarjetas, verbos y voz siguen funcionando aquí."),
+        h("div",{class:"btns"},h("a",{class:"btn primary",href:"https://claude.ai/artifact/Rgfk5iGqmYBybk2mJzxH6L",target:"_blank",rel:"noopener"},"Abrir el tutor en Claude")))
+    : h("div",{class:"panel"},
+        chat,
+        h("div",{class:"compose"},ta,enviarBtn),
+        h("div",{class:"small muted"},"Consejo: en el celular toca el micrófono del teclado para dictar en inglés."),
+        h("div",{class:"btns"},
+          h("button",{class:"btn ghost",type:"button",onclick:()=>{turnos=[];ultimaEval=null;render()}},"Empezar de nuevo"),
+          h("button",{class:"btn teal",type:"button",id:"eval-btn",disabled:true,onclick:evaluar,title:"Disponible después de 3 respuestas"},"Terminar y evaluar")),
+        h("div",{id:"eval"}));
+  setTimeout(()=>{pintarChat(); if(sample&&!turnos.length) pedirTurno(); if(ultimaEval) pintarEval(ultimaEval)},0);
+  return h("section",{class:"view"},
+    titulo("Tutor de conversación","Elige una situación"),
+    guia("hablar","Cómo funciona el tutor",
+      h("ol",{},h("li",{},"Escoge una situación. El tutor hace el otro personaje y te habla primero."),
+        h("li",{},"Responde escribiendo en inglés. Si no sabes cómo, escríbelo en español y te dice cómo se dice."),
+        h("li",{},"Debajo de cada mensaje ves la corrección y opciones de respuesta que puedes tocar."),
+        h("li",{},"Después de 3 respuestas toca “Terminar y evaluar” para ver tu nivel y guardar frases."))),
+    lista, cuerpo);
+}
+function reglas(){
+  return `You are an English conversation tutor role-playing as ${escena.rol}
+The student, Anggelo, is a Spanish-speaking beginner (A1). Rules:
+- Stay in character. Use very simple English: short sentences, common words, max 2 sentences, and end with ONE simple question.
+- If he writes in Spanish or mixes languages, understand it, and put the English version in "natural".
+- Correct only the most important mistake, explained briefly in neutral Latin American Spanish (no voseo, no Argentine slang).
+- Reply with only JSON:
+{"en":"your reply in English","es":"Spanish translation of your reply","palabras":[...],"correccion":"short explanation in Spanish of his main mistake, or empty string if his message was fine or this is the first turn","natural":"how a native speaker would say his last message, or empty string","natural_es":"Spanish translation of natural, or empty","natural_palabras":[...],"opciones":[{"en":"short simple answer he could give next","es":"Spanish translation","palabras":[...]}] (exactly 3)}
+${PAL_INSTR}`;
+}
+function pintarChat(){
+  if(!chatUI)return; const {chat}=chatUI; chat.replaceChildren();
+  for(const t of turnos){
+    if(t.role==="user"){chat.append(h("div",{class:"msg yo"},ingles(t.content,{oir:false,tam:"sm"})));continue}
+    const r=t.data||{en:t.content};
+    const m=h("div",{class:"msg tutor"},ingles(r.en,{es:r.es,palabras:r.palabras}));
+    if(r.correccion) m.append(h("div",{class:"corr"},r.correccion));
+    if(r.natural) m.append(h("div",{class:"natural"},
+      h("div",{class:"fila-sb"},h("span",{class:"small muted"},"Mejor dicho así:"),
+        h("button",{class:"icon-btn",type:"button","aria-label":"Agregar a tarjetas",title:"Agregar a tarjetas",onclick:()=>agregarTarjeta(r.natural,r.natural_es||"","Del tutor",r.natural_palabras)},svg("mas"))),
+      ingles(r.natural,{es:r.natural_es,palabras:r.natural_palabras,tam:"sm"})));
+    if(t===turnos[turnos.length-1]&&Array.isArray(r.opciones)&&r.opciones.length)
+      m.append(h("div",{class:"small muted"},"Puedes responder (toca una):"),h("div",{class:"opciones"},r.opciones.slice(0,3).map(o=>{
+        const oo=typeof o==="string"?{en:o}:o;
+        return h("button",{class:"opcion",type:"button",onclick:()=>{chatUI.ta.value=oo.en;chatUI.ta.focus()}},ingles(oo.en,{es:oo.es,palabras:oo.palabras,tam:"sm",oir:false}));
+      })));
+    chat.append(m);
+  }
+  if(enCurso) chat.append(h("div",{class:"typing"},"El tutor está escribiendo…"));
+  const eb=document.getElementById("eval-btn"); if(eb) eb.disabled=!!enCurso||turnos.filter(t=>t.role==="user").length<3;
+}
+async function pedirTurno(){
+  if(enCurso) return;
+  enCurso=new AbortController(); if(chatUI) chatUI.enviarBtn.disabled=true; pintarChat();
+  const msgs=[{role:"user",content:reglas()+"\n\nStart the conversation now with your first line."}];
+  for(const t of turnos)msgs.push({role:t.role,content:t.role==="assistant"?JSON.stringify(t.data):t.content});
+  while(JSON.stringify(msgs).length>80000&&msgs.length>4)msgs.splice(1,2);
+  const primera=turnos.length===0;
+  try{
+    const r=await sample.json(msgs.length===1?msgs[0].content:msgs,{cache:false,signal:enCurso.signal});
+    if(!r||typeof r.en!=="string")throw {code:"bad"};
+    aprenderPalabras(r.palabras); aprenderPalabras(r.natural_palabras);
+    if(Array.isArray(r.opciones)) for(const o of r.opciones) if(o&&o.palabras) aprenderPalabras(o.palabras);
+    guardar();
+    turnos.push({role:"assistant",content:r.en,data:r});
+    if(!primera&&vista==="hablar") hablar(r.en);
+  }catch(e){const m=mensajeError(e);if(m)toast(m)}
+  finally{enCurso=null;if(chatUI)chatUI.enviarBtn.disabled=false;pintarChat();const c=$("#chat");if(c&&c.lastElementChild)c.lastElementChild.scrollIntoView({block:"nearest",behavior:"smooth"})}
+}
+function enviar(txt){
+  txt=String(txt||"").trim(); if(!txt||enCurso||!turnos.length)return;
+  turnos.push({role:"user",content:txt}); chatUI.ta.value=""; sumar("turnos");
+  pedirTurno();
+}
+async function evaluar(){
+  const box=$("#eval"); if(!box)return; box.replaceChildren(h("p",{class:"typing"},"Revisando tu conversación…"));
+  const lineas=turnos.map(t=>(t.role==="user"?"STUDENT: ":"TUTOR: ")+t.content).join("\n");
+  try{
+    const r=await pedirJSON(`Evaluate this English practice conversation of a Spanish-speaking beginner (A1). Scene: ${escena.t}.
+${lineas}
+Reply with only JSON, all explanations in neutral Latin American Spanish (no voseo):
+{"bien":"what he did well, 1-2 sentences","mejorar":["2 or 3 specific things to improve, short"],"frases":[{"en":"useful corrected or new sentence from this conversation, max 10 words","es":"Spanish","palabras":[...]}] (exactly 5),"nivel":"one line estimate like 'A1 alto'"}
+${PAL_INSTR}`);
+    for(const f of r.frases||[]) aprenderPalabras(f.palabras); guardar();
+    ultimaEval=r; pintarEval(r);
+  }catch(e){box.replaceChildren();const m=mensajeError(e);if(m)toast(m)}
+}
+function pintarEval(r){
+  const box=$("#eval"); if(!box||!r)return;
+  box.replaceChildren(h("div",{class:"panel",style:"background:var(--soft)"},
+    h("div",{class:"fila-sb"},h("span",{class:"eyebrow"},"Tu evaluación"),h("b",{},r.nivel||"")),
+    h("div",{class:"corr bien"},r.bien||""),
+    h("ul",{style:"margin:0;padding-left:18px"},(r.mejorar||[]).map(x=>h("li",{},x))),
+    h("div",{class:"lista-frases"},(r.frases||[]).map(f=>ingles(f.en,{es:f.es,palabras:f.palabras}))),
+    h("div",{class:"btns"},h("button",{class:"btn primary",type:"button",onclick:()=>{for(const f of r.frases||[])agregarTarjeta(f.en,f.es,"Del tutor",f.palabras)}},"Guardar estas frases en tarjetas"))));
+}
+
+/* ---------- TARJETAS ---------- */
+let cola=null, volteada=false;
+function vTarjetas(){
+  if(!cola||!cola.length) cola=pendientes();
+  const actual=cola[0]||null;
+  const niveles={nuevas:0,aprendiendo:0,repasando:0,dominadas:0};
+  for(const c of todas()){const st=S.cards[c.id]; if(!st)niveles.nuevas++; else if(st.box<=2)niveles.aprendiendo++; else if(st.box<=4)niveles.repasando++; else niveles.dominadas++;}
+  const dirSeg=h("div",{class:"seg",role:"group","aria-label":"Qué ves primero"},
+    h("button",{type:"button","aria-pressed":S.dir==="en"?"true":"false",onclick:()=>{S.dir="en";guardar();volteada=false;render()}},"Veo inglés"),
+    h("button",{type:"button","aria-pressed":S.dir==="es"?"true":"false",onclick:()=>{S.dir="es";guardar();volteada=false;render()}},"Veo español"));
+  let tarjeta;
+  if(!actual){
+    tarjeta=h("div",{class:"flash"},h("div",{},h("div",{class:"big"},"Repaso terminado"),h("p",{class:"sub"},"Vuelve mañana. Las tarjetas regresan justo cuando las estás por olvidar.")));
+  }else{
+    const pal=actual.p;
+    let contenido;
+    if(S.dir==="en"){
+      contenido = volteada ? ingles(actual.en,{es:actual.es||"(sin traducción)",palabras:pal,tam:"lg"})
+                           : [ingles(actual.en,{soloIngles:true,palabras:pal,tam:"lg"}),h("p",{class:"sub"},"¿Qué significa?")];
+      if(!volteada) setTimeout(()=>hablar(actual.en),150);
+    } else {
+      contenido = volteada ? [h("div",{class:"big-es"},actual.es||"(sin traducción)"),ingles(actual.en,{palabras:pal,tam:"lg"})]
+                           : [h("div",{class:"big-es"},actual.es||"(sin traducción)"),h("p",{class:"sub"},"¿Cómo se dice en inglés?")];
+    }
+    tarjeta=h("div",{class:"flash"},
+      h("span",{class:"chip cat"},actual.cat+(S.cards[actual.id]?"":" · nueva")),
+      h("div",{class:"flash-cuerpo"},contenido));
+  }
+  const acciones = !actual?null: !volteada
+    ? h("button",{class:"btn primary ancho",type:"button",onclick:()=>{volteada=true;render();if(S.dir==="es")hablar(actual.en)}},"Ver respuesta")
+    : h("div",{class:"califs"},NOTAS.map(({t,n})=>{const dd=diasHasta(actual,n);
+        return h("button",{class:"btn"+(n===2?" primary":n===1?" ghost":""),type:"button",onclick:()=>{calificar(actual,n);cola.shift();if(n===0)cola.push(actual);volteada=false;render()}},t,h("small",{},dd===0?"la repites hoy":dd===1?"vuelve mañana":`vuelve en ${dd} días`))}));
+  const enIn=h("input",{id:"nueva-en",class:"campo",placeholder:"Frase en inglés"});
+  const esIn=h("input",{id:"nueva-es",class:"campo",placeholder:"Traducción en español"});
+  const temaIn=h("input",{id:"tema-gen",class:"campo",placeholder:"Ej.: hablar con un DJ en un club"});
+  return h("section",{class:"view"},
+    titulo("Tarjetas",actual?`${cola.length} para repasar hoy`:"Al día",dirSeg),
+    guia("tarjetas","Cómo funcionan las tarjetas",
+      h("ol",{},
+        h("li",{},"Te aparece una frase en inglés y la escuchas."),
+        h("li",{},"Piensa qué significa. Mejor si lo dices en voz alta."),
+        h("li",{},"Toca “Ver respuesta” para comprobar."),
+        h("li",{},"Dile a la app qué tan bien te la sabías: “No me la sé” la repite hoy, “Más o menos” vuelve mañana y “Me la sé” vuelve en unos días.")),
+      h("p",{class:"small muted",style:"margin:8px 0 0"},"Las que te sabes aparecen cada vez menos y las que fallas aparecen más. Así repasas solo lo que necesitas. Con “Veo español” lo haces al revés: ves la frase en español y tú la dices en inglés.")),
+    tarjeta, acciones,
+    h("div",{class:"panel"},
+      h("span",{class:"eyebrow"},"Tu avance"),
+      h("div",{class:"niveles tabnum"},
+        h("div",{},h("b",{},String(niveles.nuevas)),h("small",{},"Sin ver")),
+        h("div",{},h("b",{},String(niveles.aprendiendo)),h("small",{},"Aprendiendo")),
+        h("div",{},h("b",{},String(niveles.repasando)),h("small",{},"Repasando")),
+        h("div",{},h("b",{},String(niveles.dominadas)),h("small",{},"Dominadas"))),
+      h("div",{class:"small muted"},`${todas().length} frases en total. Te entran 10 nuevas por día.`)),
+    h("div",{class:"panel"},
+      h("span",{class:"eyebrow"},"Agregar tu propia frase"),
+      enIn,esIn,
+      h("div",{class:"btns"},h("button",{class:"btn",type:"button",onclick:()=>{if(agregarTarjeta(enIn.value,esIn.value)){enIn.value="";esIn.value="";cola=null;render()}}},"Agregar"))),
+    sample?h("div",{class:"panel"},
+      h("span",{class:"eyebrow"},"Crear 10 tarjetas con Claude"),
+      h("div",{class:"small muted"},"Escribe una situación y Claude te arma frases útiles para ella, con su traducción y pronunciación."),
+      temaIn,
+      h("div",{class:"btns"},h("button",{class:"btn teal",type:"button",onclick:async(e)=>{
+        const tema=temaIn.value.trim();if(!tema){toast("Escribe primero la situación");return}
+        const btn=e.currentTarget; btn.disabled=true;btn.textContent="Creando…";
+        try{const r=await pedirJSON(`Create 10 short, very useful English sentences (max 9 words each) for a Spanish-speaking beginner (A1) for this situation: "${tema}". Reply with only a JSON array: [{"en":"...","es":"Spanish translation, neutral Latin American","palabras":[...]}]
+${PAL_INSTR}`,{modelTier:"quick"});
+          let n=0;for(const f of (Array.isArray(r)?r:[]))if(f&&f.en&&!todas().some(c=>c.en.toLowerCase()===String(f.en).toLowerCase())){aprenderPalabras(f.palabras);S.custom.push({id:"c"+Date.now().toString(36)+n+Math.random().toString(36).slice(2,4),en:String(f.en),es:String(f.es||""),cat:tema.slice(0,24),p:f.palabras});n++}
+          guardar();toast(`${n} tarjetas nuevas`);cola=null;render();
+        }catch(err){const m=mensajeError(err);if(m)toast(m);render()}
+      }},"Crear tarjetas"))):null
+  );
+}
+
+/* ---------- VERBOS ---------- */
+let vModo="practica", vActual=null, vRes=null, vSesion={ok:0,total:0}, vSel="go";
+function nuevoEjercicio(){
+  const pesos=VERBOS.map(v=>1+Math.min(4,S.vfallos[v.b]||0)); let r=Math.random()*pesos.reduce((a,b)=>a+b,0); let v=VERBOS[0];
+  for(let i=0;i<VERBOS.length;i++){r-=pesos[i];if(r<=0){v=VERBOS[i];break}}
+  let tiempos=S.tiempos.slice(); if(v.b==="be") tiempos=tiempos.filter(t=>t!=="cont"); if(!tiempos.length) tiempos=["pres"];
+  const t=tiempos[Math.floor(Math.random()*tiempos.length)];
+  const s=SUJETOS[Math.floor(Math.random()*SUJETOS.length)];
+  const f=S.formas[Math.floor(Math.random()*S.formas.length)];
+  const ok=conjugar(v,s,t,f);
+  // opciones para el modo Elegir: la correcta, un error típico y otra forma del mismo verbo
+  const cand=[]; const norm=x=>variantes(x)[0];
+  const agregar=x=>{if(x&&norm(x)!==norm(ok)&&!cand.some(c=>norm(c)===norm(x)))cand.push(x)};
+  agregar(errorTipico(v,s,t,f));
+  for(const t2 of barajar(TIEMPOS.map(x=>x.k).filter(k=>k!==t&&!(v.b==="be"&&k==="cont")))) agregar(conjugar(v,s,t2,f));
+  vActual={v,s,t,f,ok,opciones:barajar([ok,...cand.slice(0,2)]),elegida:null}; vRes=null;
+}
+function vVerbos(){
+  const modos=h("div",{class:"seg",role:"group","aria-label":"Modo"},
+    [["practica","Practicar"],["tabla","Tabla"],["lista","Lista"]].map(([k,l])=>h("button",{type:"button","aria-pressed":vModo===k?"true":"false",onclick:()=>{vModo=k;render()}},l)));
+  const tit=vModo==="practica"?"¿Cómo se dice en inglés?":vModo==="tabla"?"Un verbo en todos los tiempos":"Las tres formas de cada verbo";
+  const cuerpo = vModo==="practica"?vPractica():vModo==="tabla"?vTabla():vLista();
+  return h("section",{class:"view"},titulo("Verbos",tit,modos),
+    guia("verbos","Cómo funciona esta sección",
+      h("ol",{},
+        h("li",{},h("b",{},"Practicar: "),"lees una oración en español, por ejemplo “¿Ella fue?”, y eliges o escribes cómo se dice en inglés: “Did she go?”. La app te corrige y te muestra la fórmula para armarla."),
+        h("li",{},h("b",{},"Tabla: "),"escoges un verbo y lo ves en los 6 tiempos, con ejemplos para leer y escuchar."),
+        h("li",{},h("b",{},"Lista: "),"las tres formas de cada verbo (presente, pasado y participio), por ejemplo go, went, gone. Repítelas como una frase rítmica.")),
+      h("p",{class:"small muted",style:"margin:8px 0 0"},"Empieza con “Elegir”. Cuando te salga fácil, cambia a “Escribir”. Abajo puedes escoger qué tiempos practicar.")),
+    ...cuerpo);
+}
+function vPractica(){
+  if(!vActual) nuevoEjercicio();
+  const a=vActual, {v,s,t,f,ok}=a; const T=TIEMPOS.find(x=>x.k===t), F=FORMAS.find(x=>x.k===f);
+  const esFrase=espanol(v,s,t,f);
+  const terminar=(bien,dada)=>{ if(vRes)return; vRes={bien,dada};
+    vSesion.total++; if(bien)vSesion.ok++;
+    S.vfallos[v.b]=Math.max(0,(S.vfallos[v.b]||0)+(bien?-1:1));
+    dia().verbos=(dia().verbos||0)+1; sumar("tarjetas"); hablar(ok); render();
+    setTimeout(()=>{const b=document.getElementById("verbo-sig");if(b)b.focus({preventScroll:true})},0); };
+  const modoSeg=h("div",{class:"seg",role:"group","aria-label":"Cómo respondes"},
+    [["elegir","Elegir"],["escribir","Escribir"]].map(([k,l])=>h("button",{type:"button","aria-pressed":S.vmodo===k?"true":"false",onclick:()=>{S.vmodo=k;guardar();render()}},l)));
+  let respuesta;
+  if(S.vmodo==="escribir"){
+    const inp=h("input",{class:"resp",id:"verbo-resp",autocomplete:"off",autocapitalize:"off",spellcheck:"false",placeholder:"Escribe la oración en inglés",disabled:!!vRes});
+    inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();const val=inp.value.trim();if(val)terminar(esCorrecta(val,ok),val)}});
+    if(!vRes) setTimeout(()=>{const el=document.getElementById("verbo-resp");if(el)el.focus({preventScroll:true})},0);
+    respuesta=[vRes?null:inp,
+      vRes?null:h("div",{class:"btns"},
+        h("button",{class:"btn primary",type:"button",onclick:()=>{const val=inp.value.trim();if(!val){inp.focus();return}terminar(esCorrecta(val,ok),val)}},"Comprobar"),
+        h("button",{class:"btn ghost",type:"button",onclick:()=>terminar(false,"")},"No sé"))];
+  } else {
+    respuesta=h("div",{class:"opciones-v"},a.opciones.map(op=>{
+      let cls="opcion-v"; if(vRes){ if(op===ok)cls+=" correcta"; else if(op===a.elegida)cls+=" incorrecta"; }
+      return h("button",{class:cls,type:"button",disabled:!!vRes,onclick:()=>{a.elegida=op;terminar(op===ok,op)}},ingles(op,{soloIngles:true,oir:false}));
+    }));
+  }
+  return [
+    h("div",{class:"panel"},
+      h("div",{class:"fila-sb"},h("div",{class:"drill-meta"},h("span",{class:"chip acc"},T.t),h("span",{class:"chip tl"},F.t)),modoSeg),
+      h("div",{class:"small muted"},"Traduce al inglés:"),
+      h("div",{class:"drill-frase"},esFrase),
+      h("div",{class:"muted small"},`Verbo: to ${v.b} = ${v.si}`+(v.b==="be"?" · aquí = here":"")),
+      respuesta,
+      vRes?h("div",{class:"resultado "+(vRes.bien?"ok":"mal")},
+        h("b",{},vRes.bien?"¡Correcto!":(vRes.dada?"No es esa. La correcta es:":"La respuesta es:")),
+        ingles(ok,{es:esFrase,partes:conjugarT(v,s,t,f)}),
+        (!vRes.bien&&vRes.dada&&S.vmodo==="escribir")?h("div",{class:"small muted"},"Escribiste: "+vRes.dada):null,
+        h("div",{class:"formula"},h("span",{class:"small muted"},T.t+" · "+F.t.toLowerCase()+": "),formulaDe(v,t,f)),
+        h("div",{class:"small muted"},"Se usa para: "+T.d.toLowerCase()+".")):null,
+      vRes?h("div",{class:"btns"},
+        h("button",{class:"btn primary",type:"button",id:"verbo-sig",onclick:()=>{nuevoEjercicio();render()}},"Siguiente"),
+        h("button",{class:"btn ghost",type:"button",onclick:()=>{vSel=v.b;vModo="tabla";render()}},`Ver “${v.b}” en todos los tiempos`)):null,
+      h("div",{class:"small muted tabnum"},`Esta sesión: ${vSesion.ok} de ${vSesion.total} correctas`)),
+    h("div",{class:"panel"},
+      h("span",{class:"eyebrow"},"Tiempos que quieres practicar"),
+      toggles("tiempos",TIEMPOS),
+      h("span",{class:"eyebrow"},"Tipo de oración"),
+      toggles("formas",FORMAS),
+      h("div",{class:"small muted"},"Los verbos que fallas te salen más seguido hasta que los domines. Al escribir puedes usar contracciones (don't, didn't, won't) o la forma completa (do not)."))
+  ];
+}
+function toggles(clave,items){
+  return h("div",{class:"toggles"},items.map(it=>h("button",{class:"toggle",type:"button","aria-pressed":S[clave].includes(it.k)?"true":"false",onclick:()=>{
+    const set=new Set(S[clave]); if(set.has(it.k)){if(set.size===1){toast("Deja al menos una opción");return}set.delete(it.k)}else set.add(it.k);
+    S[clave]=items.map(i=>i.k).filter(k=>set.has(k)); guardar(); nuevoEjercicio(); render(); }},it.t)));
+}
+function vTabla(){
+  const v=VERBOS.find(x=>x.b===vSel)||VERBOS[0];
+  const sel=h("select",{class:"sel",id:"verbo-sel","aria-label":"Verbo"},VERBOS.map(x=>h("option",{value:x.b,selected:x.b===v.b},`to ${x.b} · ${x.es}`)));
+  sel.addEventListener("change",()=>{vSel=sel.value;render()});
+  const yo=SUJETOS[0], ella=SUJETOS[3];
+  const tres=v.b==="be"?["be","was / were","been"]:[v.b,v.pa,v.pp];
+  const bloques=TIEMPOS.filter(t=>!(v.b==="be"&&t.k==="cont")).map(t=>
+    h("div",{class:"tiempo-bloque"},
+      h("div",{},h("h3",{},t.t),h("div",{class:"small muted"},t.d)),
+      h("div",{class:"formula"},formulaDe(v,t.k,"aff")),
+      [[yo,"aff","Yo"],[ella,"aff","Ella"],[ella,"neg","Negativa"],[ella,"q","Pregunta"]].map(([s,f,et])=>
+        h("div",{class:"ejemplo"},h("span",{class:"etq"},et),ingles(conjugar(v,s,t.k,f),{es:espanol(v,s,t.k,f),partes:conjugarT(v,s,t.k,f),tam:"sm"})))));
+  return [
+    h("div",{class:"panel"},
+      sel,
+      ingles(tres.join(" · "),{partes:[[tres[0],v.si],[tres[1],v.b==="be"?"estuvo":esConj(v.si,"pret",2)],[tres[2],esPart(v.si)]],oir:true}),
+      h("div",{class:"small muted"},"Presente · pasado · participio")),
+    h("div",{class:"panel"},bloques),
+    h("div",{class:"btns"},h("button",{class:"btn primary",type:"button",onclick:()=>{vModo="practica";vActual=null;render()}},"Practicar ahora"))
+  ];
+}
+function vLista(){
+  return [h("div",{class:"panel"},
+    h("div",{class:"small muted"},"Presente · pasado · participio. Escucha y repite las tres formas como una frase rítmica: go, went, gone. Las marcadas “irregular” no siguen la regla de agregar -ed."),
+    h("div",{class:"lista-verbos"},VERBOS.map(v=>{
+      const tres=v.b==="be"?["be","was/were","been"]:[v.b,v.pa,v.pp];
+      const irr=!/ed$/.test(v.pa);
+      return h("div",{class:"verbo-item"},
+        h("div",{class:"fila-sb"},h("b",{class:"verbo-es"},v.es),irr?h("span",{class:"chip acc"},"irregular"):null),
+        ingles(tres.join(" · "),{partes:[[tres[0],v.si],[tres[1],v.b==="be"?"estuvo":esConj(v.si,"pret",2)],[tres[2],esPart(v.si)]],tam:"sm"}));
+    })))];
+}
+
+/* ---------- VOZ ---------- */
+let shadowLista=null, shadowI=0, shadowReps=0;
+function vVoz(){
+  if(!shadowLista||!shadowLista.length){
+    const vistas=todas().filter(c=>S.cards[c.id]); const base=vistas.length>=5?vistas:DECK.slice(0,25);
+    shadowLista=barajar(base).slice(0,12).map(c=>({en:c.en,es:c.es,p:c.p})); shadowI=0; shadowReps=0;}
+  const f=shadowLista[shadowI%shadowLista.length];
+  const temaIn=h("input",{id:"tema-voz",class:"campo",placeholder:"Ej.: mi última presentación"});
+  const promptBox=h("div",{class:"prompt-box",id:"prompt-voz",lang:"en"},VOZ_PROMPT+"my music and my week.");
+  const promptEs=h("div",{class:"small muted"},VOZ_PROMPT_ES+"mi música y mi semana.");
+  temaIn.addEventListener("input",()=>{const t=temaIn.value.trim();promptBox.textContent=VOZ_PROMPT+(t||"my music and my week.");promptEs.textContent=VOZ_PROMPT_ES+(t||"mi música y mi semana.")});
+  const d=dia();
+  return h("section",{class:"view"},
+    titulo("Shadowing","Escucha y repite"),
+    guia("voz","Cómo practicar",
+      h("ol",{},h("li",{},"Toca “Escuchar” y oye la frase."),
+        h("li",{},"Repítela en voz alta copiando el ritmo y dónde cae la fuerza, como si copiaras una clave."),
+        h("li",{},"Toca “Lo repetí” cada vez. Con 3 repeticiones pasas a la siguiente frase."))),
+    h("div",{class:"panel"},
+      h("div",{class:"small muted tabnum"},`Frase ${shadowI%shadowLista.length+1} de ${shadowLista.length} · hoy: ${d.shadow||0} repeticiones`),
+      ingles(f.en,{es:f.es,palabras:f.p,tam:"lg",oir:false}),
+      h("div",{class:"btns"},
+        h("button",{class:"btn teal",type:"button",onclick:()=>hablar(f.en)},svg("play"),"Escuchar"),
+        h("button",{class:"btn ghost",type:"button",onclick:()=>hablar(f.en,true)},"Despacio")),
+      h("div",{class:"fila-sb"},
+        h("div",{class:"reps"},[1,2,3].map(i=>h("span",{class:shadowReps>=i?"on":""},String(i)))),
+        h("div",{class:"btns"},
+          h("button",{class:"btn primary",type:"button",onclick:()=>{sumar("shadow");shadowReps++;if(shadowReps>=3){shadowReps=0;shadowI++;toast("Siguiente frase")}render();if(shadowReps>0)hablar(shadowLista[shadowI%shadowLista.length].en)}},"Lo repetí"),
+          h("button",{class:"btn ghost",type:"button",onclick:()=>{shadowReps=0;shadowI++;render()}},"Saltar")))),
+    h("div",{class:"panel"},
+      h("div",{class:"eyebrow"},"Conversación por voz con Claude"),
+      h("p",{style:"margin:0"},"Abre la app de Claude en tu celular, entra al modo de voz y pega este mensaje al empezar. Habla 15 minutos."),
+      h("label",{for:"tema-voz",class:"small muted"},"Tema de hoy (en español o inglés)"), temaIn, promptBox,
+      h("div",{class:"small muted",style:"font-weight:700"},"Lo que le estás pidiendo:"), promptEs,
+      h("div",{class:"btns"},
+        h("button",{class:"btn",type:"button",onclick:async()=>{try{await navigator.clipboard.writeText(promptBox.textContent);toast("Mensaje copiado")}catch(e){const r=document.createRange();r.selectNodeContents(promptBox);const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Texto seleccionado, cópialo")}}},"Copiar mensaje"),
+        h("button",{class:"btn primary",type:"button",disabled:!!d.voz,onclick:()=>{dia().voz=1;guardar();toast("15 minutos registrados");render()}},d.voz?"Hoy ya practicaste":"Ya hablé 15 minutos")))
+  );
+}
+
+/* ---------- PREGUNTAR (profe de dudas) ---------- */
+let pregCurso=null;
+const PREG_RAPIDAS=[
+  {t:"¿Qué significa…?",txt:"¿Qué significa "},
+  {t:"¿Cómo se dice…?",txt:"¿Cómo se dice en inglés "},
+  {t:"do o does",txt:"¿Cuándo uso do y cuándo does?"},
+  {t:"will o going to",txt:"¿Qué diferencia hay entre will y going to?"},
+  {t:"Pronunciar la th",txt:"¿Cómo se pronuncia la th en inglés?"},
+  {t:"Revisa mi frase",txt:"¿Está bien dicha esta frase? "},
+];
+function reglasPreg(){
+  return `You are "el profe", a patient English teacher for Anggelo, a Spanish-speaking beginner (A1) from the Dominican Republic. He is a percussionist, DJ and music teacher. He asks you questions about English: meanings, how to say things, grammar, pronunciation.
+Rules:
+- Answer in neutral Latin American Spanish (no voseo, no Argentine slang), simple and short: at most 120 words, short sentences, no jargon. If you use a grammar term, explain it in plain words.
+- When it helps, compare with music (rhythm, accents, patterns), since he is a musician.
+- Give 1 to 3 short English example sentences (max 9 words each).
+- Reply with only JSON: {"respuesta":"your explanation in Spanish; you may use line breaks","ejemplos":[{"en":"example in English","es":"Spanish translation","palabras":[...]}]}
+${PAL_INSTR}`;
+}
+function vPreguntar(){
+  const chat=h("div",{class:"chat",id:"preg-chat"});
+  const ta=h("textarea",{id:"preg-entrada",placeholder:"Escribe tu duda en español",rows:"2"});
+  const btn=h("button",{class:"btn primary",type:"button",id:"preg-enviar",onclick:()=>preguntar(ta.value)},"Preguntar");
+  ta.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();preguntar(ta.value)}});
+  const rapidas=h("div",{class:"rapidas"},PREG_RAPIDAS.map(r=>h("button",{class:"toggle",type:"button",onclick:()=>{ta.value=r.txt;ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)}},r.t)));
+  setTimeout(pintarPreg,0);
+  const cuerpo = !sample
+    ? h("div",{class:"panel"},
+        h("p",{style:"margin:0"},"El profe funciona dentro de Claude. Ábrelo ahí con tu cuenta para hacerle tus preguntas."),
+        h("div",{class:"btns"},h("a",{class:"btn primary",href:"https://claude.ai/artifact/Rgfk5iGqmYBybk2mJzxH6L",target:"_blank",rel:"noopener"},"Abrir Amauta en Claude")))
+    : h("div",{class:"panel"},
+        chat,
+        h("div",{class:"small muted"},"Preguntas rápidas:"),
+        rapidas,
+        h("div",{class:"compose"},ta,btn),
+        h("div",{class:"fila-sb"},
+          h("span",{class:"small muted"},"Consejo: en el celular puedes dictar con el micrófono del teclado."),
+          S.preg.length?h("button",{class:"btn ghost",type:"button",style:"padding:5px 12px;font-size:13px",onclick:()=>{S.preg=[];guardar();render()}},"Borrar conversación"):null));
+  return h("section",{class:"view"},
+    titulo("Pregúntale al profe","¿Qué duda tienes?"),
+    guia("preguntar","Para qué sirve",
+      h("p",{style:"margin:8px 0 0"},"Aquí le preguntas en español cualquier duda de inglés: qué significa una palabra, cómo se dice algo, por qué se usa does y no do, cómo se pronuncia. Te responde fácil y con ejemplos que puedes escuchar y guardar en tus tarjetas.")),
+    cuerpo);
+}
+function pintarPreg(){
+  const chat=$("#preg-chat"); if(!chat) return;
+  chat.replaceChildren();
+  if(!S.preg.length && !pregCurso){
+    chat.append(h("div",{class:"msg tutor"},h("div",{},"¡Hola, Anggelo! Pregúntame lo que quieras del inglés. Por ejemplo: “¿Qué significa ",h("i",{},"booking"),"?” o “¿Cómo se dice ",h("i",{},"llegué tarde"),"?”")));
+  }
+  for(const t of S.preg){
+    if(t.role==="user"){chat.append(h("div",{class:"msg yo"},t.content));continue}
+    const r=t.data||{respuesta:t.content};
+    const m=h("div",{class:"msg tutor"},h("div",{class:"preg-texto"},String(r.respuesta||"")));
+    const ej=Array.isArray(r.ejemplos)?r.ejemplos.filter(e=>e&&e.en):[];
+    if(ej.length) m.append(h("div",{class:"lista-frases"},ej.map(e=>h("div",{class:"ej-preg"},
+      ingles(e.en,{es:e.es,palabras:e.palabras,tam:"sm"}),
+      h("button",{class:"btn ghost",type:"button",style:"padding:4px 10px;font-size:13px;justify-self:start",onclick:()=>agregarTarjeta(e.en,e.es,"Del profe",e.palabras)},svg("mas"),"Guardar en tarjetas")))));
+    chat.append(m);
+  }
+  if(pregCurso) chat.append(h("div",{class:"typing"},"El profe está pensando…"));
+  const b=$("#preg-enviar"); if(b) b.disabled=!!pregCurso;
+}
+async function preguntar(txt){
+  txt=String(txt||"").trim(); if(!txt||pregCurso||!sample) return;
+  S.preg.push({role:"user",content:txt}); const ta=$("#preg-entrada"); if(ta) ta.value="";
+  pregCurso=new AbortController(); pintarPreg();
+  const msgs=[{role:"user",content:reglasPreg()}];
+  for(const t of S.preg.slice(-16)) msgs.push({role:t.role,content:t.role==="assistant"?JSON.stringify(t.data):t.content});
+  try{
+    const r=await sample.json(msgs,{cache:false,signal:pregCurso.signal});
+    if(!r||typeof r.respuesta!=="string") throw {code:"bad"};
+    for(const e of r.ejemplos||[]) if(e) aprenderPalabras(e.palabras);
+    S.preg.push({role:"assistant",content:r.respuesta,data:r});
+    if(S.preg.length>40) S.preg=S.preg.slice(-40);
+    guardar();
+  }catch(e){
+    S.preg.pop(); if(ta) ta.value=txt;
+    const m=mensajeError(e); if(m) toast(m);
+  }finally{
+    pregCurso=null; pintarPreg();
+    const c=$("#preg-chat"); if(c&&c.lastElementChild) c.lastElementChild.scrollIntoView({block:"nearest",behavior:"smooth"});
+  }
+}
+
+/* ---------- PLAN ---------- */
+function vPlan(){
+  const sem=semana();
+  return h("section",{class:"view"},
+    titulo(`Empezaste el ${new Date(S.inicio+"T12:00:00").toLocaleDateString("es-DO",{day:"numeric",month:"long",year:"numeric"})}`,"Plan de 24 semanas"),
+    h("div",{class:"panel"},
+      h("span",{class:"eyebrow"},"Rutina diaria · 1 hora"),
+      h("div",{class:"rutina"},
+        h("div",{},h("b",{},"15 min"),h("span",{},"Tarjetas y verbos: repasa lo pendiente y conjuga 10 verbos")),
+        h("div",{},h("b",{},"20 min"),h("span",{},"Tutor: una situación, mínimo 10 respuestas")),
+        h("div",{},h("b",{},"10 min"),h("span",{},"Shadowing: 15 repeticiones en voz alta")),
+        h("div",{},h("b",{},"15 min"),h("span",{},"Voz con Claude: hablar sin parar")))),
+    h("div",{class:"panel"},FASES.map(f=>h("div",{class:"fase"+(sem>=f.a&&sem<=f.b?" actual":"")},
+      h("div",{class:"sem tabnum"},`Sem ${f.a}–${f.b}`),
+      h("div",{},h("h3",{},f.t+(sem>=f.a&&sem<=f.b?" · ahora":"")),h("ul",{},f.o.map(x=>h("li",{},x))))))),
+    h("div",{class:"tip"},"Si un día no puedes hacer la hora completa, haz al menos tarjetas y shadowing. Lo importante es no romper la racha.")
+  );
+}
+
+/* ---------- Paletas de color ---------- */
+const OSC={ok:"#6CC28A",warn:"#E2AE4C"}, CLA={ok:"#2F7D46",warn:"#B9771A"};
+const TEMAS=[
+ {id:"auto",g:"Básicas",n:"Automático",sw:["#F6F0E4","#B4362A","#17141F"]},
+ {id:"sello",g:"Básicas",n:"Sello Amauta",dark:1,v:{bg:"#111827",surface:"#18223A",soft:"#222E4A",line:"#2F3C5C",ink:"#F1E6D2",muted:"#A9A08C",accent:"#C8925A","accent-ink":"#140E07",teal:"#7DB9B3",gold:"#D9B26A"}},
+ {id:"crema",g:"Básicas",n:"Crema",v:{bg:"#F6F0E4",surface:"#FFFBF3",soft:"#EFE5D2",line:"#E2D8C6",ink:"#1F1B2E",muted:"#6B6378",accent:"#B4362A","accent-ink":"#FFFFFF",teal:"#1F6E6A",gold:"#C98A1B"}},
+ {id:"noche",g:"Básicas",n:"Noche",dark:1,v:{bg:"#17141F",surface:"#211D2B",soft:"#2A2536",line:"#36304A",ink:"#F2EBDD",muted:"#A79FB3",accent:"#E0654F","accent-ink":"#1A0F0C",teal:"#5BB8B0",gold:"#E2AE4C"}},
+ {id:"grafito",g:"Sobrias",n:"Grafito y oro",dark:1,v:{bg:"#121417",surface:"#1B1E23",soft:"#272B31",line:"#30353C",ink:"#ECE8DF",muted:"#8F949B",accent:"#C9A96E","accent-ink":"#14161A",teal:"#7FA38C",gold:"#E3D3A8"}},
+ {id:"vino",g:"Sobrias",n:"Vino tinto",dark:1,v:{bg:"#1A1012",surface:"#251719",soft:"#362224",line:"#43292C",ink:"#F2E7DE",muted:"#A8918A",accent:"#C94B5E","accent-ink":"#FFFFFF",teal:"#9AAB7C",gold:"#C49A5B"}},
+ {id:"pizarra",g:"Sobrias",n:"Pizarra",v:{bg:"#ECEFF2",surface:"#F9FAFB",soft:"#DBE1E7",line:"#CDD5DE",ink:"#1F2933",muted:"#5F6B78",accent:"#2F4A63","accent-ink":"#FFFFFF",teal:"#4F7461",gold:"#A3503A"}},
+ {id:"lofi",g:"Chill",n:"Lo-fi",dark:1,v:{bg:"#1E1B2E",surface:"#28243B",soft:"#353050",line:"#3E385B",ink:"#ECE6F5",muted:"#9B93B6",accent:"#A493FF","accent-ink":"#1E1B2E",teal:"#7FD1C7",gold:"#F5E17A"}},
+ {id:"atardecer",g:"Chill",n:"Atardecer",v:{bg:"#FDF0EA",surface:"#FFFAF7",soft:"#F5DCD1",line:"#EBCFC2",ink:"#3D2C33",muted:"#7D656C",accent:"#C2594C","accent-ink":"#FFFFFF",teal:"#6E5AA8",gold:"#D99A3C"}},
+ {id:"oceano",g:"Chill",n:"Océano",dark:1,v:{bg:"#0F2027",surface:"#16303A",soft:"#1F404C",line:"#28505E",ink:"#E3F2F1",muted:"#86AEB0",accent:"#5CC8B5","accent-ink":"#0F2027",teal:"#8FC9EA",gold:"#F2A65A"}},
+ {id:"matcha",g:"Chill",n:"Matcha",v:{bg:"#EFF3E9",surface:"#FBFCF8",soft:"#DCE5D0",line:"#CFDAC0",ink:"#2B3326",muted:"#6D7B62",accent:"#5F8A4E","accent-ink":"#FFFFFF",teal:"#4E7A6C",gold:"#C4775E"}},
+];
+const VARS=["bg","surface","soft","line","ink","muted","accent","accent-ink","teal","gold","ok","warn"];
+function aplicarTema(id){
+  const t=TEMAS.find(x=>x.id===id)||TEMAS[0]; const r=document.documentElement;
+  for(const k of VARS) r.style.removeProperty("--"+k);
+  r.style.removeProperty("color-scheme");
+  if(t.v){ const v={...t.v,...(t.dark?OSC:CLA)}; for(const k of VARS) r.style.setProperty("--"+k,v[k]); r.style.colorScheme=t.dark?"dark":"light"; }
+}
+
+/* ---------- AJUSTES ---------- */
+const AYUDAS=[
+  {k:"palabra",t:"Traducción palabra por palabra",d:"Debajo de cada palabra en inglés aparece lo que significa."},
+  {k:"trad",t:"Traducción completa",d:"La frase entera traducida al español, como se diría normal."},
+  {k:"pron",t:"Pronunciación escrita",d:"Cómo suena cada palabra escrita con letras en español, por ejemplo hello = jelóu."}];
+function pintarAjustes(){
+  const box=$("#ajustes"); const actual=S.tema||"auto";
+  const ejemplo=h("div",{class:"ejemplo-ajustes"},ingles("Nice to meet you.",{es:"Mucho gusto.",oir:false}));
+  box.replaceChildren(
+    h("div",{class:"fila-sb"},h("h2",{style:"font-size:22px"},"Ajustes"),
+      h("button",{class:"btn ghost",type:"button",style:"padding:5px 14px;font-size:14px",onclick:()=>abrirAjustes(false)},"Listo")),
+    h("span",{class:"eyebrow"},"Ayudas para leer inglés"),
+    h("div",{class:"switches"},AYUDAS.map(a=>{
+      const id="aj-"+a.k;
+      const input=h("input",{type:"checkbox",role:"switch",id,checked:!!S.ayudas[a.k]});
+      input.addEventListener("change",()=>{S.ayudas[a.k]=input.checked;guardar();pintarAjustes();render()});
+      return h("label",{class:"sw",for:id},h("span",{},h("b",{},a.t),h("span",{class:"small muted"},a.d)),input);
+    })),
+    h("div",{class:"small muted"},"Así se ve con lo que tienes activado:"),
+    ejemplo,
+    h("span",{class:"eyebrow"},"Paleta de colores"),
+    ...["Básicas","Sobrias","Chill"].map(g=>h("div",{class:"temas-grupo"},h("div",{class:"small muted"},g),
+      h("div",{class:"temas-grid"},TEMAS.filter(t=>t.g===g).map(t=>{
+        const sw=t.sw||[t.v.bg,t.v.accent,t.v.teal];
+        return h("button",{class:"tema-op",type:"button","aria-pressed":actual===t.id?"true":"false",onclick:()=>{S.tema=t.id;aplicarTema(t.id);guardar();pintarAjustes()}},
+          h("span",{},t.n),h("span",{class:"swatches","aria-hidden":"true"},sw.map(c=>h("i",{style:`background:${c}`}))));
+      })))),
+    h("div",{class:"small muted"},"Automático usa Crema de día y Noche cuando tu teléfono está en modo oscuro."));
+}
+function abrirAjustes(abrir){const box=$("#ajustes"),b=$("#ajustes-btn");box.hidden=!abrir;b.setAttribute("aria-expanded",abrir?"true":"false");if(abrir){pintarAjustes();window.scrollTo({top:0,behavior:"smooth"})}}
+
+/* ---------- Arranque ---------- */
+S=norm(lsGet()); aplicarTema(S.tema||"auto"); pintarTabs(); render();
+$("#ajustes-btn").addEventListener("click",()=>abrirAjustes($("#ajustes").hidden));
+$("#preguntar-btn").addEventListener("click",()=>{abrirAjustes(false);ir("preguntar")});
+
+(async()=>{
+  try{
+    const c=window.claude; if(!c||!c.use)return;
+    const [db,user,smp]=await Promise.all([c.use("db"),c.use("user"),c.use("sample")]);
+    sample=smp||null;
+    if(db&&user){
+      const id=await user.id();
+      if(id){
+        dbRef=db.collection("data/users/"+id).doc("amauta");
+        const snap=await dbRef.get().catch(()=>null);
+        const remoto=snap&&snap.exists?norm(snap.data()):null;
+        const local=lsGet();
+        S=norm(mezclar(local?norm(local):null,remoto)||S); cola=null;
+        aplicarTema(S.tema||"auto"); guardar();
+      }
+    }
+  }catch(e){}
+  render();
+})();
+})();
+
+</script>
