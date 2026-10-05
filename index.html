@@ -208,6 +208,50 @@ footer.pie .sello{width:34px;height:34px;font-size:13px}
 @media (prefers-reduced-motion:no-preference){.flash{transition:transform .15s}.flash.flip{transform:scale(.98)}}
 
 [hidden]{display:none!important}
+/* TARJETAS: escribir y revisar */
+.escribir{gap:8px}
+.resp-t{font-size:17px;padding:12px}
+.mini-sw{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
+.mini-sw input{width:18px;height:18px;accent-color:var(--teal);margin:0}
+.rev{gap:10px}
+.rev-bloque{display:grid;gap:4px;padding-top:8px;border-top:1px dashed var(--line)}
+.rev-tit{font-weight:700}
+.rev-linea{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:17px}
+.w-ok{color:var(--ok);font-weight:700}
+.w-mal{color:var(--accent);font-weight:700;text-decoration:line-through;text-decoration-thickness:2px}
+.w-falta{display:inline-block;margin-left:6px;padding:0 6px;border-radius:6px;background:var(--soft);color:var(--ink);font-weight:700}
+.califs-wrap{display:grid;gap:8px}
+.califs .btn.sugerida{outline:3px solid var(--gold);outline-offset:2px}
+/* MIS CLASES */
+.lista-clases{display:grid;gap:8px}
+.clase-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;text-align:left;width:100%;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;color:inherit}
+.clase-item:hover{border-color:var(--teal)}
+.clase-item .ci-tit{font-family:var(--display);font-weight:700;font-size:17px;grid-column:1}
+.clase-item .small{grid-column:1}
+.clase-item .chip{grid-column:2;grid-row:1 / span 2;align-self:center}
+.chip.chip-ok{background:var(--ok);color:var(--bg)}
+.vacio{text-align:center;justify-items:center}
+.cargando{display:flex;gap:12px;align-items:center}
+.spinner{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--teal);flex:none;animation:gira 1s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spinner{animation:none}}
+.clase-tit{font-size:30px;margin-top:4px}
+.clase-resumen{margin:0;font-size:17px;color:var(--muted)}
+.clase-sec{position:relative}
+.clase-sec h3{font-size:20px;padding-right:40px}
+.sec-num{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--display);font-weight:800}
+.musica{border-style:dashed;border-color:var(--gold)}
+.error-item{display:grid;gap:3px;padding-top:10px;border-top:1px dashed var(--line)}
+.error-item:first-of-type{border-top:0;padding-top:0}
+.err-mal{color:var(--accent);font-weight:700;text-decoration:line-through}
+.err-bien{color:var(--ok);font-weight:700;display:flex;gap:8px;align-items:center}
+.ejercicio{gap:10px}
+.ejercicio.ej-ok{border-color:var(--ok);box-shadow:inset 3px 0 0 var(--ok)}
+.ejercicio.ej-mal{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.ej-num{width:26px;height:26px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-weight:700;font-size:13px}
+.ej-preg{font-size:18px;font-weight:700}
+.resultado-clase{text-align:center;justify-items:center;border-color:var(--gold)}
+.borrar{color:var(--muted);font-size:13px}
 /* PREGUNTAR */
 .top-acc{margin-left:auto;display:flex;gap:8px;align-items:center;flex:none}
 .top-acc .temas-btn{margin-left:0}
@@ -268,7 +312,7 @@ details.guia ol{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
 .flash-cuerpo{display:grid;gap:12px;justify-items:center;width:100%;min-width:0}
 .flash .ing{text-align:left;width:100%}
 .flash .chip.cat{position:absolute;top:12px;left:16px}
-.flash{padding-top:44px}
+.flash{padding-top:44px;scroll-margin-top:12px}
 .big-es{font-family:var(--display);font-size:26px;font-weight:700;line-height:1.2}
 .califs{grid-template-columns:repeat(3,minmax(0,1fr))}
 .califs .btn small{font-size:11.5px}
@@ -715,7 +759,7 @@ function botonOir(texto,lento=false){
 
 /* ---------- Estado y guardado ---------- */
 const LS="amauta-idioma-v1";
-function estadoNuevo(){return {v:2,inicio:hoyStr(),cards:{},custom:[],dias:{},reto:null,dir:"en",tiempos:["pres","past","will"],formas:["aff","neg","q"],vfallos:{},vmodo:"elegir",ayudas:{palabra:true,trad:true,pron:true},vocab:{},guias:{},tema:"auto",preg:[]}}
+function estadoNuevo(){return {v:2,inicio:hoyStr(),cards:{},custom:[],dias:{},reto:null,dir:"en",tiempos:["pres","past","will"],formas:["aff","neg","q"],vfallos:{},vmodo:"elegir",ayudas:{palabra:true,trad:true,pron:true},vocab:{},guias:{},tema:"auto",preg:[],clases:[],profeModo:"chat"}}
 let S = estadoNuevo();
 let dbRef=null, guardarT=null;
 
@@ -729,7 +773,7 @@ function guardar(){
 }
 function mezclar(a,b){
   if(!a) return b; if(!b) return a;
-  const r={...b}; r.vfallos={...(a.vfallos||{}),...(b.vfallos||{})}; r.vocab={...(a.vocab||{}),...(b.vocab||{})};
+  const r={...b}; {const ids=new Set((b.clases||[]).map(c=>c.id)); r.clases=[...(b.clases||[]),...(a.clases||[]).filter(c=>!ids.has(c.id))];} r.vfallos={...(a.vfallos||{}),...(b.vfallos||{})}; r.vocab={...(a.vocab||{}),...(b.vocab||{})};
   r.inicio = a.inicio<b.inicio?a.inicio:b.inicio;
   r.cards={...a.cards,...b.cards};
   const ids=new Set(b.custom.map(c=>c.id)); r.custom=[...b.custom,...a.custom.filter(c=>!ids.has(c.id))];
@@ -738,7 +782,7 @@ function mezclar(a,b){
 }
 function norm(x){const n=estadoNuevo();x=x||{};return {...n,...x,cards:x.cards||{},custom:x.custom||[],dias:x.dias||{},
   tiempos:(x.tiempos&&x.tiempos.length)?x.tiempos:n.tiempos,formas:(x.formas&&x.formas.length)?x.formas:n.formas,
-  vfallos:x.vfallos||{},vocab:x.vocab||{},guias:x.guias||{},preg:Array.isArray(x.preg)?x.preg:[],ayudas:{...n.ayudas,...(x.ayudas||{})}}}
+  vfallos:x.vfallos||{},vocab:x.vocab||{},guias:x.guias||{},preg:Array.isArray(x.preg)?x.preg:[],clases:Array.isArray(x.clases)?x.clases:[],ayudas:{...n.ayudas,...(x.ayudas||{})}}}
 
 function dia(){const k=hoyStr();if(!S.dias[k])S.dias[k]={tarjetas:0,turnos:0,shadow:0,voz:0,verbos:0};return S.dias[k]}
 function sumar(campo,n=1){dia()[campo]=(dia()[campo]||0)+n;guardar()}
@@ -845,9 +889,9 @@ function pintarTabs(){
 }
 function ir(v){vista=v;pintarTabs();render();window.scrollTo({top:0})}
 function render(){
-  const f={hoy:vHoy,hablar:vHablar,tarjetas:vTarjetas,verbos:vVerbos,voz:vVoz,plan:vPlan,preguntar:vPreguntar}[vista];
+  const f={hoy:vHoy,hablar:vHablar,tarjetas:vTarjetas,verbos:vVerbos,voz:vVoz,plan:vPlan,preguntar:vPreguntar,clase:vClase}[vista];
   $("#app").replaceChildren(f());
-  const pb=$("#preguntar-btn"); if(pb){pb.classList.toggle("activo",vista==="preguntar");pb.setAttribute("aria-current",vista==="preguntar"?"page":"false")}
+  const pb=$("#preguntar-btn"); if(pb){pb.classList.toggle("activo",vista==="preguntar"||vista==="clase");pb.setAttribute("aria-current",vista==="preguntar"?"page":"false")}
 }
 const titulo=(eyebrow,txt,extra)=>h("div",{class:"vista-cab"},h("div",{},h("div",{class:"eyebrow"},eyebrow),h("h2",{},txt)),extra||null);
 
@@ -879,7 +923,7 @@ function vHoy(){
       h("div",{class:"small muted"},"Dorado: 2 metas cumplidas. Rojo: las 4.")),
     retoBox,
     h("button",{class:"preg-card",type:"button",onclick:()=>ir("preguntar")},
-      h("span",{},h("b",{},"¿Tienes una duda?"),h("span",{class:"small muted"},"Pregúntale al profe en español: palabras, gramática, pronunciación.")),
+      h("span",{},h("b",{},"¿Tienes una duda?"),h("span",{class:"small muted"},"Pregúntale al profe en español o pídele una clase completa con ejercicios.")),
       h("span",{class:"btn primary",style:"flex:none"},"Preguntar"))
   );
 }
@@ -1024,15 +1068,66 @@ function pintarEval(r){
 }
 
 /* ---------- TARJETAS ---------- */
-let cola=null, volteada=false;
+let cola=null, volteada=false, tResp=null;
+const sinTildes=x=>String(x||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+function tokensEn(x){return variantes(x)[0].split(" ").filter(Boolean)}
+function tokensEs(x){return sinTildes(x).replace(/[^a-zñ ]+/g," ").split(/\s+/).filter(Boolean)}
+/* Compara palabra por palabra (LCS) y marca cuáles coinciden */
+function compararPalabras(dada,correcta){
+  const a=tokensEn(dada), b=tokensEn(correcta);
+  const dp=Array.from({length:a.length+1},()=>new Array(b.length+1).fill(0));
+  for(let i=a.length-1;i>=0;i--)for(let j=b.length-1;j>=0;j--)dp[i][j]=a[i]===b[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
+  const okA=new Set(),okB=new Set(); let i=0,j=0;
+  while(i<a.length&&j<b.length){ if(a[i]===b[j]){okA.add(i);okB.add(j);i++;j++} else if(dp[i+1][j]>=dp[i][j+1]) i++; else j++; }
+  const puntaje=b.length?dp[0][0]/Math.max(b.length,a.length):0;
+  return {a,b,okA,okB,puntaje};
+}
+function parecidoEs(dada,correcta){
+  const vacias=new Set(["el","la","los","las","un","una","de","a","y","que","en","me","te","se","lo","le","por","con","es","yo","tu","mi"]);
+  const a=new Set(tokensEs(dada)), b=tokensEs(correcta);
+  const imp=b.filter(w=>!vacias.has(w)); const base=imp.length?imp:b;
+  if(!base.length) return 0;
+  return base.filter(w=>a.has(w)).length/base.length;
+}
+function revisarTarjeta(c,en,es){
+  const r={en:String(en||"").trim(),es:String(es||"").trim(),cmp:null,pEs:null};
+  if(r.en) r.cmp=compararPalabras(r.en,c.en);
+  if(r.es&&c.es) r.pEs=parecidoEs(r.es,c.es);
+  const notas=[]; if(r.cmp) notas.push(r.cmp.puntaje); if(r.pEs!=null) notas.push(r.pEs>=0.6?1:r.pEs);
+  r.prom=notas.length?notas.reduce((x,y)=>x+y,0)/notas.length:null;
+  r.sugerida=r.prom==null?null:r.prom>=0.95?2:r.prom>=0.6?1:0;
+  return r;
+}
+function vistaRevision(c,r){
+  if(!r||(!r.en&&!r.es)) return null;
+  const partes=[h("span",{class:"eyebrow"},"Lo que escribiste")];
+  if(r.cmp){
+    const {a,okA,b,okB,puntaje}=r.cmp; const perfecto=puntaje>=0.999;
+    partes.push(h("div",{class:"rev-bloque"},
+      h("div",{class:"rev-tit"},perfecto?"¡Inglés perfecto!":"En inglés:"),
+      h("div",{class:"rev-linea",lang:"en"},a.map((w,k)=>h("span",{class:okA.has(k)?"w-ok":"w-mal"},w))),
+      perfecto?null:h("div",{class:"small muted"},"Te faltó o cambiaste: ",...b.map((w,k)=>okB.has(k)?null:h("span",{class:"w-falta"},w)))));
+  }
+  if(r.es){
+    const p=r.pEs??0;
+    partes.push(h("div",{class:"rev-bloque"},
+      h("div",{class:"rev-tit"},p>=0.6?"¡Bien entendido!":p>=0.3?"Casi, compara:":"Compara con la traducción:"),
+      h("div",{class:"rev-linea"},r.es),
+      h("div",{class:"small muted"},"Traducción: ",h("b",{},c.es||"—")),h("div",{class:"small muted"},"Hay varias formas de decirlo. Si dijiste lo mismo con otras palabras, también vale.")));
+  }
+  return h("div",{class:"panel rev"},partes);
+}
+function irATarjeta(){setTimeout(()=>{const t=document.getElementById("tarjeta-actual");if(t)t.scrollIntoView({block:"start",behavior:"smooth"})},30)}
 function vTarjetas(){
   if(!cola||!cola.length) cola=pendientes();
   const actual=cola[0]||null;
   const niveles={nuevas:0,aprendiendo:0,repasando:0,dominadas:0};
   for(const c of todas()){const st=S.cards[c.id]; if(!st)niveles.nuevas++; else if(st.box<=2)niveles.aprendiendo++; else if(st.box<=4)niveles.repasando++; else niveles.dominadas++;}
+  const cambiarDir=d=>{S.dir=d;guardar();volteada=false;tResp=null;render()};
   const dirSeg=h("div",{class:"seg",role:"group","aria-label":"Qué ves primero"},
-    h("button",{type:"button","aria-pressed":S.dir==="en"?"true":"false",onclick:()=>{S.dir="en";guardar();volteada=false;render()}},"Veo inglés"),
-    h("button",{type:"button","aria-pressed":S.dir==="es"?"true":"false",onclick:()=>{S.dir="es";guardar();volteada=false;render()}},"Veo español"));
+    h("button",{type:"button","aria-pressed":S.dir==="en"?"true":"false",onclick:()=>cambiarDir("en")},"Veo inglés"),
+    h("button",{type:"button","aria-pressed":S.dir==="es"?"true":"false",onclick:()=>cambiarDir("es")},"Veo español"));
+  const oculta = S.dir==="en" && S.soloOir && !volteada;
   let tarjeta;
   if(!actual){
     tarjeta=h("div",{class:"flash"},h("div",{},h("div",{class:"big"},"Repaso terminado"),h("p",{class:"sub"},"Vuelve mañana. Las tarjetas regresan justo cuando las estás por olvidar.")));
@@ -1040,34 +1135,78 @@ function vTarjetas(){
     const pal=actual.p;
     let contenido;
     if(S.dir==="en"){
-      contenido = volteada ? ingles(actual.en,{es:actual.es||"(sin traducción)",palabras:pal,tam:"lg"})
-                           : [ingles(actual.en,{soloIngles:true,palabras:pal,tam:"lg"}),h("p",{class:"sub"},"¿Qué significa?")];
+      if(volteada) contenido=ingles(actual.en,{es:actual.es||"(sin traducción)",palabras:pal,tam:"lg"});
+      else if(oculta) contenido=[h("div",{class:"big-es"},"Escucha la frase"),h("div",{class:"btns",style:"justify-content:center"},
+          h("button",{class:"btn teal",type:"button",onclick:()=>hablar(actual.en)},svg("play"),"Escuchar"),
+          h("button",{class:"btn ghost",type:"button",onclick:()=>hablar(actual.en,true)},"Despacio")),
+          h("p",{class:"sub"},"Escribe lo que oyes y qué significa.")];
+      else contenido=[ingles(actual.en,{soloIngles:true,palabras:pal,tam:"lg"}),h("p",{class:"sub"},"¿Qué significa?")];
       if(!volteada) setTimeout(()=>hablar(actual.en),150);
     } else {
       contenido = volteada ? [h("div",{class:"big-es"},actual.es||"(sin traducción)"),ingles(actual.en,{palabras:pal,tam:"lg"})]
                            : [h("div",{class:"big-es"},actual.es||"(sin traducción)"),h("p",{class:"sub"},"¿Cómo se dice en inglés?")];
     }
-    tarjeta=h("div",{class:"flash"},
+    tarjeta=h("div",{class:"flash",id:"tarjeta-actual"},
       h("span",{class:"chip cat"},actual.cat+(S.cards[actual.id]?"":" · nueva")),
       h("div",{class:"flash-cuerpo"},contenido));
   }
-  const acciones = !actual?null: !volteada
-    ? h("button",{class:"btn primary ancho",type:"button",onclick:()=>{volteada=true;render();if(S.dir==="es")hablar(actual.en)}},"Ver respuesta")
-    : h("div",{class:"califs"},NOTAS.map(({t,n})=>{const dd=diasHasta(actual,n);
-        return h("button",{class:"btn"+(n===2?" primary":n===1?" ghost":""),type:"button",onclick:()=>{calificar(actual,n);cola.shift();if(n===0)cola.push(actual);volteada=false;render()}},t,h("small",{},dd===0?"la repites hoy":dd===1?"vuelve mañana":`vuelve en ${dd} días`))}));
-  const enIn=h("input",{id:"nueva-en",class:"campo",placeholder:"Frase en inglés"});
-  const esIn=h("input",{id:"nueva-es",class:"campo",placeholder:"Traducción en español"});
+  /* Recuadros para escribir */
+  let escribir=null, acciones=null;
+  if(actual&&!volteada){
+    const inEn=h("input",{class:"campo resp-t",id:"t-en",lang:"en",autocomplete:"off",autocapitalize:"sentences",spellcheck:"false",
+      placeholder:S.dir==="en"?(oculta?"Escribe en inglés lo que oyes":"Repite la frase: escríbela en inglés"):"Escríbela en inglés"});
+    const inEs=S.dir==="en"?h("input",{class:"campo resp-t",id:"t-es",lang:"es",autocomplete:"off",placeholder:"¿Qué significa? Escríbelo en español"}):null;
+    const ver=()=>{tResp=revisarTarjeta(actual,inEn.value,inEs?inEs.value:"");volteada=true;render();if(S.dir==="es"||oculta)hablar(actual.en);irATarjeta()};
+    inEn.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();if(inEs)inEs.focus();else ver()}});
+    if(inEs) inEs.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ver()}});
+    escribir=h("div",{class:"panel escribir"},
+      h("div",{class:"fila-sb"},h("span",{class:"eyebrow"},"Escribe tu respuesta"),
+        S.dir==="en"?h("label",{class:"mini-sw",for:"t-oir"},h("input",{type:"checkbox",id:"t-oir",checked:!!S.soloOir,onchange:(e)=>{S.soloOir=e.target.checked;guardar();render()}}),"Solo escuchar"):null),
+      h("label",{class:"small muted",for:"t-en"},S.dir==="en"?(oculta?"1. Lo que oyes, en inglés":"1. Repite la frase en inglés"):"Cómo se dice en inglés"),
+      inEn,
+      inEs?h("label",{class:"small muted",for:"t-es"},"2. Qué significa, en español"):null,
+      inEs,
+      h("div",{class:"small muted"},"Escribirla te ayuda a fijar la gramática y la ortografía. Si no sabes, déjalo en blanco y toca “Ver respuesta”."));
+    acciones=h("button",{class:"btn primary ancho",type:"button",onclick:ver},"Ver respuesta");
+  } else if(actual){
+    const sug=tResp&&tResp.sugerida;
+    acciones=h("div",{class:"califs-wrap"},
+      h("div",{class:"small muted",style:"text-align:center"},sug!=null?"Toca un botón para pasar a la siguiente tarjeta. Te sugiero el marcado en dorado.":"Toca un botón para pasar a la siguiente tarjeta."),
+      h("div",{class:"califs"},NOTAS.map(({t,n})=>{const dd=diasHasta(actual,n);
+        return h("button",{class:"btn"+(n===2?" primary":n===1?" ghost":"")+(sug===n?" sugerida":""),type:"button",onclick:()=>{calificar(actual,n);cola.shift();if(n===0)cola.push(actual);volteada=false;tResp=null;render();irATarjeta();toast(cola.length?"Siguiente tarjeta":"¡Terminaste el repaso de hoy!")}},t,h("small",{},dd===0?"la repites hoy":dd===1?"vuelve mañana":`vuelve en ${dd} días`))})));
+  }
+  /* Guardar una frase nueva */
+  const nEn=h("input",{id:"nueva-en",class:"campo",lang:"en",placeholder:"La frase en inglés (si la sabes)"});
+  const nEs=h("input",{id:"nueva-es",class:"campo",lang:"es",placeholder:"La frase en español"});
+  const guardarNueva=async(e)=>{
+    let en=nEn.value.trim(), es=nEs.value.trim();
+    if(!en&&!es){toast("Escribe la frase en inglés, en español o en los dos");return}
+    let pal;
+    if(!en||!es){
+      if(!sample){toast(!en?"Escribe también la frase en inglés":"Escribe también qué significa en español");return}
+      const btn=e.currentTarget; btn.disabled=true; btn.textContent="Completando…";
+      try{
+        const r=await pedirJSON(`A Spanish-speaking beginner wants to save this phrase to study. ${en?`English: "${en}"`:`Spanish: "${es}"`}
+${en?"Translate it to natural neutral Latin American Spanish.":"Give the most natural, simple English way to say it (max 12 words)."} If the English has a mistake, fix it.
+Reply with only JSON: {"en":"English phrase","es":"Spanish phrase","palabras":[...]}
+${PAL_INSTR}`,{modelTier:"quick"});
+        if(!r||!r.en) throw {code:"bad"};
+        en=String(r.en); es=String(r.es||es); pal=r.palabras;
+      }catch(err){btn.disabled=false;btn.textContent="Guardar frase";const m=mensajeError(err);if(m)toast(m);return}
+    }
+    if(agregarTarjeta(en,es,"Mis frases",pal)){nEn.value="";nEs.value="";cola=null;render()}
+  };
   const temaIn=h("input",{id:"tema-gen",class:"campo",placeholder:"Ej.: hablar con un DJ en un club"});
   return h("section",{class:"view"},
     titulo("Tarjetas",actual?`${cola.length} para repasar hoy`:"Al día",dirSeg),
-    guia("tarjetas","Cómo funcionan las tarjetas",
+    guia("tarjetas2","Cómo funcionan las tarjetas",
       h("ol",{},
-        h("li",{},"Te aparece una frase en inglés y la escuchas."),
-        h("li",{},"Piensa qué significa. Mejor si lo dices en voz alta."),
-        h("li",{},"Toca “Ver respuesta” para comprobar."),
+        h("li",{},"Te sale una frase y la escuchas."),
+        h("li",{},"Escríbela: con “Veo inglés” la repites en inglés y escribes qué significa en español. Con “Veo español” la escribes en inglés."),
+        h("li",{},"Toca “Ver respuesta”. La app te marca en verde las palabras bien escritas y en rojo las que no."),
         h("li",{},"Dile a la app qué tan bien te la sabías: “No me la sé” la repite hoy, “Más o menos” vuelve mañana y “Me la sé” vuelve en unos días.")),
-      h("p",{class:"small muted",style:"margin:8px 0 0"},"Las que te sabes aparecen cada vez menos y las que fallas aparecen más. Así repasas solo lo que necesitas. Con “Veo español” lo haces al revés: ves la frase en español y tú la dices en inglés.")),
-    tarjeta, acciones,
+      h("p",{class:"small muted",style:"margin:8px 0 0"},"Con “Solo escuchar” la frase se oculta y la escribes de oído, como un dictado. Las que te sabes aparecen cada vez menos y las que fallas aparecen más.")),
+    tarjeta, escribir, vistaRevision(actual,volteada?tResp:null), acciones,
     h("div",{class:"panel"},
       h("span",{class:"eyebrow"},"Tu avance"),
       h("div",{class:"niveles tabnum"},
@@ -1077,9 +1216,12 @@ function vTarjetas(){
         h("div",{},h("b",{},String(niveles.dominadas)),h("small",{},"Dominadas"))),
       h("div",{class:"small muted"},`${todas().length} frases en total. Te entran 10 nuevas por día.`)),
     h("div",{class:"panel"},
-      h("span",{class:"eyebrow"},"Agregar tu propia frase"),
-      enIn,esIn,
-      h("div",{class:"btns"},h("button",{class:"btn",type:"button",onclick:()=>{if(agregarTarjeta(enIn.value,esIn.value)){enIn.value="";esIn.value="";cola=null;render()}}},"Agregar"))),
+      h("span",{class:"eyebrow"},"Guardar una frase nueva"),
+      h("p",{style:"margin:0"},"¿Escuchaste o necesitas una frase que no está en tus tarjetas? Por ejemplo algo de un ensayo, una canción o una conversación. Guárdala aquí y te saldrá en tus repasos como las demás."),
+      h("div",{class:"small muted"},sample?"Puedes escribirla solo en español o solo en inglés: Claude completa la otra.":"Escribe la frase en inglés y su traducción en español."),
+      nEs,nEn,
+      h("div",{class:"btns"},h("button",{class:"btn",type:"button",onclick:guardarNueva},"Guardar frase")),
+      S.custom.length?h("div",{class:"small muted"},`Tienes ${S.custom.length} ${S.custom.length===1?"frase guardada":"frases guardadas"} por ti.`):null),
     sample?h("div",{class:"panel"},
       h("span",{class:"eyebrow"},"Crear 10 tarjetas con Claude"),
       h("div",{class:"small muted"},"Escribe una situación y Claude te arma frases útiles para ella, con su traducción y pronunciación."),
@@ -1294,10 +1436,19 @@ function vPreguntar(){
         h("div",{class:"fila-sb"},
           h("span",{class:"small muted"},"Consejo: en el celular puedes dictar con el micrófono del teclado."),
           S.preg.length?h("button",{class:"btn ghost",type:"button",style:"padding:5px 12px;font-size:13px",onclick:()=>{S.preg=[];guardar();render()}},"Borrar conversación"):null));
+  const modo=S.profeModo==="clases"?"clases":"chat";
+  const seg=h("div",{class:"seg",role:"group","aria-label":"Profe"},
+    h("button",{type:"button","aria-pressed":modo==="chat"?"true":"false",onclick:()=>{S.profeModo="chat";guardar();render()}},"Preguntar"),
+    h("button",{type:"button","aria-pressed":modo==="clases"?"true":"false",onclick:()=>{S.profeModo="clases";guardar();render()}},`Mis clases${S.clases.length?" ("+S.clases.length+")":""}`));
+  if(modo==="clases") return h("section",{class:"view"},
+    titulo("El profe","Mis clases",seg),
+    guia("clases","Para qué sirve",
+      h("p",{style:"margin:8px 0 0"},"Le pides al profe una clase de un tema, por ejemplo “el verbo do”, y te la arma completa: explicación sencilla, ejemplos con audio y traducción, errores comunes y 9 ejercicios para practicar. Cada clase queda guardada aquí para repasarla las veces que quieras.")),
+    ...vMisClases());
   return h("section",{class:"view"},
-    titulo("Pregúntale al profe","¿Qué duda tienes?"),
+    titulo("El profe","¿Qué duda tienes?",seg),
     guia("preguntar","Para qué sirve",
-      h("p",{style:"margin:8px 0 0"},"Aquí le preguntas en español cualquier duda de inglés: qué significa una palabra, cómo se dice algo, por qué se usa does y no do, cómo se pronuncia. Te responde fácil y con ejemplos que puedes escuchar y guardar en tus tarjetas.")),
+      h("p",{style:"margin:8px 0 0"},"Aquí le preguntas en español cualquier duda de inglés: qué significa una palabra, cómo se dice algo, por qué se usa does y no do, cómo se pronuncia. Te responde fácil y con ejemplos que puedes escuchar y guardar en tus tarjetas. Si quieres aprender un tema completo, toca “Hacer una clase de esto” debajo de su respuesta.")),
     cuerpo);
 }
 function pintarPreg(){
@@ -1314,6 +1465,8 @@ function pintarPreg(){
     if(ej.length) m.append(h("div",{class:"lista-frases"},ej.map(e=>h("div",{class:"ej-preg"},
       ingles(e.en,{es:e.es,palabras:e.palabras,tam:"sm"}),
       h("button",{class:"btn ghost",type:"button",style:"padding:4px 10px;font-size:13px;justify-self:start",onclick:()=>agregarTarjeta(e.en,e.es,"Del profe",e.palabras)},svg("mas"),"Guardar en tarjetas")))));
+    const idx=S.preg.indexOf(t); const pregunta=idx>0&&S.preg[idx-1].role==="user"?S.preg[idx-1].content:"";
+    if(pregunta) m.append(h("button",{class:"btn teal",type:"button",style:"justify-self:start;font-size:14px;padding:7px 14px",onclick:()=>{S.profeModo="clases";crearClase(pregunta.slice(0,140))}},"Hacer una clase de esto"));
     chat.append(m);
   }
   if(pregCurso) chat.append(h("div",{class:"typing"},"El profe está pensando…"));
@@ -1339,6 +1492,197 @@ async function preguntar(txt){
     pregCurso=null; pintarPreg();
     const c=$("#preg-chat"); if(c&&c.lastElementChild) c.lastElementChild.scrollIntoView({block:"nearest",behavior:"smooth"});
   }
+}
+
+/* ---------- MIS CLASES ---------- */
+const CLASE_TEMAS=["El verbo do / does","El verbo to be (am, is, are)","Presente simple","Pasado simple","Pronombres (I, you, he…)","In, on, at","Preguntas con what, where, when","Can y can't","Futuro con going to","There is / there are"];
+let claseActual=null, claseRes={}, creandoClase=null;
+const nuevoId=()=>"cl"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+function promptClase(tema){
+  const sem=semana(); const fase=FASES.find(x=>sem>=x.a&&sem<=x.b)||FASES[5];
+  return `You are the best English teacher in the world, preparing a complete mini-lesson for Anggelo, a Spanish-speaking beginner (A1). He is Peruvian (from Piura) and lives in Santo Domingo; he is a percussionist (congas, cajón), DJ and music teacher, and books shows for his salsa bands. His goal: speak English in less than 6 months. He is in study week ${sem} of 24 (phase: "${fase.t}").
+Lesson topic he asked for: "${tema}"
+
+Write everything for him in neutral Latin American Spanish (no voseo, no Argentine slang), simple words, short sentences. English examples must be short (max 10 words), natural and useful in his real life (music, gigs, travel, daily life). When it helps, compare grammar with rhythm or music.
+
+Reply with only JSON in exactly this shape:
+{"titulo":"short lesson title in Spanish",
+"resumen":"1-2 sentences: what he will learn and why it matters",
+"secciones":[{"titulo":"short subtitle","texto":"clear explanation, max 70 words; you may use line breaks","formula":"optional pattern like 'He / She + does + ...' or empty string","ejemplos":[{"en":"...","es":"..."}]}],
+"musica":"one short comparison between this topic and music or rhythm",
+"errores":[{"mal":"typical wrong English sentence","bien":"the correct sentence","porque":"short reason in Spanish"}],
+"ejercicios":[
+ {"tipo":"elegir","pregunta":"question or sentence with ___ (can mix Spanish instructions and English)","opciones":["...","...","..."],"correcta":0,"explicacion":"short reason"},
+ {"tipo":"completar","frase":"English sentence with ___ for the missing word(s)","es":"Spanish meaning of the full sentence","respuesta":"the missing word(s)","alternativas":["other accepted answers, e.g. contracted or full form"],"explicacion":"short reason"},
+ {"tipo":"traducir","es":"Spanish sentence to translate","en":"best English translation","alternativas":["other correct English versions"],"explicacion":"short tip"}
+],
+"tarea":"one small speaking task to do today, in Spanish"}
+Rules: 3 or 4 secciones, each with 2 or 3 ejemplos. 2 or 3 errores. Exactly 9 ejercicios: 3 "elegir", 3 "completar", 3 "traducir", ordered from easy to harder. "correcta" is the 0-based index of the right option; vary its position.`;
+}
+function frasesDeClase(d){
+  const out=[];
+  for(const s of d.secciones||[]) for(const e of s.ejemplos||[]) if(e&&e.en) out.push(e.en);
+  for(const e of d.errores||[]) if(e&&e.bien) out.push(e.bien);
+  for(const x of d.ejercicios||[]) if(x&&x.tipo==="traducir"&&x.en) out.push(x.en);
+  return [...new Set(out)];
+}
+async function crearClase(tema){
+  tema=String(tema||"").trim(); if(!tema){toast("Escribe primero el tema de la clase");return}
+  if(!sample||creandoClase) return;
+  creandoClase={tema,inicio:Date.now()}; render();
+  const tick=setInterval(()=>{const el=document.getElementById("clase-espera");if(el&&creandoClase)el.textContent=`Preparando tu clase de “${creandoClase.tema}”… ${Math.round((Date.now()-creandoClase.inicio)/1000)} s. Puede tardar hasta un par de minutos.`},1000);
+  try{
+    let d;
+    try{ d=await sample.json(promptClase(tema),{cache:false,modelTier:"complex"}); }
+    catch(e){ if(e&&e.code==="invalid_json") d=await sample.json(promptClase(tema)+"\nKeep it shorter: 3 secciones with 2 ejemplos each.",{cache:false}); else throw e; }
+    if(!d||!Array.isArray(d.secciones)||!Array.isArray(d.ejercicios)) throw {code:"bad"};
+    const c={id:nuevoId(),tema,titulo:String(d.titulo||tema),fecha:hoyStr(),data:d,mejor:null};
+    S.clases.unshift(c); if(S.clases.length>40) S.clases=S.clases.slice(0,40);
+    guardar(); creandoClase=null; clearInterval(tick);
+    abrirClase(c.id);
+    completarPalabras(c);
+  }catch(e){
+    creandoClase=null; clearInterval(tick); render();
+    const m=mensajeError(e); if(m) toast(m);
+  }
+}
+/* Segunda llamada: traducción palabra por palabra y pronunciación de las frases de la clase */
+async function completarPalabras(c){
+  const frases=frasesDeClase(c.data).filter(f=>fichas(f).some(x=>!x.es));
+  if(!frases.length||!sample) return;
+  try{
+    const r=await sample.json(`For each English sentence, list its words. Reply with only a JSON array of arrays, one per sentence, in the same order: [[["word as written","literal Spanish meaning here","pronunciation"],...],...]. Pronunciation is spelled for a Dominican Spanish speaker with an accent mark on the stressed syllable (hello=jelóu, the=de, you=iu, work=uerk).
+Sentences:
+${frases.map((f,i)=>`${i+1}. ${f}`).join("\n")}`,{cache:false,modelTier:"quick"});
+    if(Array.isArray(r)) for(const p of r) aprenderPalabras(p);
+    guardar(); if(vista==="clase"&&claseActual===c.id) render();
+  }catch(e){}
+}
+function abrirClase(id){claseActual=id;claseRes={};ir("clase")}
+function normCorta(x){return variantes(x)[0]}
+function vMisClases(){
+  const temaIn=h("input",{id:"clase-tema",class:"campo",placeholder:"Ej.: el verbo do, cómo pedir en un restaurante…"});
+  temaIn.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();crearClase(temaIn.value)}});
+  const crear = !sample
+    ? h("div",{class:"panel"},
+        h("p",{style:"margin:0"},"Las clases nuevas las arma el profe dentro de Claude. Ábrelo ahí para crear una."),
+        h("div",{class:"btns"},h("a",{class:"btn primary",href:"https://claude.ai/artifact/Rgfk5iGqmYBybk2mJzxH6L",target:"_blank",rel:"noopener"},"Abrir Amauta en Claude")))
+    : creandoClase
+      ? h("div",{class:"panel"},h("div",{class:"cargando"},h("span",{class:"spinner","aria-hidden":"true"}),h("span",{id:"clase-espera"},`Preparando tu clase de “${creandoClase.tema}”…`)))
+      : h("div",{class:"panel"},
+          h("span",{class:"eyebrow"},"Pídele una clase al profe"),
+          h("div",{class:"small muted"},"Escribe el tema y te arma una clase completa: explicación, ejemplos con audio, errores comunes y 9 ejercicios."),
+          temaIn,
+          h("div",{class:"rapidas"},CLASE_TEMAS.map(t=>h("button",{class:"toggle",type:"button",onclick:()=>{temaIn.value=t;temaIn.focus()}},t))),
+          h("div",{class:"btns"},h("button",{class:"btn primary",type:"button",onclick:()=>crearClase(temaIn.value)},"Crear clase")));
+  const lista = S.clases.length
+    ? h("div",{class:"lista-clases"},S.clases.map(c=>{
+        const n=(c.data.ejercicios||[]).length;
+        return h("button",{class:"clase-item",type:"button",onclick:()=>abrirClase(c.id)},
+          h("span",{class:"ci-tit"},c.titulo),
+          h("span",{class:"small muted"},new Date(c.fecha+"T12:00:00").toLocaleDateString("es-DO",{day:"numeric",month:"short"})+" · "+n+" ejercicios"),
+          h("span",{class:"chip"+(c.mejor!=null&&c.mejor>=n*0.8?" chip-ok":"")},c.mejor==null?"Sin hacer":`Mejor: ${c.mejor}/${n}`));
+      }))
+    : h("div",{class:"panel vacio"},h("b",{},"Todavía no tienes clases"),h("span",{class:"small muted"},"Pide tu primera clase arriba, por ejemplo “El verbo do / does”. Quedará guardada aquí para repasarla cuando quieras."));
+  return [crear, h("div",{class:"fila-sb"},h("span",{class:"eyebrow"},`Mis clases (${S.clases.length})`)), lista];
+}
+function vClase(){
+  const c=S.clases.find(x=>x.id===claseActual);
+  if(!c){ S.profeModo="clases"; return vPreguntar(); }
+  const d=c.data;
+  const volver=h("button",{class:"btn ghost",type:"button",style:"padding:6px 14px;font-size:14px",onclick:()=>{S.profeModo="clases";ir("preguntar")}},"← Mis clases");
+  const secciones=(d.secciones||[]).map((s,i)=>h("div",{class:"panel clase-sec"},
+    h("div",{class:"sec-num"},String(i+1)),
+    h("h3",{},s.titulo||""),
+    h("div",{class:"preg-texto"},s.texto||""),
+    s.formula?h("div",{class:"formula"},s.formula):null,
+    (s.ejemplos||[]).length?h("div",{class:"lista-frases"},(s.ejemplos||[]).map(e=>ingles(e.en,{es:e.es}))):null));
+  const errores=(d.errores||[]).length?h("div",{class:"panel"},
+    h("span",{class:"eyebrow"},"Errores comunes"),
+    (d.errores||[]).map(e=>h("div",{class:"error-item"},
+      h("div",{class:"err-mal",lang:"en"},"✗ ",e.mal),
+      h("div",{class:"err-bien",lang:"en"},"✓ ",e.bien,botonOir(e.bien)),
+      h("div",{class:"small muted"},e.porque||"")))):null;
+  const ejercicios=(d.ejercicios||[]).map((x,i)=>ejercicio(c,x,i));
+  const n=(d.ejercicios||[]).length, hechos=Object.keys(claseRes).length, bien=Object.values(claseRes).filter(r=>r.ok).length;
+  const fin = hechos===n&&n ? h("div",{class:"panel resultado-clase"},
+      h("div",{class:"big-es"},`${bien} de ${n} correctas`),
+      h("div",{class:"small muted"},bien===n?"¡Perfecto! Dominaste esta clase.":bien>=n*0.7?"¡Muy bien! Repasa los que fallaste.":"Vuelve a leer la explicación y repite los ejercicios."),
+      d.tarea?h("div",{class:"tip"},h("b",{},"Tarea para hoy: "),d.tarea):null,
+      h("div",{class:"btns"},h("button",{class:"btn",type:"button",onclick:()=>{claseRes={};render();window.scrollTo({top:0})}},"Repetir ejercicios"))) : null;
+  return h("section",{class:"view clase"},
+    h("div",{class:"fila-sb"},volver,h("span",{class:"small muted"},new Date(c.fecha+"T12:00:00").toLocaleDateString("es-DO",{day:"numeric",month:"long"}))),
+    h("div",{},h("div",{class:"eyebrow"},"Clase"),h("h2",{class:"clase-tit"},c.titulo)),
+    d.resumen?h("p",{class:"clase-resumen"},d.resumen):null,
+    ...secciones,
+    d.musica?h("div",{class:"panel musica"},h("span",{class:"eyebrow"},"Con ritmo"),h("div",{},d.musica)):null,
+    errores,
+    h("div",{class:"fila-sb"},h("h2",{style:"font-size:24px"},"Ejercicios"),h("span",{class:"small muted tabnum"},`${hechos} de ${n} hechos · ${bien} bien`)),
+    ...ejercicios,
+    fin,
+    h("div",{class:"panel"},
+      h("span",{class:"eyebrow"},"Para repasar después"),
+      h("div",{class:"btns"},
+        h("button",{class:"btn primary",type:"button",onclick:()=>{let k=0;for(const s of d.secciones||[])for(const e of s.ejemplos||[])if(agregarTarjetaSilenciosa(e.en,e.es,"Clase: "+c.titulo.slice(0,20)))k++;guardar();toast(k?`${k} frases guardadas en tus tarjetas`:"Esas frases ya estaban en tus tarjetas")}},"Guardar ejemplos en tarjetas"),
+        h("button",{class:"btn ghost",type:"button",onclick:()=>{S.profeModo="chat";ir("preguntar");setTimeout(()=>{const t=$("#preg-entrada");if(t){t.value=`Tengo una duda de la clase “${c.titulo}”: `;t.focus()}},50)}},"Preguntar una duda de esta clase"))),
+    h("div",{class:"btns",style:"justify-content:center"},
+      h("button",{class:"btn ghost borrar",type:"button",onclick:(e)=>{const b=e.currentTarget;if(b.dataset.ok){S.clases=S.clases.filter(x=>x.id!==c.id);guardar();S.profeModo="clases";ir("preguntar");toast("Clase borrada")}else{b.dataset.ok="1";b.textContent="Toca otra vez para borrarla"}}},"Borrar esta clase"))
+  );
+}
+function agregarTarjetaSilenciosa(en,es,cat){
+  en=String(en||"").trim(); if(!en||todas().some(c=>c.en.toLowerCase()===en.toLowerCase())) return false;
+  S.custom.push({id:"c"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),en,es:String(es||""),cat}); return true;
+}
+function registrar(c,i,res){
+  claseRes[i]=res;
+  const n=(c.data.ejercicios||[]).length;
+  if(Object.keys(claseRes).length===n){
+    const bien=Object.values(claseRes).filter(r=>r.ok).length;
+    c.mejor=Math.max(c.mejor??0,bien); sumar("tarjetas",bien); guardar();
+  }
+  const y=window.scrollY; render(); window.scrollTo({top:y});
+}
+function ejercicio(c,x,i){
+  const r=claseRes[i]; const num=h("span",{class:"ej-num"},String(i+1));
+  const etiqueta={elegir:"Elige la correcta",completar:"Completa la frase",traducir:"Traduce al inglés"}[x.tipo]||"Ejercicio";
+  const caja=h("div",{class:"panel ejercicio"+(r?(r.ok?" ej-ok":" ej-mal"):"")},h("div",{class:"fila-sb"},h("span",{class:"eyebrow"},etiqueta),num));
+  if(x.tipo==="elegir"){
+    caja.append(h("div",{class:"ej-preg"},x.pregunta||""));
+    caja.append(h("div",{class:"opciones-v"},(x.opciones||[]).map((op,k)=>{
+      let cls="opcion-v"; if(r){ if(k===x.correcta)cls+=" correcta"; else if(k===r.elegida)cls+=" incorrecta"; }
+      return h("button",{class:cls,type:"button",disabled:!!r,onclick:()=>registrar(c,i,{ok:k===x.correcta,elegida:k})},op);
+    })));
+  } else {
+    const correcta = x.tipo==="completar" ? x.respuesta : x.en;
+    const validas=[correcta,...(x.alternativas||[])].filter(Boolean);
+    if(x.tipo==="completar"){
+      caja.append(h("div",{class:"ej-preg",lang:"en"},x.frase||""));
+      if(x.es) caja.append(h("div",{class:"small muted"},x.es));
+    } else {
+      caja.append(h("div",{class:"ej-preg"},x.es||""));
+    }
+    if(!r){
+      const inp=h("input",{class:"campo resp-t",id:`ej-${c.id}-${i}`,lang:"en",autocomplete:"off",autocapitalize:"off",spellcheck:"false",placeholder:x.tipo==="completar"?"Escribe la palabra que falta":"Escribe la frase en inglés"});
+      const comprobar=(rend)=>{const v=inp.value.trim(); if(!v&&!rend){inp.focus();return}
+        const ok=!rend&&validas.some(a=>normCorta(a)===normCorta(v));
+        registrar(c,i,{ok,dada:v});};
+      inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();comprobar(false)}});
+      caja.append(inp,h("div",{class:"btns"},
+        h("button",{class:"btn primary",type:"button",onclick:()=>comprobar(false)},"Comprobar"),
+        h("button",{class:"btn ghost",type:"button",onclick:()=>comprobar(true)},"No sé")));
+    } else {
+      if(r.dada&&!r.ok&&x.tipo==="traducir"){
+        const cmp=compararPalabras(r.dada,correcta);
+        caja.append(h("div",{class:"rev-linea",lang:"en"},cmp.a.map((w,k)=>h("span",{class:cmp.okA.has(k)?"w-ok":"w-mal"},w))));
+      } else if(r.dada&&!r.ok){
+        caja.append(h("div",{class:"small muted"},"Escribiste: ",h("span",{class:"w-mal"},r.dada)));
+      }
+      const completa = x.tipo==="completar" ? String(x.frase||"").replace(/_{2,}/,correcta) : correcta;
+      caja.append(h("div",{class:"rev-tit"},r.ok?"¡Correcto!":"La respuesta es:"), ingles(completa,{es:x.es,tam:"sm"}));
+    }
+  }
+  if(r&&x.explicacion) caja.append(h("div",{class:"small muted"},x.explicacion));
+  return caja;
 }
 
 /* ---------- PLAN ---------- */

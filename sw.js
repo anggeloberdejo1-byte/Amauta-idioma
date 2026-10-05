@@ -1,6 +1,6 @@
 // Amauta Idioma — service worker
 // Cada vez que subas cambios, sube también este archivo con un número nuevo de versión.
-const CACHE = "amauta-idioma-v3";
+const CACHE = "amauta-idioma-v6";
 const ARCHIVOS = [
   "./",
   "./index.html",
